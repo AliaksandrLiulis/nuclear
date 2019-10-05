@@ -1,34 +1,24 @@
 package com.isotop.storage.controller
 
-import com.isotop.storage.dto.User
-import com.isotop.storage.service.NewService
-import com.isotop.storage.service.userService
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.*
-
+import com.isotop.storage.dto.request.UserCreateRequest
+import com.isotop.storage.dto.response.UserCreateResponse
+import com.isotop.storage.service.UserService
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/accounts")
-@Validated
-open class UserController @Autowired constructor(
-    private val service: userService,
-    private val newService: NewService
+@RequestMapping("/user", produces = ["application/json"])
+open class UserController(
+    private val userService: UserService
 ) {
 
-   @GetMapping("/{accountId}")
-    open fun getAccount(
-        @PathVariable(value = "accountId")
-        accountId: User
-    ): String {
-
-        return service.getUserPassword("slv")
-    }
-
-    @GetMapping("get")
-    open fun get() : String{
-        val password:String = "123"
-        return newService.getUserName(password)
+    @PostMapping
+    open fun createUser(
+        @RequestBody
+        request: UserCreateRequest
+    ): UserCreateResponse {
+        return userService.createUser(request)
     }
 }

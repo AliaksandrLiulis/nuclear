@@ -20,7 +20,6 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
     @Autowired
     private val authenticationManager: AuthenticationManager? = null
 
-
     @Bean
     open fun accessTokenConverter(): JwtAccessTokenConverter {
         val converter = JwtAccessTokenConverter()
