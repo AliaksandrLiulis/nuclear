@@ -1,0 +1,9 @@
+application:
+  name: "nuclear"
+
+spring:
+  profiles:
+    active: ${NUCLEAR_ENVIRONMENT:dev}
+  jpa:
+    hibernate:
+      ddl-auto: none
