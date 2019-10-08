@@ -37,7 +37,5 @@ open class SecurityRepository(
             USERS
         ).where(USERS.NAME.equalIgnoreCase(payload))
             .fetchInto(UserCheckResponse::class.java)
-
-
     }
 }

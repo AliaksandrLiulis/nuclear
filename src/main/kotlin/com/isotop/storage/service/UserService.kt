@@ -1,7 +1,10 @@
 package com.isotop.storage.service
 
+import com.isotop.storage.constant.getEmailSign
+import com.isotop.storage.dto.request.UpdateRoleUserRequest
 import com.isotop.storage.dto.request.UserCreateRequest
 import com.isotop.storage.dto.response.UserCreateResponse
+import com.isotop.storage.dto.response.UserIdResponse
 import com.isotop.storage.enums.UserRole
 import com.isotop.storage.repository.UserRepository
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -26,4 +29,25 @@ open class UserService(
             role = UserRole.ROLE_UNAUTHORIZE
         )
     }
+
+    @Transactional
+    open fun updateUserRole(payload: UpdateRoleUserRequest): UserIdResponse {
+        val result =
+        if (payload.identity.contains(getEmailSign)){
+            userRepository.isExistUserByEmail(payload = payload.identity)
+        }else{
+            userRepository.isExistUserByName(payload = payload.identity)
+        }
+        if (result){
+            val id = userRepository.updateUserRole(payload.identity, payload.role)
+            return if (id != 0){
+                UserIdResponse(id, payload.role)
+            }else{
+                UserIdResponse(0, null)
+            }
+        }else{
+            throw RuntimeException("User not exist")
+        }
+    }
+
 }

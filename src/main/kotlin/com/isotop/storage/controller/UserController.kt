@@ -1,10 +1,11 @@
 package com.isotop.storage.controller
 
+import com.isotop.storage.dto.request.UpdateRoleUserRequest
 import com.isotop.storage.dto.request.UserCreateRequest
 import com.isotop.storage.dto.response.UserCreateResponse
+import com.isotop.storage.dto.response.UserIdResponse
 import com.isotop.storage.service.UserService
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -14,20 +15,20 @@ open class UserController(
 ) {
 
 
-    @PostMapping( produces = ["application/json"])
+    @PostMapping(produces = ["application/json"])
     open fun createUser(
         @RequestBody
-        request: UserCreateRequest
+        payload: UserCreateRequest
     ): UserCreateResponse {
-        return userService.createUser(request)
+        return userService.createUser(payload)
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping
-    open fun getUser(
-        aunt: Authentication
-    ):String {
-    return aunt.name
-
+    @PutMapping
+    open fun updateUserRoleByNameOrEmail(
+        @RequestBody
+        payload: UpdateRoleUserRequest
+    ): UserIdResponse {
+        return userService.updateUserRole(payload)
     }
 }
