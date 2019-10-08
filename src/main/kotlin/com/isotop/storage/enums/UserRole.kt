@@ -1,8 +1,8 @@
 package com.isotop.storage.enums
 
 enum class UserRole {
-    UNAUTHORIZE,
-    ADMIN,
-    WORKER,
-    STORAGE
+    ROLE_UNAUTHORIZE,
+    ROLE_ADMIN,
+    ROLE_WORKER,
+    ROLE_STORAGE
 }

@@ -23,7 +23,7 @@ open class UserService(
             userId = userRepository.createUser(payload),
             name = payload.userName,
             email = payload.userEmail,
-            role = UserRole.UNAUTHORIZE
+            role = UserRole.ROLE_UNAUTHORIZE
         )
     }
 }
