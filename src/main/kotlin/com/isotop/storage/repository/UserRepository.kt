@@ -14,7 +14,7 @@ open class UserRepository(
     private val dsl: DSLContext
 ) {
 
-    open fun getUsers(
+    open fun getUsers(name:String
     ): MutableList<UserCreateResponse> {
 
         return dsl.select(
@@ -24,6 +24,8 @@ open class UserRepository(
             USERS.ROLE
         ).from(
             USERS
+        ).where(
+            USERS.NAME.ne(name)
         ).fetchInto(UserCreateResponse::class.java)
     }
 

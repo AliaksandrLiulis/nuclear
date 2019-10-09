@@ -6,6 +6,7 @@ import com.isotop.storage.dto.response.UserCreateResponse
 import com.isotop.storage.dto.response.UserIdResponse
 import com.isotop.storage.service.UserService
 import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.Authentication
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -19,9 +20,9 @@ open class UserController(
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(produces = ["application/json"])
-    open fun getUsers(
+    open fun getUsers(authentication: Authentication
     ): List<UserCreateResponse> {
-        return userService.getUsers()
+        return userService.getUsers(authentication.name)
     }
 
 

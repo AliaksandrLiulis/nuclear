@@ -19,8 +19,8 @@ open class UserService(
     private val encoder: BCryptPasswordEncoder
 ) {
 
-    open fun getUsers(): MutableList<UserCreateResponse> {
-        return  userRepository.getUsers()
+    open fun getUsers(name:String): MutableList<UserCreateResponse> {
+        return  userRepository.getUsers(name)
     }
 
     @Transactional
