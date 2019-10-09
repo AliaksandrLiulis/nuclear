@@ -6,10 +6,13 @@ import com.isotop.storage.dto.response.UserCreateResponse
 import com.isotop.storage.dto.response.UserIdResponse
 import com.isotop.storage.service.UserService
 import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/user")
+@Validated
 open class UserController(
     private val userService: UserService
 ) {
@@ -18,6 +21,7 @@ open class UserController(
     @PostMapping(produces = ["application/json"])
     open fun createUser(
         @RequestBody
+        @Valid
         payload: UserCreateRequest
     ): UserCreateResponse {
         return userService.createUser(payload)
@@ -27,6 +31,7 @@ open class UserController(
     @PutMapping
     open fun updateUserRoleByNameOrEmail(
         @RequestBody
+        @Valid
         payload: UpdateRoleUserRequest
     ): UserIdResponse {
         return userService.updateUserRole(payload)
