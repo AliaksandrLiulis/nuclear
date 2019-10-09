@@ -10,4 +10,5 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             else -> ""
         }
     }
+
 }

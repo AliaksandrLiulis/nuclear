@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import javax.ws.rs.NotAuthorizedException
 
 @RestControllerAdvice
 class ExceptionHandlers {
@@ -26,4 +27,18 @@ class ExceptionHandlers {
             else -> NuclearError(e.errorCode)
         }
     }
+
+    @ExceptionHandler(Exception::class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    fun handleGlobalException(e: Exception): ErrorMessageResponse {
+        log.error("500 Internal Server Error", e)
+        return ErrorMessageResponse(true,e.message)
+    }
+
+    @ExceptionHandler(NotAuthorizedException::class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    fun handleUnauthorizedException(e: NuclearRuntimeException): NuclearError {
+        return handleErrorCode(e)
+    }
+
 }
