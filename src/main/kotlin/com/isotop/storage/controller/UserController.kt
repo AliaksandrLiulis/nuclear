@@ -17,6 +17,13 @@ open class UserController(
     private val userService: UserService
 ) {
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(produces = ["application/json"])
+    open fun getUsers(
+    ): List<UserCreateResponse> {
+        return userService.getUsers()
+    }
+
 
     @PostMapping(produces = ["application/json"])
     open fun createUser(

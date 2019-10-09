@@ -1,6 +1,9 @@
 package com.isotop.storage.config.exceptionHandlers
 
+import com.isotop.storage.config.exceptionHandlers.exception.ErrorMessageResponse
+import com.isotop.storage.config.exceptionHandlers.exception.NuclearRuntimeException
 import com.isotop.storage.config.exceptionHandlers.exception.ResourceNotFoundException
+import com.isotop.storage.config.exceptionHandlers.exception.ValidateException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -22,6 +25,12 @@ class ExceptionHandlers {
     @ExceptionHandler(ResourceNotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handleResourceNotFoundException(e: ResourceNotFoundException): NuclearError {
+        return handleErrorCode(e)
+    }
+
+    @ExceptionHandler(ValidateException::class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    fun handleValidateException(e: ValidateException): NuclearError {
         return handleErrorCode(e)
     }
 

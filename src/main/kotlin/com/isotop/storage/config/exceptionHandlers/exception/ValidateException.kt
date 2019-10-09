@@ -1,6 +1,6 @@
 package com.isotop.storage.config.exceptionHandlers.exception
 
-class ResourceNotFoundException : NuclearRuntimeException {
+class ValidateException : NuclearRuntimeException {
     constructor() : super()
     constructor(errorCode: Int) : super(errorCode)
     constructor(errorMessage: String) : super(errorMessage)

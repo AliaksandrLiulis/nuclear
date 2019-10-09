@@ -2,6 +2,7 @@ package com.isotop.storage.repository
 
 import com.isotop.storage.constant.getEmailSign
 import com.isotop.storage.dto.request.UserCreateRequest
+import com.isotop.storage.dto.response.UserCreateResponse
 import com.isotop.storage.jooq.Tables.USERS
 import com.isotop.storage.jooq.enums.UserRole
 import org.jooq.DSLContext
@@ -12,6 +13,19 @@ import org.springframework.stereotype.Repository
 open class UserRepository(
     private val dsl: DSLContext
 ) {
+
+    open fun getUsers(
+    ): MutableList<UserCreateResponse> {
+
+        return dsl.select(
+            USERS.USERCODE.`as`("userId"),
+            USERS.NAME,
+            USERS.EMAIL,
+            USERS.ROLE
+        ).from(
+            USERS
+        ).fetchInto(UserCreateResponse::class.java)
+    }
 
     open fun createUser(
         payload: UserCreateRequest

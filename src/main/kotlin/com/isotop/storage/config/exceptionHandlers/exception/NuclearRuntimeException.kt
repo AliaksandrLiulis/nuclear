@@ -1,4 +1,4 @@
-package com.isotop.storage.config.exceptionHandlers
+package com.isotop.storage.config.exceptionHandlers.exception
 
 open class NuclearRuntimeException : RuntimeException {
     var errorCode: Int = 0

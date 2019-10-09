@@ -1,6 +1,7 @@
 package com.isotop.storage.service
 
 import com.isotop.storage.config.exceptionHandlers.exception.ResourceNotFoundException
+import com.isotop.storage.config.exceptionHandlers.exception.ValidateException
 import com.isotop.storage.constant.getEmailSign
 import com.isotop.storage.dto.request.UpdateRoleUserRequest
 import com.isotop.storage.dto.request.UserCreateRequest
@@ -18,8 +19,22 @@ open class UserService(
     private val encoder: BCryptPasswordEncoder
 ) {
 
+    open fun getUsers(): MutableList<UserCreateResponse> {
+        return  userRepository.getUsers()
+    }
+
     @Transactional
     open fun createUser(payload: UserCreateRequest): UserCreateResponse {
+        val isExistName = userRepository.isExistUserByName(payload = payload.userName)
+        val isExistEmail = userRepository.isExistUserByEmail(payload = payload.userEmail)
+
+        if (isExistName){
+            throw ValidateException(2)
+        }
+
+        if (isExistEmail){
+            throw ValidateException(3)
+        }
 
         payload.userPassword = encoder.encode(payload.userPassword)
 
