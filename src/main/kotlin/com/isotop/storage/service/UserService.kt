@@ -1,5 +1,6 @@
 package com.isotop.storage.service
 
+import com.isotop.storage.config.exceptionHandlers.exception.ResourceNotFoundException
 import com.isotop.storage.constant.getEmailSign
 import com.isotop.storage.dto.request.UpdateRoleUserRequest
 import com.isotop.storage.dto.request.UserCreateRequest
@@ -46,8 +47,7 @@ open class UserService(
                 UserIdResponse(0, null)
             }
         }else{
-            throw RuntimeException("User not exist")
+            throw ResourceNotFoundException(1)
         }
     }
-
 }
