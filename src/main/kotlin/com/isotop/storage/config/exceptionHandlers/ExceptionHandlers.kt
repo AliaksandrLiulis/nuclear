@@ -3,9 +3,14 @@ package com.isotop.storage.config.exceptionHandlers
 import com.isotop.storage.config.exceptionHandlers.exception.ResourceNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
+import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.validation.BindException
+import org.springframework.validation.BindingResult
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import javax.validation.ConstraintViolationException
 import javax.ws.rs.NotAuthorizedException
 
 @RestControllerAdvice
@@ -20,19 +25,35 @@ class ExceptionHandlers {
         return handleErrorCode(e)
     }
 
-    private fun handleErrorCode(e: NuclearRuntimeException): NuclearError {
-        log.error(e.errorMessage)
-        return when (e.errorCode) {
-            0 -> NuclearError(e.errorCode, e.errorMessage)
-            else -> NuclearError(e.errorCode)
-        }
+    @ExceptionHandler(BindException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleBindException(e: BindException): ErrorMessageResponse {
+       return createErrorValidationMessage(e.bindingResult)
     }
 
     @ExceptionHandler(Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     fun handleGlobalException(e: Exception): ErrorMessageResponse {
         log.error("500 Internal Server Error", e)
-        return ErrorMessageResponse(true,e.message)
+        return ErrorMessageResponse(true, e.message)
+    }
+
+    @ExceptionHandler(value = [HttpMessageNotReadableException::class, NumberFormatException::class])
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleServiceExceptions(): ErrorMessageResponse {
+        return ErrorMessageResponse(true, null)
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ErrorMessageResponse {
+        return createErrorValidationMessage(e.bindingResult)
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException::class)
+    fun exceptionHandler(e: ConstraintViolationException): ErrorMessageResponse {
+        return ErrorMessageResponse(true, e.message)
     }
 
     @ExceptionHandler(NotAuthorizedException::class)
@@ -41,4 +62,24 @@ class ExceptionHandlers {
         return handleErrorCode(e)
     }
 
+    @ExceptionHandler(IllegalArgumentException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleIllegalArgumentException(e: IllegalArgumentException): ErrorMessageResponse {
+        return ErrorMessageResponse(true, e.message)
+    }
+
+    private fun handleErrorCode(e: NuclearRuntimeException): NuclearError {
+        log.error(e.errorMessage)
+        return when (e.errorCode) {
+            0 -> NuclearError(e.errorCode, e.errorMessage)
+            else -> NuclearError(e.errorCode)
+        }
+    }
+
+    private fun createErrorValidationMessage(bindingResult: BindingResult): ErrorMessageResponse {
+        val errorMessage = bindingResult.allErrors
+            .map { it.defaultMessage }
+            .joinToString(";")
+        return ErrorMessageResponse(true, errorMessage)
+    }
 }
