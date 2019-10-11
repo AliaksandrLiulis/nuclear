@@ -38,7 +38,6 @@ open class ResourceServerConfig : ResourceServerConfigurerAdapter() {
     }
 
     companion object {
-
         private val RESOURCE_ID = "resource_id"
     }
 }

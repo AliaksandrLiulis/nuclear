@@ -6,9 +6,11 @@ import com.isotop.storage.constant.getEmailSign
 import com.isotop.storage.dto.request.UpdateRoleUserRequest
 import com.isotop.storage.dto.request.UserCreateRequest
 import com.isotop.storage.dto.response.UserCreateResponse
+import com.isotop.storage.dto.response.UserCreateResponseData
 import com.isotop.storage.dto.response.UserIdResponse
 import com.isotop.storage.enums.UserRole
 import com.isotop.storage.repository.UserRepository
+import org.springframework.security.core.Authentication
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,8 +21,8 @@ open class UserService(
     private val encoder: BCryptPasswordEncoder
 ) {
 
-    open fun getUsers(name:String): MutableList<UserCreateResponse> {
-        return  userRepository.getUsers(name)
+    open fun getUsers(): UserCreateResponseData {
+        return  UserCreateResponseData(userRepository.getUsers())
     }
 
     @Transactional
@@ -47,7 +49,12 @@ open class UserService(
     }
 
     @Transactional
-    open fun updateUserRole(payload: UpdateRoleUserRequest): UserIdResponse {
+    open fun updateUserRole(authentication: Authentication, payload: UpdateRoleUserRequest): UserIdResponse {
+        val user = userRepository.getUserByName(authentication.name)[0]
+        if (user.name.equals(payload.identity, ignoreCase = true) || user.email.equals(payload.identity, ignoreCase = true)){
+            throw ValidateException(4)
+        }
+
         val result =
         if (payload.identity.contains(getEmailSign)){
             userRepository.isExistUserByEmail(payload = payload.identity)

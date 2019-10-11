@@ -9,6 +9,7 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             1 -> "User not found"
             2 -> "User with such name exist"
             3 -> "User with such email exist"
+            4 -> "Can not update user"
             else -> ""
         }
     }
