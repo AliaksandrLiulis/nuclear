@@ -3,7 +3,7 @@ application:
 
 spring:
   profiles:
-    active: ${NUCLEAR_ENVIRONMENT:user}
+    active: ${NUCLEAR_ENVIRONMENT:dev}
   jpa:
     hibernate:
       ddl-auto: none
