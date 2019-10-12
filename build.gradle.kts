@@ -114,7 +114,7 @@ jooqGenerator {
             jdbc = Jdbc().withDriver("org.postgresql.Driver")
                 .withUsername("postgres")
                 .withPassword("root")
-                .withUrl("jdbc:postgresql://localhost:5432/nuclear_base")
+                .withUrl("jdbc:postgresql://localhost:5433/nuclear_base")
             generator = Generator().withTarget(Target()
                 .withPackageName("com.isotop.storage.jooq")
                 .withDirectory("${project.buildDir}/generated/jooq/base"))
