@@ -2,3 +2,5 @@
 /.idea
 /build
 /gradle
+/build.gradle.kts
+/src/main/resources/application-dev.yml
