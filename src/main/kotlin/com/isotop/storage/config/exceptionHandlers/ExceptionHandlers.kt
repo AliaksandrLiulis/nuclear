@@ -21,7 +21,6 @@ class ExceptionHandlers {
 
     private val log = LoggerFactory.getLogger(ExceptionHandlers::class.java)
 
-
     @ExceptionHandler(ResourceNotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handleResourceNotFoundException(e: ResourceNotFoundException): NuclearError {
@@ -44,13 +43,13 @@ class ExceptionHandlers {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     fun handleGlobalException(e: Exception): ErrorMessageResponse {
         log.error("500 Internal Server Error", e)
-        return ErrorMessageResponse(true, e.message)
+        return ErrorMessageResponse("undefined", e.message)
     }
 
     @ExceptionHandler(value = [HttpMessageNotReadableException::class, NumberFormatException::class])
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleServiceExceptions(): ErrorMessageResponse {
-        return ErrorMessageResponse(true, null)
+        return ErrorMessageResponse("undefined", null)
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
@@ -62,7 +61,7 @@ class ExceptionHandlers {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException::class)
     fun exceptionHandler(e: ConstraintViolationException): ErrorMessageResponse {
-        return ErrorMessageResponse(true, e.message)
+        return ErrorMessageResponse("undefined", e.message)
     }
 
     @ExceptionHandler(NotAuthorizedException::class)
@@ -74,7 +73,7 @@ class ExceptionHandlers {
     @ExceptionHandler(IllegalArgumentException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleIllegalArgumentException(e: IllegalArgumentException): ErrorMessageResponse {
-        return ErrorMessageResponse(true, e.message)
+        return ErrorMessageResponse("undefined", e.message)
     }
 
     private fun handleErrorCode(e: NuclearRuntimeException): NuclearError {
@@ -89,6 +88,6 @@ class ExceptionHandlers {
         val errorMessage = bindingResult.allErrors
             .map { it.defaultMessage }
             .joinToString(";")
-        return ErrorMessageResponse(true, errorMessage)
+        return ErrorMessageResponse("undefined", errorMessage)
     }
 }
