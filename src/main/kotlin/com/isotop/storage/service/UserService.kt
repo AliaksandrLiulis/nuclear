@@ -51,38 +51,6 @@ open class UserService(
         )
     }
 
-//    @Transactional
-//    open fun updateUserRoleByNameOrEmail(
-//        authentication: Authentication,
-//        payload: UpdateRoleUserByNameOrEmailRequest
-//    ): UserIdResponse {
-//        val user = userRepository.getUserByName(authentication.name)[0]
-//        if (user.name.equals(payload.identity, ignoreCase = true) || user.email.equals(
-//                payload.identity,
-//                ignoreCase = true
-//            )
-//        ) {
-//            throw ValidateException(4)
-//        }
-//
-//        val result =
-//            if (payload.identity.contains(getEmailSign)) {
-//                userRepository.isExistUserByEmail(payload = payload.identity)
-//            } else {
-//                userRepository.isExistUserByName(payload = payload.identity)
-//            }
-//        if (result) {
-//            val id = userRepository.updateUserRole(payload.identity, payload.role)
-//            return if (id != 0) {
-//                UserIdResponse(id, payload.role)
-//            } else {
-//                UserIdResponse(0, null)
-//            }
-//        } else {
-//            throw ResourceNotFoundException(1)
-//        }
-//    }
-
     @Transactional
     open fun updateUserRoleByUserId(
         authentication: Authentication,

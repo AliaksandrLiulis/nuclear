@@ -1,6 +1,5 @@
 package com.isotop.storage.repository
 
-import com.isotop.storage.constant.getEmailSign
 import com.isotop.storage.dto.request.UserCreateRequest
 import com.isotop.storage.dto.response.UserResponse
 import com.isotop.storage.jooq.Tables.USERS
@@ -23,7 +22,8 @@ open class UserRepository(
             USERS.ROLE
         ).from(
             USERS
-        ).fetchInto(UserResponse::class.java)
+        ).orderBy(USERS.NAME)
+            .fetchInto(UserResponse::class.java)
     }
 
     open fun getUserByName(name: String): List<UserResponse> {
@@ -37,7 +37,8 @@ open class UserRepository(
             USERS
         ).where(
             USERS.NAME.eq(name)
-        ).fetchInto(UserResponse::class.java)
+        ).orderBy(USERS.NAME)
+            .fetchInto(UserResponse::class.java)
     }
 
     open fun getUserById(idUser: Int): List<UserResponse> {
@@ -51,7 +52,8 @@ open class UserRepository(
             USERS
         ).where(
             USERS.USERCODE.eq(idUser)
-        ).fetchInto(UserResponse::class.java)
+        ).orderBy(USERS.NAME)
+            .fetchInto(UserResponse::class.java)
     }
 
     open fun createUser(
@@ -106,27 +108,6 @@ open class UserRepository(
         )
     }
 
-    open fun updateUserRole(
-        identity: String,
-        role: UserRole
-    ): Int? {
-
-        return dsl
-            .update(USERS)
-            .set(USERS.ROLE, role)
-            .where(
-                if (identity.contains(getEmailSign)) {
-                    USERS.EMAIL.equalIgnoreCase(identity)
-                } else {
-                    USERS.NAME.equalIgnoreCase(identity)
-                }
-            )
-            .returning(USERS.USERCODE)
-            .fetchOne()
-            ?.get(USERS.USERCODE)
-            ?.or(0)
-    }
-
     open fun updateUserRoleByUserId(
         idUser: Int,
         role: UserRole
@@ -143,4 +124,3 @@ open class UserRepository(
             .get(USERS.USERCODE)
     }
 }
-

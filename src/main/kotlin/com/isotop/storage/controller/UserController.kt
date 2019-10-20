@@ -18,17 +18,17 @@ open class UserController(
     private val userService: UserService
 ) {
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(produces = ["application/json"])
-    open fun getUsers(): ListUserDataResponse {
-        return userService.getUsers()
-    }
-
     @GetMapping("/role", produces = ["application/json"])
     open fun getUserAuthentication(
         authentication: Authentication
     ): UserResponse {
         return userService.getUserAuthentication(authentication)
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(produces = ["application/json"])
+    open fun getUsers(): ListUserDataResponse {
+        return userService.getUsers()
     }
 
     @PostMapping(produces = ["application/json"])
@@ -48,6 +48,6 @@ open class UserController(
         @Valid
         payload: UpdateRoleUserByIdRequest
     ): UserResponse {
-        return userService.updateUserRoleByUserId(authentication,payload)
+        return userService.updateUserRoleByUserId(authentication, payload)
     }
 }
