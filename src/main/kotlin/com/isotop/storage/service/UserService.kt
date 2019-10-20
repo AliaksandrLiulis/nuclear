@@ -22,11 +22,13 @@ open class UserService(
 ) {
 
     open fun getUsers(): UserCreateResponseData {
-        return  UserCreateResponseData(userRepository.getUsers())
+        return UserCreateResponseData(userRepository.getUsers())
     }
 
-    open fun getRole(authentication: Authentication): UserCreateResponseData {
-        return  UserCreateResponseData(userRepository.getUserByName(authentication.name))
+    open fun getUserAuthentication(authentication: Authentication): UserCreateResponse {
+
+        return UserCreateResponseData(userRepository.getUserByName(authentication.name))
+            .data[0]
     }
 
     @Transactional
@@ -34,11 +36,11 @@ open class UserService(
         val isExistName = userRepository.isExistUserByName(payload = payload.userName)
         val isExistEmail = userRepository.isExistUserByEmail(payload = payload.userEmail)
 
-        if (isExistName){
+        if (isExistName) {
             throw ValidateException(2)
         }
 
-        if (isExistEmail){
+        if (isExistEmail) {
             throw ValidateException(3)
         }
 
@@ -55,24 +57,28 @@ open class UserService(
     @Transactional
     open fun updateUserRole(authentication: Authentication, payload: UpdateRoleUserRequest): UserIdResponse {
         val user = userRepository.getUserByName(authentication.name)[0]
-        if (user.name.equals(payload.identity, ignoreCase = true) || user.email.equals(payload.identity, ignoreCase = true)){
+        if (user.name.equals(payload.identity, ignoreCase = true) || user.email.equals(
+                payload.identity,
+                ignoreCase = true
+            )
+        ) {
             throw ValidateException(4)
         }
 
         val result =
-        if (payload.identity.contains(getEmailSign)){
-            userRepository.isExistUserByEmail(payload = payload.identity)
-        }else{
-            userRepository.isExistUserByName(payload = payload.identity)
-        }
-        if (result){
+            if (payload.identity.contains(getEmailSign)) {
+                userRepository.isExistUserByEmail(payload = payload.identity)
+            } else {
+                userRepository.isExistUserByName(payload = payload.identity)
+            }
+        if (result) {
             val id = userRepository.updateUserRole(payload.identity, payload.role)
-            return if (id != 0){
+            return if (id != 0) {
                 UserIdResponse(id, payload.role)
-            }else{
+            } else {
                 UserIdResponse(0, null)
             }
-        }else{
+        } else {
             throw ResourceNotFoundException(1)
         }
     }
