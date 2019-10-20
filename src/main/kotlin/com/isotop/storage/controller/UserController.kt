@@ -25,6 +25,13 @@ open class UserController(
         return userService.getUsers()
     }
 
+    @GetMapping("/role", produces = ["application/json"])
+    open fun getRole(
+        authentication: Authentication
+    ): UserCreateResponseData {
+        return userService.getRole(authentication)
+    }
+
     @PostMapping(produces = ["application/json"])
     open fun createUser(
         @RequestBody

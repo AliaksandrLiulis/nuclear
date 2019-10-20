@@ -25,6 +25,10 @@ open class UserService(
         return  UserCreateResponseData(userRepository.getUsers())
     }
 
+    open fun getRole(authentication: Authentication): UserCreateResponseData {
+        return  UserCreateResponseData(userRepository.getUserByName(authentication.name))
+    }
+
     @Transactional
     open fun createUser(payload: UserCreateRequest): UserCreateResponse {
         val isExistName = userRepository.isExistUserByName(payload = payload.userName)
