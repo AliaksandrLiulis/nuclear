@@ -1,10 +1,9 @@
 package com.isotop.storage.controller
 
-import com.isotop.storage.dto.request.UpdateRoleUserRequest
+import com.isotop.storage.dto.request.UpdateRoleUserByIdRequest
 import com.isotop.storage.dto.request.UserCreateRequest
-import com.isotop.storage.dto.response.UserCreateResponse
-import com.isotop.storage.dto.response.UserCreateResponseData
-import com.isotop.storage.dto.response.UserIdResponse
+import com.isotop.storage.dto.response.ListUserDataResponse
+import com.isotop.storage.dto.response.UserResponse
 import com.isotop.storage.service.UserService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
@@ -21,14 +20,14 @@ open class UserController(
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(produces = ["application/json"])
-    open fun getUsers(): UserCreateResponseData {
+    open fun getUsers(): ListUserDataResponse {
         return userService.getUsers()
     }
 
     @GetMapping("/role", produces = ["application/json"])
     open fun getUserAuthentication(
         authentication: Authentication
-    ): UserCreateResponse {
+    ): UserResponse {
         return userService.getUserAuthentication(authentication)
     }
 
@@ -37,7 +36,7 @@ open class UserController(
         @RequestBody
         @Valid
         payload: UserCreateRequest
-    ): UserCreateResponse {
+    ): UserResponse {
         return userService.createUser(payload)
     }
 
@@ -47,8 +46,8 @@ open class UserController(
         authentication: Authentication,
         @RequestBody
         @Valid
-        payload: UpdateRoleUserRequest
-    ): UserIdResponse {
-        return userService.updateUserRole(authentication,payload)
+        payload: UpdateRoleUserByIdRequest
+    ): UserResponse {
+        return userService.updateUserRoleByUserId(authentication,payload)
     }
 }

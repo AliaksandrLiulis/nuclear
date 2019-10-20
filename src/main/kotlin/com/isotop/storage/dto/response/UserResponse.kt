@@ -2,11 +2,11 @@ package com.isotop.storage.dto.response
 
 import com.isotop.storage.enums.UserRole
 
-data class UserCreateResponseData(
-    val data: List<UserCreateResponse>
+data class ListUserDataResponse(
+    val data: List<UserResponse>
 )
 
-data class UserCreateResponse(
+data class UserResponse(
     val userId: Int,
     val name: String,
     val email: String,

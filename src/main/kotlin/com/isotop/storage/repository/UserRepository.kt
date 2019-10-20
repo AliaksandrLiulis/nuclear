@@ -2,7 +2,7 @@ package com.isotop.storage.repository
 
 import com.isotop.storage.constant.getEmailSign
 import com.isotop.storage.dto.request.UserCreateRequest
-import com.isotop.storage.dto.response.UserCreateResponse
+import com.isotop.storage.dto.response.UserResponse
 import com.isotop.storage.jooq.Tables.USERS
 import com.isotop.storage.jooq.enums.UserRole
 import org.jooq.DSLContext
@@ -14,7 +14,7 @@ open class UserRepository(
     private val dsl: DSLContext
 ) {
 
-    open fun getUsers(): List<UserCreateResponse> {
+    open fun getUsers(): List<UserResponse> {
 
         return dsl.select(
             USERS.USERCODE.`as`("userId"),
@@ -23,10 +23,10 @@ open class UserRepository(
             USERS.ROLE
         ).from(
             USERS
-        ).fetchInto(UserCreateResponse::class.java)
+        ).fetchInto(UserResponse::class.java)
     }
 
-    open fun getUserByName(name: String): List<UserCreateResponse> {
+    open fun getUserByName(name: String): List<UserResponse> {
 
         return dsl.select(
             USERS.USERCODE.`as`("userId"),
@@ -37,7 +37,21 @@ open class UserRepository(
             USERS
         ).where(
             USERS.NAME.eq(name)
-        ).fetchInto(UserCreateResponse::class.java)
+        ).fetchInto(UserResponse::class.java)
+    }
+
+    open fun getUserById(idUser: Int): List<UserResponse> {
+
+        return dsl.select(
+            USERS.USERCODE.`as`("userId"),
+            USERS.NAME,
+            USERS.EMAIL,
+            USERS.ROLE
+        ).from(
+            USERS
+        ).where(
+            USERS.USERCODE.eq(idUser)
+        ).fetchInto(UserResponse::class.java)
     }
 
     open fun createUser(
@@ -67,6 +81,17 @@ open class UserRepository(
             DSL.select(USERS.USERCODE)
                 .from(USERS)
                 .where(USERS.EMAIL.equalIgnoreCase(payload))
+        )
+    }
+
+    open fun isExistUserById(
+        idUser: Int
+    ): Boolean {
+
+        return dsl.fetchExists(
+            DSL.select(USERS.USERCODE)
+                .from(USERS)
+                .where(USERS.USERCODE.eq(idUser))
         )
     }
 
@@ -100,6 +125,22 @@ open class UserRepository(
             .fetchOne()
             ?.get(USERS.USERCODE)
             ?.or(0)
+    }
+
+    open fun updateUserRoleByUserId(
+        idUser: Int,
+        role: UserRole
+    ): Int {
+
+        return dsl
+            .update(USERS)
+            .set(USERS.ROLE, role)
+            .where(
+                USERS.USERCODE.eq(idUser)
+            )
+            .returning(USERS.USERCODE)
+            .fetchOne()
+            .get(USERS.USERCODE)
     }
 }
 
