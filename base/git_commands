@@ -1,0 +1,6 @@
+git status
+git add . // add all
+git add [file path] // add file
+git commit -m "comment"
+git push // add to repository
+git pull // update from repository
