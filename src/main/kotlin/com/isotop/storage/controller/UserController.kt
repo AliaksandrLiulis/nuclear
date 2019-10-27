@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @Validated
 open class UserController(
     private val userService: UserService
