@@ -16,7 +16,7 @@ open class UserRepository(
     open fun getUsers(): List<UserResponse> {
 
         return dsl.select(
-            USERS.USERCODE.`as`("userId"),
+            USERS.USER_CODE.`as`("userId"),
             USERS.NAME,
             USERS.EMAIL,
             USERS.ROLE
@@ -29,7 +29,7 @@ open class UserRepository(
     open fun getUserByName(name: String): List<UserResponse> {
 
         return dsl.select(
-            USERS.USERCODE.`as`("userId"),
+            USERS.USER_CODE.`as`("userId"),
             USERS.NAME,
             USERS.EMAIL,
             USERS.ROLE
@@ -44,14 +44,14 @@ open class UserRepository(
     open fun getUserById(idUser: Int): List<UserResponse> {
 
         return dsl.select(
-            USERS.USERCODE.`as`("userId"),
+            USERS.USER_CODE.`as`("userId"),
             USERS.NAME,
             USERS.EMAIL,
             USERS.ROLE
         ).from(
             USERS
         ).where(
-            USERS.USERCODE.eq(idUser)
+            USERS.USER_CODE.eq(idUser)
         ).orderBy(USERS.NAME)
             .fetchInto(UserResponse::class.java)
     }
@@ -61,18 +61,16 @@ open class UserRepository(
     ): Int {
 
         val insertValues = mapOf<Any, Any?>(
-            USERS.RIGHTCODE to 0,
             USERS.NAME to payload.userName,
             USERS.PASSWORD to payload.userPassword,
-            USERS.AUTOSORT to 0,
             USERS.EMAIL to payload.userEmail
         )
         return dsl
             .insertInto(USERS)
             .set(insertValues)
-            .returning(USERS.USERCODE)
+            .returning(USERS.USER_CODE)
             .fetchOne()
-            .getValue(USERS.USERCODE)
+            .getValue(USERS.USER_CODE)
     }
 
     open fun isExistUserByEmail(
@@ -80,7 +78,7 @@ open class UserRepository(
     ): Boolean {
 
         return dsl.fetchExists(
-            DSL.select(USERS.USERCODE)
+            DSL.select(USERS.USER_CODE)
                 .from(USERS)
                 .where(USERS.EMAIL.equalIgnoreCase(payload))
         )
@@ -91,9 +89,9 @@ open class UserRepository(
     ): Boolean {
 
         return dsl.fetchExists(
-            DSL.select(USERS.USERCODE)
+            DSL.select(USERS.USER_CODE)
                 .from(USERS)
-                .where(USERS.USERCODE.eq(idUser))
+                .where(USERS.USER_CODE.eq(idUser))
         )
     }
 
@@ -102,7 +100,7 @@ open class UserRepository(
     ): Boolean {
 
         return dsl.fetchExists(
-            DSL.select(USERS.USERCODE)
+            DSL.select(USERS.USER_CODE)
                 .from(USERS)
                 .where(USERS.NAME.equalIgnoreCase(payload))
         )
@@ -117,10 +115,10 @@ open class UserRepository(
             .update(USERS)
             .set(USERS.ROLE, role)
             .where(
-                USERS.USERCODE.eq(idUser)
+                USERS.USER_CODE.eq(idUser)
             )
-            .returning(USERS.USERCODE)
+            .returning(USERS.USER_CODE)
             .fetchOne()
-            .get(USERS.USERCODE)
+            .get(USERS.USER_CODE)
     }
 }
