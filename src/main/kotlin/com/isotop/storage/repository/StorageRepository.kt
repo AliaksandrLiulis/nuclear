@@ -26,6 +26,7 @@ open class StorageRepository(
     open fun getAllFromStorage(): List<StorageResponse> {
 
         return dsl.with(outOrgNameQuery).select(
+            ORGS.ORG_CODE,
             ORGS.ICON_ORG_NAME,
             NUCLIDE_TYPES.NUCLIDE_TYPE,
             MAKE_TYPES.MAKE_TYPE_NAME,
