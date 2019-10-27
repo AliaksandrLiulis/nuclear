@@ -1,7 +1,7 @@
 package com.isotop.storage.service
 
 import com.isotop.storage.config.exceptionHandlers.exception.ResourceNotFoundException
-import com.isotop.storage.config.exceptionHandlers.exception.ValidateException
+import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.UpdateRoleUserByIdRequest
 import com.isotop.storage.dto.request.UserCreateRequest
 import com.isotop.storage.dto.response.ListUserDataResponse
@@ -34,11 +34,11 @@ open class UserService(
         val isExistEmail = userRepository.isExistUserByEmail(payload = payload.userEmail)
 
         if (isExistName) {
-            throw ValidateException(2)
+            throw ValidationException(2)
         }
 
         if (isExistEmail) {
-            throw ValidateException(3)
+            throw ValidationException(3)
         }
 
         payload.userPassword = encoder.encode(payload.userPassword)
@@ -59,7 +59,7 @@ open class UserService(
         val adminUser = userRepository.getUserByName(authentication.name)[0]
         if (userRepository.isExistUserById(payload.userId)) {
             if (adminUser.userId == payload.userId) {
-                throw ValidateException(4)
+                throw ValidationException(4)
             }
             val userId = userRepository.updateUserRoleByUserId(payload.userId, payload.role)
             return userRepository.getUserById(userId)[0]

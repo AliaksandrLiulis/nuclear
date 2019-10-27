@@ -1,6 +1,6 @@
 package com.isotop.storage.config.exceptionHandlers.exception
 
-class ValidateException : NuclearRuntimeException {
+class ValidationException : NuclearRuntimeException {
     constructor() : super()
     constructor(errorCode: Int) : super(errorCode)
     constructor(errorMessage: String) : super(errorMessage)
