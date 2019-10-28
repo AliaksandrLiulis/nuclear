@@ -15,6 +15,7 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             7 -> "Icon organization name not valid or exist"
             8 -> "Organization not exist"
             9 -> "Organization params can not be empty or null"
+            10 -> "Type by Id not exist"
             else -> ""
         }
     }
