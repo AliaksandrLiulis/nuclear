@@ -1,13 +1,11 @@
 package com.isotop.storage.controller
 
+import com.isotop.storage.dto.request.NuclideRequest
 import com.isotop.storage.dto.response.ListNuclideTypeDataResponse
 import com.isotop.storage.dto.response.NuclideTypeResponse
 import com.isotop.storage.service.NuclideService
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/nuclides")
@@ -28,5 +26,32 @@ open class NuclideController(
         typeId: Int
     ): NuclideTypeResponse {
         return nuclideService.getNuclideTypeById(typeId)
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @PostMapping
+    open fun addNuclide(
+        @RequestBody
+        payload: NuclideRequest
+    ): NuclideTypeResponse {
+        return nuclideService.addNuclide(payload)
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @PutMapping
+    open fun updateNuclide(
+        @RequestBody
+        payload: NuclideRequest
+    ): NuclideTypeResponse {
+        return nuclideService.updateNuclide(payload)
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @DeleteMapping("/{id}")
+    open fun deleteNuclide(
+        @PathVariable(value = "id")
+        id: Int
+    ) {
+        return nuclideService.removeNuclide(id)
     }
 }

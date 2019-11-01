@@ -27,7 +27,7 @@ open class OrganizationService(
     }
 
     open fun removeOrganization(id: Int) {
-        if (!organizationRepository.isExistOrganizationByOrgCode(id)){
+        if (!organizationRepository.isExistOrganizationByOrgCode(id)) {
             throw ValidationException(8)
         }
         return organizationRepository.removeOrganization(id)

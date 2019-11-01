@@ -16,6 +16,10 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             8 -> "Organization not exist"
             9 -> "Organization params can not be empty or null"
             10 -> "Type by Id not exist"
+            11 -> "Nuclide type not valid or exist"
+            12 -> "Nuclide type name not valid or exist"
+            13 -> "Nuclide type not exist"
+            14 -> "Nuclide params can not be empty or null"
             else -> ""
         }
     }
