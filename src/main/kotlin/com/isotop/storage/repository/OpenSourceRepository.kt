@@ -8,7 +8,7 @@ import org.jooq.impl.DSL
 import org.springframework.stereotype.Repository
 
 @Repository
-open class OpenSourceTypeRepository(
+open class OpenSourceRepository(
     private val dsl: DSLContext
 ) {
 

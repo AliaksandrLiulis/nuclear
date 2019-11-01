@@ -56,6 +56,5 @@ open class OrganizationService(
         ) {
             throw ValidationException(9)
         }
-
     }
 }

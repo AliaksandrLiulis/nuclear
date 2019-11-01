@@ -22,5 +22,3 @@ open class StorageController(
         return storageService.getAllStorage()
     }
 }
-
-

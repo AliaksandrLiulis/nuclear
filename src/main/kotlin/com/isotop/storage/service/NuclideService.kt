@@ -7,7 +7,7 @@ import com.isotop.storage.repository.NuclideRepository
 import org.springframework.stereotype.Service
 
 @Service
-open class NuclideTypeService(
+open class NuclideService(
     private val nuclideTypeRepository: NuclideRepository
 ) {
     open fun getNuclideTypes(): ListNuclideTypeDataResponse {

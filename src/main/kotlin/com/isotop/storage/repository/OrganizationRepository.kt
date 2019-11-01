@@ -23,7 +23,7 @@ open class OrganizationRepository(
         )
             .from(
                 ORGS
-            )
+            ).orderBy(ORGS.ICON_ORG_NAME)
             .fetchInto(OrganizationResponse::class.java)
     }
 
