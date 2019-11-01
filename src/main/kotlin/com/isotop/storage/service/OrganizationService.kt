@@ -26,6 +26,13 @@ open class OrganizationService(
         return organizationRepository.updateOrganization(organizationRequest)
     }
 
+    open fun removeOrganization(id: Int) {
+        if (!organizationRepository.isExistOrganizationByOrgCode(id)){
+            throw ValidationException(8)
+        }
+        return organizationRepository.removeOrganization(id)
+    }
+
     private fun validateAddOrganizationRequest(organizationRequest: OrganizationRequest) {
         if (organizationRequest.orgName.isNullOrBlank()
             || organizationRepository.isExistOrganizationByName(organizationRequest.orgName)

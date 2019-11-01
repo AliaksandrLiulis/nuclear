@@ -91,6 +91,15 @@ open class OrganizationRepository(
 
     }
 
+    open fun removeOrganization(id: Int) {
+
+        dsl.delete(
+            ORGS
+        ).where(
+        ORGS.ORG_CODE.eq(id)
+        ).execute()
+    }
+
     open fun isExistOrganizationByName(
         payload: String
     ): Boolean {

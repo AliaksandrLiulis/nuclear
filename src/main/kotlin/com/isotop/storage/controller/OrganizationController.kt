@@ -1,7 +1,6 @@
 package com.isotop.storage.controller
 
 import com.isotop.storage.dto.request.OrganizationRequest
-import com.isotop.storage.dto.response.CodeResponse
 import com.isotop.storage.dto.response.ListOrganizationDataResponse
 import com.isotop.storage.dto.response.OrganizationResponse
 import com.isotop.storage.service.OrganizationService
@@ -36,5 +35,14 @@ open class OrganizationController(
         payload: OrganizationRequest
     ): OrganizationResponse {
         return organizationService.updateOrganization(payload)
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @DeleteMapping("/{id}")
+    open fun deleteOrganizations(
+        @PathVariable(value = "id")
+        id: Int
+    ) {
+        return organizationService.removeOrganization(id)
     }
 }
