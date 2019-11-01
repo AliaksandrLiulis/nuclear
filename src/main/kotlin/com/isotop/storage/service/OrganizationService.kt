@@ -2,8 +2,8 @@ package com.isotop.storage.service
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.OrganizationRequest
-import com.isotop.storage.dto.response.CodeResponse
 import com.isotop.storage.dto.response.ListOrganizationDataResponse
+import com.isotop.storage.dto.response.OrganizationResponse
 import com.isotop.storage.repository.OrganizationRepository
 import org.springframework.stereotype.Service
 
@@ -16,16 +16,14 @@ open class OrganizationService(
         return ListOrganizationDataResponse(organizationRepository.getOrganizations())
     }
 
-    open fun addOrganization(organizationRequest: OrganizationRequest): CodeResponse {
+    open fun addOrganization(organizationRequest: OrganizationRequest): OrganizationResponse {
         validateAddOrganizationRequest(organizationRequest)
-        return CodeResponse(
-            organizationRepository.addOrganization(organizationRequest)
-        )
+        return organizationRepository.addOrganization(organizationRequest)
     }
 
-    open fun updateOrganization(organizationRequest: OrganizationRequest): CodeResponse {
+    open fun updateOrganization(organizationRequest: OrganizationRequest): OrganizationResponse {
         validateUpdateOrganizationRequest(organizationRequest)
-        return CodeResponse(organizationRepository.updateOrganization(organizationRequest))
+        return organizationRepository.updateOrganization(organizationRequest)
     }
 
     private fun validateAddOrganizationRequest(organizationRequest: OrganizationRequest) {

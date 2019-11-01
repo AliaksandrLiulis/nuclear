@@ -27,9 +27,24 @@ open class OrganizationRepository(
             .fetchInto(OrganizationResponse::class.java)
     }
 
-    open fun addOrganization(organizationRequest: OrganizationRequest): Int? {
+    open fun getOrganizationById(typeId: Int): List<OrganizationResponse> {
+        return dsl.select(
+            ORGS.ORG_CODE,
+            ORGS.ORG_NAME,
+            ORGS.SHORT_ORG_NAME,
+            ORGS.ICON_ORG_NAME,
+            ORGS.ORG_ADDRESS
+        ).from(
+            ORGS
+        )
+            .where(
+                ORGS.ORG_CODE.eq(typeId)
+            ).fetchInto(OrganizationResponse::class.java)
+    }
 
-        return dsl.insertInto(ORGS)
+    open fun addOrganization(organizationRequest: OrganizationRequest): OrganizationResponse {
+
+        val orgId = dsl.insertInto(ORGS)
             .columns(
                 ORGS.ORG_NAME,
                 ORGS.SHORT_ORG_NAME,
@@ -49,9 +64,11 @@ open class OrganizationRepository(
             .returning(ORGS.ORG_CODE)
             ?.fetchOne()
             ?.getValue(ORGS.ORG_CODE)
+
+        return getOrganizationById(orgId!!)[0]
     }
 
-    open fun updateOrganization(organizationRequest: OrganizationRequest): Int? {
+    open fun updateOrganization(organizationRequest: OrganizationRequest): OrganizationResponse {
 
         val updateValues = mapOf<Any, Any?>(
             ORGS.ORG_NAME to organizationRequest.orgName,
@@ -60,7 +77,7 @@ open class OrganizationRepository(
             ORGS.ORG_ADDRESS to organizationRequest.orgAddress
         )
 
-        return dsl
+        val orgId = dsl
             .update(ORGS)
             .set(updateValues)
             .where(
@@ -69,6 +86,9 @@ open class OrganizationRepository(
             .returning(ORGS.ORG_CODE)
             ?.fetchOne()
             ?.getValue(ORGS.ORG_CODE)
+
+        return getOrganizationById(orgId!!)[0]
+
     }
 
     open fun isExistOrganizationByName(
