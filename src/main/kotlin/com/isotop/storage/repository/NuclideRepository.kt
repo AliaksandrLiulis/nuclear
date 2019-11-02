@@ -12,17 +12,19 @@ open class NuclideRepository(
     private val dsl: DSLContext
 ) {
 
-    open fun getNuclideTypes(): List<NuclideTypeResponse> {
+    open fun getNuclides(): List<NuclideTypeResponse> {
         return dsl.select(
             NUCLIDE_TYPES.NUCLIDE_TYPE_CODE,
             NUCLIDE_TYPES.NUCLIDE_TYPE,
             NUCLIDE_TYPES.NUCLIDE_TYPE_NAME
         ).from(
             NUCLIDE_TYPES
+        ).orderBy(
+            NUCLIDE_TYPES.NUCLIDE_TYPE_NAME
         ).fetchInto(NuclideTypeResponse::class.java)
     }
 
-    open fun getNuclideTypeById(typeId: Int): List<NuclideTypeResponse> {
+    open fun getNuclideById(typeId: Int): List<NuclideTypeResponse> {
         return dsl.select(
             NUCLIDE_TYPES.NUCLIDE_TYPE_CODE,
             NUCLIDE_TYPES.NUCLIDE_TYPE,
@@ -52,7 +54,7 @@ open class NuclideRepository(
             ?.fetchOne()
             ?.getValue(NUCLIDE_TYPES.NUCLIDE_TYPE_CODE)
 
-        return getNuclideTypeById(nuclideId!!)[0]
+        return getNuclideById(nuclideId!!)[0]
     }
 
     open fun updateNuclide(nuclideRequest: NuclideRequest): NuclideTypeResponse {
@@ -72,7 +74,7 @@ open class NuclideRepository(
             ?.fetchOne()
             ?.getValue(NUCLIDE_TYPES.NUCLIDE_TYPE_CODE)
 
-        return getNuclideTypeById(nuclideId!!)[0]
+        return getNuclideById(nuclideId!!)[0]
 
     }
 
@@ -108,6 +110,4 @@ open class NuclideRepository(
                 .where(NUCLIDE_TYPES.NUCLIDE_TYPE_NAME.equalIgnoreCase(typeName))
         )
     }
-
-
 }

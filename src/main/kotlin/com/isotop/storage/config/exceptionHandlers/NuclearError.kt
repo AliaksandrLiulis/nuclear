@@ -20,6 +20,10 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             12 -> "Nuclide type name not valid or exist"
             13 -> "Nuclide type not exist"
             14 -> "Nuclide params can not be empty or null"
+            15 -> "Make type not valid or exist"
+            16 -> "Make type not exist"
+            17 -> "Make params can not be empty or null"
+            18 -> "Make type not exist"
             else -> ""
         }
     }

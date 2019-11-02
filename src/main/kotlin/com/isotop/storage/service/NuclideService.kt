@@ -12,14 +12,14 @@ open class NuclideService(
     private val nuclideRepository: NuclideRepository
 ) {
     open fun getNuclideTypes(): ListNuclideTypeDataResponse {
-        return ListNuclideTypeDataResponse(nuclideRepository.getNuclideTypes())
+        return ListNuclideTypeDataResponse(nuclideRepository.getNuclides())
     }
 
     open fun getNuclideTypeById(nuclideTypeId: Int): NuclideTypeResponse {
         if (!nuclideRepository.isExistNuclideTypeById(nuclideTypeId)) {
             throw ValidationException(10)
         }
-        return nuclideRepository.getNuclideTypeById(nuclideTypeId)[0]
+        return nuclideRepository.getNuclideById(nuclideTypeId)[0]
     }
 
     open fun addNuclide(nuclideRequest: NuclideRequest): NuclideTypeResponse {
