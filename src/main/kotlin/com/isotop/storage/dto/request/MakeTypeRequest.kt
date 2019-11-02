@@ -1,6 +1,6 @@
 package com.isotop.storage.dto.request
 
-data class MakeRequest(
-    val nmakeTypeCode: Int,
+data class MakeTypeRequest(
+    val makeTypeCode: Int,
     val makeTypeName: String?
 )

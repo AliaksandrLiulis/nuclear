@@ -1,6 +1,6 @@
 package com.isotop.storage.controller
 
-import com.isotop.storage.dto.request.MakeRequest
+import com.isotop.storage.dto.request.MakeTypeRequest
 import com.isotop.storage.dto.response.ListMakeTypeDataResponse
 import com.isotop.storage.dto.response.MakeTypeResponse
 import com.isotop.storage.service.MakeService
@@ -32,7 +32,7 @@ open class MakeController(
     @PostMapping
     open fun addMakeType(
         @RequestBody
-        payload: MakeRequest
+        payload: MakeTypeRequest
     ): MakeTypeResponse {
         return makeService.addMakeType(payload)
     }
@@ -41,7 +41,7 @@ open class MakeController(
     @PutMapping
     open fun updateMakeType(
         @RequestBody
-        payload: MakeRequest
+        payload: MakeTypeRequest
     ): MakeTypeResponse {
         return makeService.updateMakeType(payload)
     }

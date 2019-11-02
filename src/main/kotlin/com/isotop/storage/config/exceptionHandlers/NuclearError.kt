@@ -24,6 +24,12 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             16 -> "Make type not exist"
             17 -> "Make params can not be empty or null"
             18 -> "Make type not exist"
+            19 -> "Doc type not exist"
+            20 -> "doc type not valid or exist"
+            21 -> "doc type not exist"
+            22 -> "Doc type not valid or exist"
+            23 -> "Doc type not exist"
+            24 -> "Doc params can not be empty or null"
             else -> ""
         }
     }

@@ -1,6 +1,6 @@
 package com.isotop.storage.repository
 
-import com.isotop.storage.dto.request.MakeRequest
+import com.isotop.storage.dto.request.MakeTypeRequest
 import com.isotop.storage.dto.response.MakeTypeResponse
 import com.isotop.storage.jooq.Tables.MAKE_TYPES
 import org.jooq.DSLContext
@@ -8,7 +8,7 @@ import org.jooq.impl.DSL
 import org.springframework.stereotype.Repository
 
 @Repository
-open class MakeRepository(
+open class MakeTypesRepository(
     private val dsl: DSLContext
 ) {
 
@@ -36,16 +36,16 @@ open class MakeRepository(
             ).fetchInto(MakeTypeResponse::class.java)
     }
 
-    open fun addMakeType(makeRequest: MakeRequest): MakeTypeResponse {
+    open fun addMakeType(makeTypeRequest: MakeTypeRequest): MakeTypeResponse {
 
         val makeId = dsl.insertInto(MAKE_TYPES)
             .columns(
                 MAKE_TYPES.MAKE_TYPE_NAME
             )
             .values(
-                makeRequest.makeTypeName
+                makeTypeRequest.makeTypeName
             ).onDuplicateKeyUpdate()
-            .set(MAKE_TYPES.MAKE_TYPE_NAME, makeRequest.makeTypeName)
+            .set(MAKE_TYPES.MAKE_TYPE_NAME, makeTypeRequest.makeTypeName)
             .returning(MAKE_TYPES.MAKE_TYPE_CODE)
             ?.fetchOne()
             ?.getValue(MAKE_TYPES.MAKE_TYPE_CODE)
@@ -53,17 +53,17 @@ open class MakeRepository(
         return getMakeTypeById(makeId!!)[0]
     }
 
-    open fun updateMakeType(makeRequest: MakeRequest): MakeTypeResponse {
+    open fun updateMakeType(makeTypeRequest: MakeTypeRequest): MakeTypeResponse {
 
         val updateValues = mapOf<Any, Any?>(
-            MAKE_TYPES.MAKE_TYPE_NAME to makeRequest.makeTypeName
+            MAKE_TYPES.MAKE_TYPE_NAME to makeTypeRequest.makeTypeName
         )
 
         val makeId = dsl
             .update(MAKE_TYPES)
             .set(updateValues)
             .where(
-                MAKE_TYPES.MAKE_TYPE_CODE.eq(makeRequest.nmakeTypeCode)
+                MAKE_TYPES.MAKE_TYPE_CODE.eq(makeTypeRequest.makeTypeCode)
             )
             .returning(MAKE_TYPES.MAKE_TYPE_CODE)
             ?.fetchOne()
@@ -92,10 +92,9 @@ open class MakeRepository(
 
     open fun isExistMakeTypeByName(type: String): Boolean {
         return dsl.fetchExists(
-            DSL.select(MAKE_TYPES.MAKE_TYPE_NAME)
+            DSL.select(MAKE_TYPES.MAKE_TYPE_CODE)
                 .from(MAKE_TYPES)
                 .where(MAKE_TYPES.MAKE_TYPE_NAME.equalIgnoreCase(type))
         )
     }
-
 }
