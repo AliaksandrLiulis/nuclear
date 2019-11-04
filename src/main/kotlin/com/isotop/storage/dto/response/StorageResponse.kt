@@ -11,6 +11,7 @@ data class ListStorageDataResponse(
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class StorageResponse(
+    val storageCode: Int,
     val orgCode: Int,
     val iconOrgName: String,
     val nuclideType: String?,
