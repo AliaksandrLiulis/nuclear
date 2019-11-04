@@ -6,6 +6,7 @@ import com.isotop.storage.dto.response.ListOrganizationDataResponse
 import com.isotop.storage.dto.response.OrganizationResponse
 import com.isotop.storage.repository.OrganizationRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 open class OrganizationService(
@@ -16,16 +17,19 @@ open class OrganizationService(
         return ListOrganizationDataResponse(organizationRepository.getOrganizations())
     }
 
+    @Transactional
     open fun addOrganization(organizationRequest: OrganizationRequest): OrganizationResponse {
         validateAddOrganizationRequest(organizationRequest)
         return organizationRepository.addOrganization(organizationRequest)
     }
 
+    @Transactional
     open fun updateOrganization(organizationRequest: OrganizationRequest): OrganizationResponse {
         validateUpdateOrganizationRequest(organizationRequest)
         return organizationRepository.updateOrganization(organizationRequest)
     }
 
+    @Transactional
     open fun removeOrganization(id: Int) {
         if (!organizationRepository.isExistOrganizationByOrgCode(id)) {
             throw ValidationException(8)

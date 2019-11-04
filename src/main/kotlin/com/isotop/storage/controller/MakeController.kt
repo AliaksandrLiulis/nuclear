@@ -3,20 +3,20 @@ package com.isotop.storage.controller
 import com.isotop.storage.dto.request.MakeTypeRequest
 import com.isotop.storage.dto.response.ListMakeTypeDataResponse
 import com.isotop.storage.dto.response.MakeTypeResponse
-import com.isotop.storage.service.MakeService
+import com.isotop.storage.service.types.MakeTypeService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/makes")
 open class MakeController(
-    private val makeService: MakeService
+    private val makeTypeService: MakeTypeService
 ) {
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
     open fun getAllMakeTypes(): ListMakeTypeDataResponse {
-        return makeService.getMakeTypes()
+        return makeTypeService.getMakeTypes()
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -25,7 +25,7 @@ open class MakeController(
         @PathVariable(value = "typeId")
         typeId: Int
     ): MakeTypeResponse {
-        return makeService.getMakeTypeById(typeId)
+        return makeTypeService.getMakeTypeById(typeId)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -34,7 +34,7 @@ open class MakeController(
         @RequestBody
         payload: MakeTypeRequest
     ): MakeTypeResponse {
-        return makeService.addMakeType(payload)
+        return makeTypeService.addMakeType(payload)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -43,7 +43,7 @@ open class MakeController(
         @RequestBody
         payload: MakeTypeRequest
     ): MakeTypeResponse {
-        return makeService.updateMakeType(payload)
+        return makeTypeService.updateMakeType(payload)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -52,6 +52,6 @@ open class MakeController(
         @PathVariable(value = "id")
         id: Int
     ) {
-        return makeService.removeMakeType(id)
+        return makeTypeService.removeMakeType(id)
     }
 }

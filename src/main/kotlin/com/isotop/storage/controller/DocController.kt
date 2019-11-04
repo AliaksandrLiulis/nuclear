@@ -3,20 +3,20 @@ package com.isotop.storage.controller
 import com.isotop.storage.dto.request.DocTypeRequest
 import com.isotop.storage.dto.response.DocTypeResponse
 import com.isotop.storage.dto.response.ListDocTypeDataResponse
-import com.isotop.storage.service.DocService
+import com.isotop.storage.service.types.DocTypeService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/docs")
 open class DocController(
-    private val docService: DocService
+    private val docTypeService: DocTypeService
 ) {
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
     open fun getAllDocTypes(): ListDocTypeDataResponse {
-        return docService.getDocTypes()
+        return docTypeService.getDocTypes()
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -25,7 +25,7 @@ open class DocController(
         @PathVariable(value = "typeId")
         typeId: Int
     ): DocTypeResponse {
-        return docService.getDocTypeById(typeId)
+        return docTypeService.getDocTypeById(typeId)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -34,7 +34,7 @@ open class DocController(
         @RequestBody
         payload: DocTypeRequest
     ): DocTypeResponse {
-        return docService.addDocType(payload)
+        return docTypeService.addDocType(payload)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -43,7 +43,7 @@ open class DocController(
         @RequestBody
         payload: DocTypeRequest
     ): DocTypeResponse {
-        return docService.updateDocType(payload)
+        return docTypeService.updateDocType(payload)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -52,6 +52,6 @@ open class DocController(
         @PathVariable(value = "id")
         id: Int
     ) {
-        return docService.removeDocType(id)
+        return docTypeService.removeDocType(id)
     }
 }

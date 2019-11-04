@@ -1,4 +1,4 @@
-package com.isotop.storage.repository
+package com.isotop.storage.repository.types
 
 import com.isotop.storage.dto.response.MoutionTypeResponse
 import com.isotop.storage.jooq.Tables.MOUTION_TYPES

@@ -1,14 +1,15 @@
-package com.isotop.storage.service
+package com.isotop.storage.service.types
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.MakeTypeRequest
 import com.isotop.storage.dto.response.ListMakeTypeDataResponse
 import com.isotop.storage.dto.response.MakeTypeResponse
-import com.isotop.storage.repository.MakeTypesRepository
+import com.isotop.storage.repository.types.MakeTypesRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
-open class MakeService(
+open class MakeTypeService(
     private val makeTypesRepository: MakeTypesRepository
 ) {
     open fun getMakeTypes(): ListMakeTypeDataResponse {
@@ -22,16 +23,19 @@ open class MakeService(
         return makeTypesRepository.getMakeTypeById(makeId)[0]
     }
 
+    @Transactional
     open fun addMakeType(makeTypeRequest: MakeTypeRequest): MakeTypeResponse {
         validatAddMakeTypeRequest(makeTypeRequest)
         return makeTypesRepository.addMakeType(makeTypeRequest)
     }
 
+    @Transactional
     open fun updateMakeType(makeTypeRequest: MakeTypeRequest): MakeTypeResponse {
         validateUpdateMakeTypeRequest(makeTypeRequest)
         return makeTypesRepository.updateMakeType(makeTypeRequest)
     }
 
+    @Transactional
     open fun removeMakeType(id: Int) {
         if (!makeTypesRepository.isExistMakeTypeById(id)) {
             throw ValidationException(18)

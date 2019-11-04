@@ -1,54 +1,58 @@
-package com.isotop.storage.service
+package com.isotop.storage.service.types
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.DocTypeRequest
 import com.isotop.storage.dto.response.DocTypeResponse
 import com.isotop.storage.dto.response.ListDocTypeDataResponse
-import com.isotop.storage.repository.DocRepository
+import com.isotop.storage.repository.types.DocTypeRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
-open class DocService(
-    private val docRepository: DocRepository
+open class DocTypeService(
+    private val docTypeRepository: DocTypeRepository
 ) {
     open fun getDocTypes(): ListDocTypeDataResponse {
-        return ListDocTypeDataResponse(docRepository.getDocTypes())
+        return ListDocTypeDataResponse(docTypeRepository.getDocTypes())
     }
 
     open fun getDocTypeById(makeId: Int): DocTypeResponse {
-        if (!docRepository.isExistDocTypeById(makeId)) {
+        if (!docTypeRepository.isExistDocTypeById(makeId)) {
             throw ValidationException(10)
         }
-        return docRepository.getDocTypeById(makeId)[0]
+        return docTypeRepository.getDocTypeById(makeId)[0]
     }
 
+    @Transactional
     open fun addDocType(docTypeRequest: DocTypeRequest): DocTypeResponse {
         validatAddDocTypeRequest(docTypeRequest)
-        return docRepository.addDocType(docTypeRequest)
+        return docTypeRepository.addDocType(docTypeRequest)
     }
 
+    @Transactional
     open fun updateDocType(docTypeRequest: DocTypeRequest): DocTypeResponse {
         validateUpdateDocTypeRequest(docTypeRequest)
-        return docRepository.updateDocType(docTypeRequest)
+        return docTypeRepository.updateDocType(docTypeRequest)
     }
 
+    @Transactional
     open fun removeDocType(id: Int) {
-        if (!docRepository.isExistDocTypeById(id)) {
+        if (!docTypeRepository.isExistDocTypeById(id)) {
             throw ValidationException(21)
         }
-        return docRepository.removeDocType(id)
+        return docTypeRepository.removeDocType(id)
     }
 
     private fun validatAddDocTypeRequest(docTypeRequest: DocTypeRequest) {
         if (docTypeRequest.docTypeName.isNullOrBlank()
-            || docRepository.isExistDocTypeByName(docTypeRequest.docTypeName)
+            || docTypeRepository.isExistDocTypeByName(docTypeRequest.docTypeName)
         ) {
             throw ValidationException(22)
         }
     }
 
     private fun validateUpdateDocTypeRequest(docTypeRequest: DocTypeRequest) {
-        if (!docRepository.isExistDocTypeById(docTypeRequest.docTypeCode)) {
+        if (!docTypeRepository.isExistDocTypeById(docTypeRequest.docTypeCode)) {
             throw ValidationException(23)
         }
         if (docTypeRequest.docTypeName.isNullOrBlank()

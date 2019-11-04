@@ -1,4 +1,4 @@
-package com.isotop.storage.repository
+package com.isotop.storage.repository.types
 
 import com.isotop.storage.dto.request.NuclideRequest
 import com.isotop.storage.dto.response.NuclideTypeResponse
@@ -8,7 +8,7 @@ import org.jooq.impl.DSL
 import org.springframework.stereotype.Repository
 
 @Repository
-open class NuclideRepository(
+open class NuclideTypesRepository(
     private val dsl: DSLContext
 ) {
 

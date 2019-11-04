@@ -3,20 +3,20 @@ package com.isotop.storage.controller
 import com.isotop.storage.dto.request.NuclideRequest
 import com.isotop.storage.dto.response.ListNuclideTypeDataResponse
 import com.isotop.storage.dto.response.NuclideTypeResponse
-import com.isotop.storage.service.NuclideService
+import com.isotop.storage.service.types.NuclideTypeService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/nuclides")
 open class NuclideController(
-    private val nuclideService: NuclideService
+    private val nuclideTypeService: NuclideTypeService
 ) {
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
     open fun getAllNuclideTypes(): ListNuclideTypeDataResponse {
-        return nuclideService.getNuclideTypes()
+        return nuclideTypeService.getNuclideTypes()
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -25,7 +25,7 @@ open class NuclideController(
         @PathVariable(value = "typeId")
         typeId: Int
     ): NuclideTypeResponse {
-        return nuclideService.getNuclideTypeById(typeId)
+        return nuclideTypeService.getNuclideTypeById(typeId)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -34,7 +34,7 @@ open class NuclideController(
         @RequestBody
         payload: NuclideRequest
     ): NuclideTypeResponse {
-        return nuclideService.addNuclide(payload)
+        return nuclideTypeService.addNuclide(payload)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -43,7 +43,7 @@ open class NuclideController(
         @RequestBody
         payload: NuclideRequest
     ): NuclideTypeResponse {
-        return nuclideService.updateNuclide(payload)
+        return nuclideTypeService.updateNuclide(payload)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -52,6 +52,6 @@ open class NuclideController(
         @PathVariable(value = "id")
         id: Int
     ) {
-        return nuclideService.removeNuclide(id)
+        return nuclideTypeService.removeNuclide(id)
     }
 }

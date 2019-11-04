@@ -1,4 +1,4 @@
-package com.isotop.storage.repository
+package com.isotop.storage.repository.types
 
 import com.isotop.storage.dto.response.SourceTypeResponse
 import com.isotop.storage.jooq.Tables.SOURCE_TYPES
@@ -7,7 +7,7 @@ import org.jooq.impl.DSL
 import org.springframework.stereotype.Repository
 
 @Repository
-open class SourceRepository(
+open class SourceTypeRepository(
     private val dsl: DSLContext
 ) {
 
