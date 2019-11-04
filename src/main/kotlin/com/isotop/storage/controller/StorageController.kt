@@ -2,7 +2,7 @@ package com.isotop.storage.controller
 
 import com.isotop.storage.dto.request.UpdateStorageRequest
 import com.isotop.storage.dto.response.ListStorageDataResponse
-import com.isotop.storage.dto.response.StorageMoutionResponse
+import com.isotop.storage.dto.response.StorageResponse
 import com.isotop.storage.service.StorageService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
@@ -27,7 +27,7 @@ open class StorageController(
     open fun updateStorage(
         @RequestBody
         payload: UpdateStorageRequest
-    ): StorageMoutionResponse {
+    ): StorageResponse {
         return storageService.updateStorage(payload)
     }
 }

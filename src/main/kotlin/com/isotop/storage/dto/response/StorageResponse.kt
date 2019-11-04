@@ -26,5 +26,9 @@ data class StorageResponse(
     val ownerOrgCode: Int?,
     val nuclideTypeCode: Int?,
     val makeTypeCode: Int?,
-    val sourceTypeCode: Int?
+    val sourceTypeCode: Int?,
+    val docDate: LocalDate?,
+    val docNumber: String?,
+    val docTypeCode: Int?,
+    val actCode: Int?
 )

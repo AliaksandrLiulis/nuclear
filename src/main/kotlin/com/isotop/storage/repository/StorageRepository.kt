@@ -44,7 +44,11 @@ open class StorageRepository(
             STORAGES.OWNER_ORG_CODE.`as`("owner_org_code"),
             STORAGES.NUCLIDE_TYPE_CODE.`as`("nuclide_type_code"),
             STORAGES.MAKE_TYPE_CODE.`as`("make_type_code"),
-            STORAGES.SOURCE_TYPE_CODE.`as`("source_type_code")
+            STORAGES.SOURCE_TYPE_CODE.`as`("source_type_code"),
+            MOUTIONS.DOC_DATE.`as`("doc_date"),
+            MOUTIONS.DOC_NUMBER.`as`("doc_number"),
+            MOUTIONS.ACT_CODE.`as`("act_code"),
+            MOUTIONS.DOC_TYPE_CODE.`as`("doc_type_code")
         ).from(
             STORAGES
         )
@@ -108,7 +112,11 @@ open class StorageRepository(
             STORAGES.OWNER_ORG_CODE.`as`("owner_org_code"),
             STORAGES.NUCLIDE_TYPE_CODE.`as`("nuclide_type_code"),
             STORAGES.MAKE_TYPE_CODE.`as`("make_type_code"),
-            STORAGES.SOURCE_TYPE_CODE.`as`("source_type_code")
+            STORAGES.SOURCE_TYPE_CODE.`as`("source_type_code"),
+            MOUTIONS.DOC_DATE.`as`("doc_date"),
+            MOUTIONS.DOC_NUMBER.`as`("doc_number"),
+            MOUTIONS.ACT_CODE.`as`("act_code"),
+            MOUTIONS.DOC_TYPE_CODE.`as`("doc_type_code")
         ).from(
             STORAGES
         )
