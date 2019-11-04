@@ -123,7 +123,7 @@ open class StorageRepository(
             )
             .where(
                 STORAGES.COME_DATE.isNotNull
-            ).and(STORAGES.SOURCE_TYPE_CODE.eq(idStorage))
+            ).and(STORAGES.STORAGE_CODE.eq(idStorage))
             .orderBy(STORAGES.COME_DATE.desc())
             .fetchInto(StorageResponse::class.java)
     }

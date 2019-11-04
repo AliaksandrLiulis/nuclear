@@ -23,7 +23,8 @@ open class StorageService(
     @Transactional
     open fun updateStorage(payload: UpdateStorageRequest): StorageMoutionResponse {
         if (!moutionRepository.isExistMotionByStorageId(payload.storageCode) ||
-        !storageRepository.isExistStorageNoteById(payload.storageCode)){
+            !storageRepository.isExistStorageNoteById(payload.storageCode)
+        ) {
             throw ValidationException(25)
         }
         return StorageMoutionResponse(
