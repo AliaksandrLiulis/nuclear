@@ -21,5 +21,9 @@ data class StorageResponse(
     val activity: Double?,
     val comeDate: LocalDate?,
     val outIconOrgName: String?,
-    val leaveDate: LocalDate?
+    val leaveDate: LocalDate?,
+    val ownerOrgCode: Int?,
+    val nuclideTypeCode: Int?,
+    val makeTypeCode: Int?,
+    val sourceTypeCode: Int?
 )

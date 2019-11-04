@@ -36,7 +36,11 @@ open class StorageRepository(
             STORAGES.ACTIVITY,
             STORAGES.COME_DATE,
             STORAGES.LEAVE_DATE,
-            outOrgNameQuery.field("icon_org_name").`as`("outIconOrgName")
+            outOrgNameQuery.field("icon_org_name").`as`("outIconOrgName"),
+            STORAGES.OWNER_ORG_CODE.`as`("owner_org_code"),
+            STORAGES.NUCLIDE_TYPE_CODE.`as`("nuclide_type_code"),
+            STORAGES.MAKE_TYPE_CODE.`as`("make_type_code"),
+            STORAGES.SOURCE_TYPE_CODE.`as`("source_type_code")
         ).from(
             STORAGES
         )
