@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import java.time.LocalDate
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class ListActDataResponse(
+data class ListActsDataResponse(
     val data: List<ActResponse>
 )
 

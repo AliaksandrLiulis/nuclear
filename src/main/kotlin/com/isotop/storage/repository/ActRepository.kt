@@ -2,7 +2,6 @@ package com.isotop.storage.repository
 
 import com.isotop.storage.dto.request.ActRequest
 import com.isotop.storage.dto.response.ActResponse
-import com.isotop.storage.jooq.Tables
 import com.isotop.storage.jooq.Tables.ACTS
 import org.jooq.DSLContext
 import org.jooq.impl.DSL
@@ -95,19 +94,11 @@ open class ActRepository(
         ).execute()
     }
 
-    open fun isExistDocTypeById(typeId: Int): Boolean {
+    open fun isExistActById(actId: Int): Boolean {
         return dsl.fetchExists(
-            DSL.select(Tables.DOC_TYPES.DOC_TYPE_CODE)
-                .from(Tables.DOC_TYPES)
-                .where(Tables.DOC_TYPES.DOC_TYPE_CODE.eq(typeId))
-        )
-    }
-
-    open fun isExistDocTypeByName(type: String): Boolean {
-        return dsl.fetchExists(
-            DSL.select(Tables.DOC_TYPES.DOC_TYPE_CODE)
-                .from(Tables.DOC_TYPES)
-                .where(Tables.DOC_TYPES.DOC_TYPE_NAME.equalIgnoreCase(type))
+            DSL.select(ACTS.ACT_CODE)
+                .from(ACTS)
+                .where(ACTS.ACT_CODE.eq(actId))
         )
     }
 }

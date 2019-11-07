@@ -28,7 +28,7 @@ open class SourceService(
                 payload.actCode
             )
             return storageRepository.getStorageNoteByIdStorage(storageNote)[0]
-        }else{
+        } else {
             throw ValidationException(26)
         }
     }
