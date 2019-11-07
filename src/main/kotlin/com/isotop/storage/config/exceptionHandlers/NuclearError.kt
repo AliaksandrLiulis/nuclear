@@ -31,6 +31,7 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             23 -> "Doc type not exist"
             24 -> "Doc params can not be empty or null"
             25 -> "Note to update not exist"
+            26 -> "Note not added"
             else -> ""
         }
     }

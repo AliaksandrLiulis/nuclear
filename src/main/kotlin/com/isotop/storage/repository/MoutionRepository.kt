@@ -33,6 +33,37 @@ open class MoutionRepository(
             ).fetchInto(MoutionDto::class.java)
     }
 
+    open fun addMoution(
+        moutionType: Int,
+        moutionDate: LocalDate,
+        orgCode: Int,
+        storageCode: Int,
+        docDate: LocalDate,
+        docNumber: Int,
+        docTypeCode: Int,
+        actCode: Int
+    ): Int? {
+
+        val insertValues = mapOf<Any, Any?>(
+            MOUTIONS.MOUTION_TYPE to moutionType,
+            MOUTIONS.MOUTION_DATE to moutionDate,
+            MOUTIONS.ORG_CODE to orgCode,
+            MOUTIONS.STORAGE_CODE to storageCode,
+            MOUTIONS.DOC_DATE to docDate,
+            MOUTIONS.DOC_NUMBER to docNumber,
+            MOUTIONS.DOC_TYPE_CODE to docTypeCode,
+            MOUTIONS.ACT_CODE to actCode,
+            MOUTIONS.HIDE_EVENT to 0
+        )
+
+        return dsl
+            .insertInto(MOUTIONS)
+            .set(insertValues)
+            .returning(MOUTIONS.MOUTION_CODE)
+            ?.fetchOne()
+            ?.getValue(MOUTIONS.MOUTION_CODE)
+    }
+
     open fun updateMoution(
         moutionDate: LocalDate,
         orgCode: Int,

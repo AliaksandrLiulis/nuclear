@@ -1,5 +1,6 @@
 package com.isotop.storage.repository
 
+import com.isotop.storage.dto.AddSourceRequest
 import com.isotop.storage.dto.request.UpdateStorageRequest
 import com.isotop.storage.dto.response.StorageResponse
 import com.isotop.storage.jooq.Tables.*
@@ -65,6 +66,28 @@ open class StorageRepository(
                 STORAGES.COME_DATE.isNotNull
             ).orderBy(STORAGES.COME_DATE.desc())
             .fetchInto(StorageResponse::class.java)
+    }
+
+    open fun addStorageNote(addSourceRequest: AddSourceRequest): Int? {
+
+        val insertValues = mapOf<Any, Any?>(
+            STORAGES.PASSPORT_NUMBER to addSourceRequest.passportNumber,
+            STORAGES.SERIAL_NUMBER to addSourceRequest.serialNumber,
+            STORAGES.MAKE_DATE to addSourceRequest.makeDate,
+            STORAGES.COME_DATE to addSourceRequest.comeDate,
+            STORAGES.ACTIVITY to addSourceRequest.activity,
+            STORAGES.SOURCE_TYPE_CODE to addSourceRequest.sourceTypeCode,
+            STORAGES.NUCLIDE_TYPE_CODE to addSourceRequest.nuclideTypeCode,
+            STORAGES.MAKE_TYPE_CODE to addSourceRequest.makeTypeCode,
+            STORAGES.OWNER_ORG_CODE to addSourceRequest.ownerOrgCode
+        )
+
+        return dsl
+            .insertInto(STORAGES)
+            .set(insertValues)
+            .returning(STORAGES.STORAGE_CODE)
+            ?.fetchOne()
+            ?.getValue(STORAGES.STORAGE_CODE)
     }
 
     open fun updateStorageNote(updateStorageRequest: UpdateStorageRequest): StorageResponse {
