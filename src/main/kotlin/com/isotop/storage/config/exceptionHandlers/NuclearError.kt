@@ -31,7 +31,7 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             23 -> "Doc type not exist"
             24 -> "Doc params can not be empty or null"
             25 -> "Note to update not exist"
-            26 -> "Note not added"
+            26 -> "Note for source type not added"
             27 -> "Act by Id not exist"
             28 -> "Act not exist"
             29 -> "Act not valid or exist"
