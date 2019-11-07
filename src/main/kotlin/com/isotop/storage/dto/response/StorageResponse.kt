@@ -14,8 +14,6 @@ data class StorageResponse(
     val storageCode: Int,
     val orgCode: Int,
     val iconOrgName: String,
-    val nuclideType: String?,
-    val makeTypeName: String?,
     val passportNumber: String?,
     val serialNumber: String?,
     val makeDate: LocalDate?,

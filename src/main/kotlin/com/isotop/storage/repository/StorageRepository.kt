@@ -32,8 +32,6 @@ open class StorageRepository(
         return dsl.with(outOrgNameQuery).select(
             ORGS.ORG_CODE,
             ORGS.ICON_ORG_NAME,
-            NUCLIDE_TYPES.NUCLIDE_TYPE,
-            MAKE_TYPES.MAKE_TYPE_NAME,
             STORAGES.PASSPORT_NUMBER,
             STORAGES.SERIAL_NUMBER,
             STORAGES.MAKE_DATE,
@@ -122,8 +120,6 @@ open class StorageRepository(
         return dsl.with(outOrgNameQuery).select(
             ORGS.ORG_CODE,
             ORGS.ICON_ORG_NAME,
-            NUCLIDE_TYPES.NUCLIDE_TYPE,
-            MAKE_TYPES.MAKE_TYPE_NAME,
             STORAGES.PASSPORT_NUMBER,
             STORAGES.SERIAL_NUMBER,
             STORAGES.MAKE_DATE,
