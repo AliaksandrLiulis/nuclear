@@ -2,7 +2,7 @@ package com.isotop.storage.repository
 
 import com.isotop.storage.dto.request.ActRequest
 import com.isotop.storage.dto.response.ActResponse
-import com.isotop.storage.jooq.Tables.ACTS
+import com.isotop.storage.jooq.Tables.*
 import org.jooq.DSLContext
 import org.jooq.impl.DSL
 import org.springframework.stereotype.Repository
@@ -19,10 +19,19 @@ open class ActRepository(
             ACTS.ACT_NUMBER,
             ACTS.ACT_INT_NUMBER,
             ACTS.ACT_FORMAT_CODE,
-            ACTS.ACT_NOTE
+            ACTS.ACT_NOTE,
+            DOC_TYPES.DOC_TYPE_NAME,
+            STORAGES.PASSPORT_NUMBER,
+            STORAGES.SERIAL_NUMBER,
+            STORAGES.MAKE_DATE,
+            STORAGES.ACTIVITY
         ).from(
             ACTS
-        ).fetchInto(ActResponse::class.java)
+        )
+            .leftOuterJoin(MOUTIONS).on(MOUTIONS.ACT_CODE.eq(ACTS.ACT_CODE))
+            .leftOuterJoin(DOC_TYPES).on(MOUTIONS.DOC_TYPE_CODE.eq(DOC_TYPES.DOC_TYPE_CODE))
+            .leftOuterJoin(STORAGES).on(MOUTIONS.STORAGE_CODE.eq(STORAGES.STORAGE_CODE))
+            .fetchInto(ActResponse::class.java)
     }
 
     open fun getActById(actId: Int): List<ActResponse> {
@@ -32,10 +41,18 @@ open class ActRepository(
             ACTS.ACT_NUMBER,
             ACTS.ACT_INT_NUMBER,
             ACTS.ACT_FORMAT_CODE,
-            ACTS.ACT_NOTE
+            ACTS.ACT_NOTE,
+            DOC_TYPES.DOC_TYPE_NAME,
+            STORAGES.PASSPORT_NUMBER,
+            STORAGES.SERIAL_NUMBER,
+            STORAGES.MAKE_DATE,
+            STORAGES.ACTIVITY
         ).from(
             ACTS
         )
+            .leftOuterJoin(MOUTIONS).on(MOUTIONS.ACT_CODE.eq(ACTS.ACT_CODE))
+            .leftOuterJoin(DOC_TYPES).on(MOUTIONS.DOC_TYPE_CODE.eq(DOC_TYPES.DOC_TYPE_CODE))
+            .leftOuterJoin(STORAGES).on(MOUTIONS.STORAGE_CODE.eq(STORAGES.STORAGE_CODE))
             .where(
                 ACTS.ACT_CODE.eq(actId)
             ).fetchInto(ActResponse::class.java)
