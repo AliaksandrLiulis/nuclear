@@ -86,12 +86,12 @@ open class ActRepository(
 
     }
 
-    open fun removeAct(id: Int) {
+    open fun removeActById(Actid: Int) {
 
         dsl.delete(
-            Tables.DOC_TYPES
+            ACTS
         ).where(
-            Tables.DOC_TYPES.DOC_TYPE_CODE.eq(id)
+            ACTS.ACT_CODE.eq(Actid)
         ).execute()
     }
 
