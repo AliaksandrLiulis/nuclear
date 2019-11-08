@@ -2,7 +2,7 @@ package com.isotop.storage.controller
 
 import com.isotop.storage.dto.response.ListOpenSourceTypeDataResponse
 import com.isotop.storage.dto.response.OpenSourceTypeResponse
-import com.isotop.storage.service.types.OpenSourceTypeService
+import com.isotop.storage.service.directory.OpenSourceTypeService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

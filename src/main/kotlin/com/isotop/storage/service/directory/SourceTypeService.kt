@@ -1,9 +1,9 @@
-package com.isotop.storage.service.types
+package com.isotop.storage.service.directory
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.response.ListSourceTypeDataResponse
 import com.isotop.storage.dto.response.SourceTypeResponse
-import com.isotop.storage.repository.types.SourceTypeRepository
+import com.isotop.storage.repository.directory.SourceTypeRepository
 import org.springframework.stereotype.Service
 
 @Service

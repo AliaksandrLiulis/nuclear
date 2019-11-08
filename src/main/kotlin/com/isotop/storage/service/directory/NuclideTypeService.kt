@@ -1,10 +1,10 @@
-package com.isotop.storage.service.types
+package com.isotop.storage.service.directory
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.NuclideRequest
 import com.isotop.storage.dto.response.ListNuclideTypeDataResponse
 import com.isotop.storage.dto.response.NuclideTypeResponse
-import com.isotop.storage.repository.types.NuclideTypesRepository
+import com.isotop.storage.repository.directory.NuclideTypesRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

@@ -1,10 +1,10 @@
-package com.isotop.storage.service.types
+package com.isotop.storage.service.directory
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.DocTypeRequest
 import com.isotop.storage.dto.response.DocTypeResponse
 import com.isotop.storage.dto.response.ListDocTypeDataResponse
-import com.isotop.storage.repository.types.DocTypeRepository
+import com.isotop.storage.repository.directory.DocTypeRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

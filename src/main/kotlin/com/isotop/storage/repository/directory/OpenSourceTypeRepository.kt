@@ -1,4 +1,4 @@
-package com.isotop.storage.repository.types
+package com.isotop.storage.repository.directory
 
 import com.isotop.storage.dto.response.OpenSourceTypeResponse
 import com.isotop.storage.jooq.Tables

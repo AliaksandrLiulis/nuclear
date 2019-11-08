@@ -3,7 +3,7 @@ package com.isotop.storage.controller
 import com.isotop.storage.dto.request.MakeTypeRequest
 import com.isotop.storage.dto.response.ListMakeTypeDataResponse
 import com.isotop.storage.dto.response.MakeTypeResponse
-import com.isotop.storage.service.types.MakeTypeService
+import com.isotop.storage.service.directory.MakeTypeService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 

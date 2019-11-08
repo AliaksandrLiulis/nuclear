@@ -5,7 +5,7 @@ import com.isotop.storage.dto.response.ListSourceTypeDataResponse
 import com.isotop.storage.dto.response.SourceTypeResponse
 import com.isotop.storage.dto.response.StorageResponse
 import com.isotop.storage.service.SourceService
-import com.isotop.storage.service.types.SourceTypeService
+import com.isotop.storage.service.directory.SourceTypeService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 

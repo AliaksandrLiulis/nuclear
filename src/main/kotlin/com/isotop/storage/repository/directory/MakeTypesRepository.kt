@@ -1,4 +1,4 @@
-package com.isotop.storage.repository.types
+package com.isotop.storage.repository.directory
 
 import com.isotop.storage.dto.request.MakeTypeRequest
 import com.isotop.storage.dto.response.MakeTypeResponse

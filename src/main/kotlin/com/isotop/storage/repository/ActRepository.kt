@@ -31,6 +31,7 @@ open class ActRepository(
             .leftOuterJoin(MOUTIONS).on(MOUTIONS.ACT_CODE.eq(ACTS.ACT_CODE))
             .leftOuterJoin(DOC_TYPES).on(MOUTIONS.DOC_TYPE_CODE.eq(DOC_TYPES.DOC_TYPE_CODE))
             .leftOuterJoin(STORAGES).on(MOUTIONS.STORAGE_CODE.eq(STORAGES.STORAGE_CODE))
+            .orderBy(ACTS.ACT_DATE.desc())
             .fetchInto(ActResponse::class.java)
     }
 

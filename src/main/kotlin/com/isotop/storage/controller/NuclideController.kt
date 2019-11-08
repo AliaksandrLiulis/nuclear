@@ -3,7 +3,7 @@ package com.isotop.storage.controller
 import com.isotop.storage.dto.request.NuclideRequest
 import com.isotop.storage.dto.response.ListNuclideTypeDataResponse
 import com.isotop.storage.dto.response.NuclideTypeResponse
-import com.isotop.storage.service.types.NuclideTypeService
+import com.isotop.storage.service.directory.NuclideTypeService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 

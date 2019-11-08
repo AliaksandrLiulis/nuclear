@@ -1,7 +1,7 @@
 package com.isotop.storage.controller
 
 import com.isotop.storage.dto.response.ListMoutionTypeDataResponse
-import com.isotop.storage.service.types.MoutionTypesService
+import com.isotop.storage.service.directory.MoutionTypesService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
