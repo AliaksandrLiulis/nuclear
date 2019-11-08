@@ -1,13 +1,11 @@
 package com.isotop.storage.controller
 
 import com.isotop.storage.dto.AddSourceRequest
+import com.isotop.storage.dto.response.ListContainerDataResponse
 import com.isotop.storage.dto.response.StorageResponse
 import com.isotop.storage.service.ContainerService
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/containers")
@@ -16,8 +14,14 @@ open class ContainerController(
 ) {
 
     @PreAuthorize("hasRole('STORAGE')")
+    @GetMapping(produces = ["application/json"])
+    open fun getAllFromContainer(): ListContainerDataResponse {
+        return containerService.getAllFromContainer()
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
     @PostMapping(produces = ["application/json"])
-    open fun addSource(
+    open fun addContainer(
         @RequestBody
         payload: AddSourceRequest
     ): StorageResponse {

@@ -1,0 +1,30 @@
+package com.isotop.storage.repository
+
+import com.isotop.storage.dto.response.ContainerResponse
+import com.isotop.storage.jooq.Tables.CONTAINERS
+import org.jooq.DSLContext
+import org.springframework.stereotype.Repository
+
+@Repository
+open class ContainerRepository(
+    private val dsl: DSLContext
+) {
+
+    open fun getAllFromContainer(): List<ContainerResponse> {
+
+        return dsl.select(
+            CONTAINERS.CONTAINER_CODE,
+            CONTAINERS.CONTAINER_CHIPHER,
+            CONTAINERS.OPEN_SOURCE_TYPE_CODE,
+            CONTAINERS.SOURCE_DIAMETR,
+            CONTAINERS.SOURCE_HEIGHT,
+            CONTAINERS.SOURCE_ACTIVITY,
+            CONTAINERS.OPEN_SOURCE_COUNT,
+            CONTAINERS.OPEN_SOURCE_REST,
+            CONTAINERS.STORAGE_CODE,
+            CONTAINERS.SOURCE_ACTIVITY
+        ).from(
+            CONTAINERS
+        ).fetchInto(ContainerResponse::class.java)
+    }
+}
