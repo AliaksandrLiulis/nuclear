@@ -1,5 +1,6 @@
 package com.isotop.storage.repository.directory
 
+import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.MakeTypeRequest
 import com.isotop.storage.dto.response.MakeTypeResponse
 import com.isotop.storage.jooq.Tables.MAKE_TYPES
@@ -74,12 +75,15 @@ open class MakeTypesRepository(
     }
 
     open fun removeMakeType(id: Int) {
-
-        dsl.delete(
-            MAKE_TYPES
-        ).where(
-            MAKE_TYPES.MAKE_TYPE_CODE.eq(id)
-        ).execute()
+        try {
+            dsl.delete(
+                MAKE_TYPES
+            ).where(
+                MAKE_TYPES.MAKE_TYPE_CODE.eq(id)
+            ).execute()
+        } catch (ex: Exception) {
+            throw ValidationException(30)
+        }
     }
 
     open fun isExistMakeTypeById(typeId: Int): Boolean {

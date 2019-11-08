@@ -1,5 +1,6 @@
 package com.isotop.storage.repository
 
+import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.OrganizationRequest
 import com.isotop.storage.dto.response.OrganizationResponse
 import com.isotop.storage.jooq.Tables.ORGS
@@ -92,12 +93,15 @@ open class OrganizationRepository(
     }
 
     open fun removeOrganization(id: Int) {
-
-        dsl.delete(
-            ORGS
-        ).where(
-        ORGS.ORG_CODE.eq(id)
-        ).execute()
+        try {
+            dsl.delete(
+                ORGS
+            ).where(
+                ORGS.ORG_CODE.eq(id)
+            ).execute()
+        } catch (ex: Exception) {
+            throw ValidationException(30)
+        }
     }
 
     open fun isExistOrganizationByName(

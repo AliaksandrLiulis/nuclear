@@ -1,5 +1,6 @@
 package com.isotop.storage.repository.directory
 
+import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.NuclideRequest
 import com.isotop.storage.dto.response.NuclideTypeResponse
 import com.isotop.storage.jooq.Tables.NUCLIDE_TYPES
@@ -79,12 +80,15 @@ open class NuclideTypesRepository(
     }
 
     open fun removeNuclide(id: Int) {
-
-        dsl.delete(
-            NUCLIDE_TYPES
-        ).where(
-            NUCLIDE_TYPES.NUCLIDE_TYPE_CODE.eq(id)
-        ).execute()
+        try {
+            dsl.delete(
+                NUCLIDE_TYPES
+            ).where(
+                NUCLIDE_TYPES.NUCLIDE_TYPE_CODE.eq(id)
+            ).execute()
+        }catch (ex:Exception){
+            throw ValidationException(30)
+        }
     }
 
     open fun isExistNuclideTypeById(typeId: Int): Boolean {

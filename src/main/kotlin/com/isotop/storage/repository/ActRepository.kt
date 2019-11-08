@@ -1,5 +1,6 @@
 package com.isotop.storage.repository
 
+import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.ActRequest
 import com.isotop.storage.dto.response.ActResponse
 import com.isotop.storage.jooq.Tables.*
@@ -104,12 +105,15 @@ open class ActRepository(
     }
 
     open fun removeActById(Actid: Int) {
-
-        dsl.delete(
-            ACTS
-        ).where(
-            ACTS.ACT_CODE.eq(Actid)
-        ).execute()
+        try {
+            dsl.delete(
+                ACTS
+            ).where(
+                ACTS.ACT_CODE.eq(Actid)
+            ).execute()
+        } catch (ex: Exception) {
+            throw ValidationException(30)
+        }
     }
 
     open fun isExistActById(actId: Int): Boolean {

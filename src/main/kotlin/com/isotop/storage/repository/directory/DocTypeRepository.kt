@@ -1,5 +1,6 @@
 package com.isotop.storage.repository.directory
 
+import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.DocTypeRequest
 import com.isotop.storage.dto.response.DocTypeResponse
 import com.isotop.storage.jooq.Tables.DOC_TYPES
@@ -71,12 +72,15 @@ open class DocTypeRepository(
     }
 
     open fun removeDocType(id: Int) {
-
-        dsl.delete(
-            DOC_TYPES
-        ).where(
-            DOC_TYPES.DOC_TYPE_CODE.eq(id)
-        ).execute()
+        try {
+            dsl.delete(
+                DOC_TYPES
+            ).where(
+                DOC_TYPES.DOC_TYPE_CODE.eq(id)
+            ).execute()
+        } catch (ex: Exception) {
+            throw ValidationException(30)
+        }
     }
 
     open fun isExistDocTypeById(typeId: Int): Boolean {
