@@ -25,8 +25,8 @@ open class ContainerController(
     open fun getContainerByStorageCode(
         @PathVariable(value = "storageCode")
         containerId: Int
-    ): ContainerResponse {
-        return containerService.getContainerByStorageCode(containerId)
+    ): ListContainerDataResponse {
+        return containerService.getContainersByStorageCode(containerId)
     }
 
     @PreAuthorize("hasRole('STORAGE')")

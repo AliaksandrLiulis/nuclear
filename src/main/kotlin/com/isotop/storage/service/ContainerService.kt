@@ -2,7 +2,6 @@ package com.isotop.storage.service
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.AddContainerRequest
-import com.isotop.storage.dto.response.ContainerResponse
 import com.isotop.storage.dto.response.ListContainerDataResponse
 import com.isotop.storage.dto.response.StorageResponse
 import com.isotop.storage.repository.ContainerRepository
@@ -16,17 +15,21 @@ open class ContainerService(
     private val moutionRepository: MoutionRepository,
     private val storageRepository: StorageRepository,
     private val containerRepository: ContainerRepository
+
 ) {
 
     open fun getAllFromContainer(): ListContainerDataResponse {
         return ListContainerDataResponse(containerRepository.getAllFromContainer())
     }
 
-    open fun getContainerByStorageCode(idStorageCode: Int): ContainerResponse {
-        if (!containerRepository.isExistContainerByStorageCode(idStorageCode)) {
-            throw ValidationException(31)
+    open fun getContainersByStorageCode(idStorageCode: Int): ListContainerDataResponse {
+        if (!storageRepository.isExistStorageContainerNoteById(idStorageCode)) {
+            throw ValidationException(32)
         }
-        return containerRepository.getContainerByStorageCode(idStorageCode)
+        if (!containerRepository.isExistContainerByStorageCode(idStorageCode)) {
+            return ListContainerDataResponse(null)
+        }
+        return ListContainerDataResponse(containerRepository.getListContainerByStorageCode(idStorageCode))
     }
 
     @Transactional

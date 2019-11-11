@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ListContainerDataResponse(
-    private val data: List<ContainerResponse>
+    private val data: List<ContainerResponse>?
 )
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

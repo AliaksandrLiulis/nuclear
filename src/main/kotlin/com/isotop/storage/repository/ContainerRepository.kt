@@ -29,7 +29,7 @@ open class ContainerRepository(
         ).fetchInto(ContainerResponse::class.java)
     }
 
-    open fun getContainerByStorageCode(storageCodeId: Int): ContainerResponse {
+    open fun getListContainerByStorageCode(storageCodeId: Int): List<ContainerResponse> {
         return dsl.select(
             CONTAINERS.CONTAINER_CODE,
             CONTAINERS.CONTAINER_CHIPHER,
@@ -46,7 +46,7 @@ open class ContainerRepository(
         )
             .where(
                 CONTAINERS.STORAGE_CODE.eq(storageCodeId)
-            ).fetchInto(ContainerResponse::class.java)[0]
+            ).fetchInto(ContainerResponse::class.java)
     }
 
     open fun isExistContainerByStorageCode(payload: Int): Boolean {

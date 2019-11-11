@@ -166,4 +166,17 @@ open class StorageRepository(
                 .where(STORAGES.STORAGE_CODE.eq(idStorage))
         )
     }
+
+    open fun isExistStorageContainerNoteById(idStorage: Int): Boolean {
+        return dsl.fetchExists(
+            DSL.select(STORAGES.SOURCE_TYPE_CODE)
+                .from(STORAGES)
+                .where(
+                    STORAGES.STORAGE_CODE.eq(idStorage)
+                        .and(STORAGES.SOURCE_TYPE_CODE.eq(1))
+                )
+        )
+    }
+
+
 }
