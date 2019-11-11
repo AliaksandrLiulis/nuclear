@@ -27,7 +27,7 @@ open class ContainerService(
             throw ValidationException(32)
         }
         if (!containerRepository.isExistContainerByStorageCode(idStorageCode)) {
-            return ListContainerDataResponse(null)
+            return ListContainerDataResponse(listOf())
         }
         return ListContainerDataResponse(containerRepository.getListContainerByStorageCode(idStorageCode))
     }

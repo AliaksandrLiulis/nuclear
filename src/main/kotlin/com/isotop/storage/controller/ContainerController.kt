@@ -20,12 +20,13 @@ open class ContainerController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @GetMapping("/{storageCode}", produces = ["application/json"])
+    @GetMapping("/{storageCode}",produces = ["application/json"])
     open fun getContainerByStorageCode(
         @PathVariable(value = "storageCode")
         containerId: Int
     ): ListContainerDataResponse {
-        return containerService.getContainersByStorageCode(containerId)
+        val res = containerService.getContainersByStorageCode(containerId)
+        return res
     }
 
     @PreAuthorize("hasRole('STORAGE')")
