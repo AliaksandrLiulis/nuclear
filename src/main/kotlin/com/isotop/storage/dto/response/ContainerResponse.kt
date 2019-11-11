@@ -2,6 +2,7 @@ package com.isotop.storage.dto.response
 
 import com.fasterxml.jackson.annotation.JsonInclude
 
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ListContainerDataResponse(
     val data: List<ContainerResponse>
@@ -18,5 +19,6 @@ data class ContainerResponse(
     val openSourceCount: Int?,
     val openSourceRest: Int?,
     val storageCode: Int?,
-    val sourceActivity: Double?
+    val sourceActivity: Double?,
+    val openSourceTypeName: String?
 )
