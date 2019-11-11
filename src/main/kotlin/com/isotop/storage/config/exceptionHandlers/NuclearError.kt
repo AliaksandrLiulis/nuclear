@@ -36,6 +36,7 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             28 -> "Act not exist"
             29 -> "Act not valid or exist"
             30 -> "Can not execute action. Note uses other tables"
+            31 -> "Container by Id not exist"
             else -> ""
         }
     }

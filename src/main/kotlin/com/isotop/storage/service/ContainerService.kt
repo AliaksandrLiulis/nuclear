@@ -2,6 +2,7 @@ package com.isotop.storage.service
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.AddSourceRequest
+import com.isotop.storage.dto.response.ContainerResponse
 import com.isotop.storage.dto.response.ListContainerDataResponse
 import com.isotop.storage.dto.response.StorageResponse
 import com.isotop.storage.repository.ContainerRepository
@@ -19,6 +20,13 @@ open class ContainerService(
 
     open fun getAllFromContainer(): ListContainerDataResponse {
         return ListContainerDataResponse(containerRepository.getAllFromContainer())
+    }
+
+    open fun getContainerById(idContainer: Int): ContainerResponse {
+        if (!containerRepository.isExistContainerByContainerCode(idContainer)) {
+            throw ValidationException(31)
+        }
+        return containerRepository.getContainerById(idContainer)
     }
 
     @Transactional

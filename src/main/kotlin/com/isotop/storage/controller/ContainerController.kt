@@ -1,6 +1,7 @@
 package com.isotop.storage.controller
 
 import com.isotop.storage.dto.AddSourceRequest
+import com.isotop.storage.dto.response.ContainerResponse
 import com.isotop.storage.dto.response.ListContainerDataResponse
 import com.isotop.storage.dto.response.StorageResponse
 import com.isotop.storage.service.ContainerService
@@ -17,6 +18,15 @@ open class ContainerController(
     @GetMapping(produces = ["application/json"])
     open fun getAllFromContainer(): ListContainerDataResponse {
         return containerService.getAllFromContainer()
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @GetMapping("/{containerId}", produces = ["application/json"])
+    open fun getContainerById(
+        @PathVariable(value = "containerId")
+        containerId: Int
+    ): ContainerResponse {
+        return containerService.getContainerById(containerId)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
