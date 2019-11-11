@@ -1,5 +1,6 @@
 package com.isotop.storage.controller
 
+import com.isotop.storage.dto.AddContainerRequest
 import com.isotop.storage.dto.request.UpdateStorageRequest
 import com.isotop.storage.dto.response.ListStorageDataResponse
 import com.isotop.storage.dto.response.StorageResponse
@@ -29,5 +30,16 @@ open class StorageController(
         payload: UpdateStorageRequest
     ): StorageResponse {
         return storageService.updateStorage(payload)
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @PostMapping("containers", produces = ["application/json"])
+    open fun addContainerToStorage(
+        @RequestBody
+        payload: AddContainerRequest
+    ): StorageResponse {
+        payload.moutionType = 1
+        payload.sourceTypeCode = 1
+        return storageService.addContainerToStorage(payload)
     }
 }

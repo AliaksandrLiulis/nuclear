@@ -68,7 +68,7 @@ open class StorageRepository(
             .fetchInto(StorageResponse::class.java)
     }
 
-    open fun addStorageNote(addContainerRequest: AddContainerRequest): Int? {
+    open fun addContainerToStorage(addContainerRequest: AddContainerRequest): Int? {
 
         val insertValues = mapOf<Any, Any?>(
             STORAGES.PASSPORT_NUMBER to addContainerRequest.passportNumber,

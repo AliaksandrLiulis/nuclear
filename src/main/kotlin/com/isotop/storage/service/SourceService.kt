@@ -15,7 +15,7 @@ open class SourceService(
 ) {
     @Transactional
     open fun addSource(payload: AddContainerRequest): StorageResponse {
-        val storageNote = storageRepository.addStorageNote(payload)
+        val storageNote = storageRepository.addContainerToStorage(payload)
         if (storageNote != null) {
             moutionRepository.addMoution(
                 payload.moutionType!!,
