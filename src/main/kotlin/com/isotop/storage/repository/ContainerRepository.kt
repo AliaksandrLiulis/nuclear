@@ -29,7 +29,7 @@ open class ContainerRepository(
         ).fetchInto(ContainerResponse::class.java)
     }
 
-    open fun getContainerById(containerId: Int): ContainerResponse {
+    open fun getContainerByStorageCode(storageCodeId: Int): ContainerResponse {
         return dsl.select(
             CONTAINERS.CONTAINER_CODE,
             CONTAINERS.CONTAINER_CHIPHER,
@@ -45,16 +45,16 @@ open class ContainerRepository(
             CONTAINERS
         )
             .where(
-                CONTAINERS.CONTAINER_CODE.eq(containerId)
+                CONTAINERS.STORAGE_CODE.eq(storageCodeId)
             ).fetchInto(ContainerResponse::class.java)[0]
     }
 
-    open fun isExistContainerByContainerCode(payload: Int): Boolean {
+    open fun isExistContainerByStorageCode(payload: Int): Boolean {
 
         return dsl.fetchExists(
             DSL.select(CONTAINERS.CONTAINER_CODE)
                 .from(CONTAINERS)
-                .where(CONTAINERS.CONTAINER_CODE.eq(payload))
+                .where(CONTAINERS.STORAGE_CODE.eq(payload))
         )
     }
 }

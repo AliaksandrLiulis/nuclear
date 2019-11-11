@@ -1,6 +1,6 @@
 package com.isotop.storage.controller
 
-import com.isotop.storage.dto.AddSourceRequest
+import com.isotop.storage.dto.AddContainerRequest
 import com.isotop.storage.dto.response.ListSourceTypeDataResponse
 import com.isotop.storage.dto.response.SourceTypeResponse
 import com.isotop.storage.dto.response.StorageResponse
@@ -35,7 +35,7 @@ open class SourceController(
     @PostMapping(produces = ["application/json"])
     open fun addSource(
         @RequestBody
-        payload: AddSourceRequest
+        payload: AddContainerRequest
     ): StorageResponse {
         payload.moutionType = 1
         payload.sourceTypeCode = 2

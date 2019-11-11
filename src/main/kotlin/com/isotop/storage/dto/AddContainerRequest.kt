@@ -2,7 +2,7 @@ package com.isotop.storage.dto
 
 import java.time.LocalDate
 
-data class AddSourceRequest(
+data class AddContainerRequest(
     var moutionType: Int?,
     var sourceTypeCode: Int?,
     val ownerOrgCode: Int,

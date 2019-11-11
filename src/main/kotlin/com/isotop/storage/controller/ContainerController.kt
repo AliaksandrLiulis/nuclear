@@ -1,6 +1,6 @@
 package com.isotop.storage.controller
 
-import com.isotop.storage.dto.AddSourceRequest
+import com.isotop.storage.dto.AddContainerRequest
 import com.isotop.storage.dto.response.ContainerResponse
 import com.isotop.storage.dto.response.ListContainerDataResponse
 import com.isotop.storage.dto.response.StorageResponse
@@ -21,22 +21,31 @@ open class ContainerController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @GetMapping("/{containerId}", produces = ["application/json"])
-    open fun getContainerById(
-        @PathVariable(value = "containerId")
+    @GetMapping("/{storageCode}", produces = ["application/json"])
+    open fun getContainerByStorageCode(
+        @PathVariable(value = "storageCode")
         containerId: Int
     ): ContainerResponse {
-        return containerService.getContainerById(containerId)
+        return containerService.getContainerByStorageCode(containerId)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
     @PostMapping(produces = ["application/json"])
     open fun addContainer(
         @RequestBody
-        payload: AddSourceRequest
+        payload: AddContainerRequest
     ): StorageResponse {
         payload.moutionType = 1
         payload.sourceTypeCode = 1
+        return containerService.addContainer(payload)
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @PostMapping(produces = ["application/json"])
+    open fun updateContainer(
+        @RequestBody
+        payload: AddContainerRequest
+    ): StorageResponse {
         return containerService.addContainer(payload)
     }
 }

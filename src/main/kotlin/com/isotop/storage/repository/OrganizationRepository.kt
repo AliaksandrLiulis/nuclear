@@ -89,7 +89,6 @@ open class OrganizationRepository(
             ?.getValue(ORGS.ORG_CODE)
 
         return getOrganizationById(orgId!!)[0]
-
     }
 
     open fun removeOrganization(id: Int) {

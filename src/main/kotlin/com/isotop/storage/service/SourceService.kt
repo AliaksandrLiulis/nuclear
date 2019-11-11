@@ -1,7 +1,7 @@
 package com.isotop.storage.service
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
-import com.isotop.storage.dto.AddSourceRequest
+import com.isotop.storage.dto.AddContainerRequest
 import com.isotop.storage.dto.response.StorageResponse
 import com.isotop.storage.repository.MoutionRepository
 import com.isotop.storage.repository.StorageRepository
@@ -14,7 +14,7 @@ open class SourceService(
     private val storageRepository: StorageRepository
 ) {
     @Transactional
-    open fun addSource(payload: AddSourceRequest): StorageResponse {
+    open fun addSource(payload: AddContainerRequest): StorageResponse {
         val storageNote = storageRepository.addStorageNote(payload)
         if (storageNote != null) {
             moutionRepository.addMoution(

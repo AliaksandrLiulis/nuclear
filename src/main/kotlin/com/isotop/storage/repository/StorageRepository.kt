@@ -1,6 +1,6 @@
 package com.isotop.storage.repository
 
-import com.isotop.storage.dto.AddSourceRequest
+import com.isotop.storage.dto.AddContainerRequest
 import com.isotop.storage.dto.request.UpdateStorageRequest
 import com.isotop.storage.dto.response.StorageResponse
 import com.isotop.storage.jooq.Tables.*
@@ -68,18 +68,18 @@ open class StorageRepository(
             .fetchInto(StorageResponse::class.java)
     }
 
-    open fun addStorageNote(addSourceRequest: AddSourceRequest): Int? {
+    open fun addStorageNote(addContainerRequest: AddContainerRequest): Int? {
 
         val insertValues = mapOf<Any, Any?>(
-            STORAGES.PASSPORT_NUMBER to addSourceRequest.passportNumber,
-            STORAGES.SERIAL_NUMBER to addSourceRequest.serialNumber,
-            STORAGES.MAKE_DATE to addSourceRequest.makeDate,
-            STORAGES.COME_DATE to addSourceRequest.comeDate,
-            STORAGES.ACTIVITY to addSourceRequest.activity,
-            STORAGES.SOURCE_TYPE_CODE to addSourceRequest.sourceTypeCode,
-            STORAGES.NUCLIDE_TYPE_CODE to addSourceRequest.nuclideTypeCode,
-            STORAGES.MAKE_TYPE_CODE to addSourceRequest.makeTypeCode,
-            STORAGES.OWNER_ORG_CODE to addSourceRequest.ownerOrgCode
+            STORAGES.PASSPORT_NUMBER to addContainerRequest.passportNumber,
+            STORAGES.SERIAL_NUMBER to addContainerRequest.serialNumber,
+            STORAGES.MAKE_DATE to addContainerRequest.makeDate,
+            STORAGES.COME_DATE to addContainerRequest.comeDate,
+            STORAGES.ACTIVITY to addContainerRequest.activity,
+            STORAGES.SOURCE_TYPE_CODE to addContainerRequest.sourceTypeCode,
+            STORAGES.NUCLIDE_TYPE_CODE to addContainerRequest.nuclideTypeCode,
+            STORAGES.MAKE_TYPE_CODE to addContainerRequest.makeTypeCode,
+            STORAGES.OWNER_ORG_CODE to addContainerRequest.ownerOrgCode
         )
 
         return dsl
