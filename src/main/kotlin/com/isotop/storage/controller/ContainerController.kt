@@ -1,7 +1,6 @@
 package com.isotop.storage.controller
 
 import com.isotop.storage.dto.AddContainerRequest
-import com.isotop.storage.dto.response.ContainerResponse
 import com.isotop.storage.dto.response.ListContainerDataResponse
 import com.isotop.storage.dto.response.StorageResponse
 import com.isotop.storage.service.ContainerService

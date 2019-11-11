@@ -2,7 +2,6 @@ package com.isotop.storage.dto.response
 
 import com.fasterxml.jackson.annotation.JsonInclude
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 data class ListContainerDataResponse(
     private val data: List<ContainerResponse>?
 )
