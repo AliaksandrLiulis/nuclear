@@ -41,7 +41,7 @@ open class ContainerController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PostMapping(produces = ["application/json"])
+    @PutMapping(produces = ["application/json"])
     open fun updateContainer(
         @RequestBody
         payload: AddContainerRequest
