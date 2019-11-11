@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/opensourcetypes")
+@RequestMapping("/opensource")
 open class OpenSourceController(
     private val openSourceTypeService: OpenSourceTypeService
 ) {
 
     @PreAuthorize("hasRole('STORAGE')")
-    @GetMapping(produces = ["application/json"])
+    @GetMapping("/types",produces = ["application/json"])
     open fun getAllOpenSourceTypes(): ListOpenSourceTypeDataResponse {
         return openSourceTypeService.getOpenSourceTypes()
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @GetMapping("/{typeId}", produces = ["application/json"])
+    @GetMapping("/types/{typeId}", produces = ["application/json"])
     open fun getOpenSourceTypeById(
         @PathVariable(value = "typeId")
         typeId: Int
