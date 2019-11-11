@@ -42,6 +42,26 @@ open class StorageService(
     }
 
     @Transactional
+    open fun addSourceToStorage(payload: AddContainerRequest): StorageResponse {
+        val storageNote = storageRepository.addContainerToStorage(payload)
+        if (storageNote != null) {
+            moutionRepository.addMoution(
+                payload.moutionType!!,
+                payload.makeDate,
+                payload.orgCode,
+                storageNote,
+                payload.docDate,
+                payload.docNumber,
+                payload.docTypeCode,
+                payload.actCode
+            )
+            return storageRepository.getStorageNoteByIdStorage(storageNote)[0]
+        } else {
+            throw ValidationException(26)
+        }
+    }
+
+    @Transactional
     open fun updateStorage(payload: UpdateStorageRequest): StorageResponse {
         if (!moutionRepository.isExistMotionByStorageId(payload.storageCode) ||
             !storageRepository.isExistStorageNoteById(payload.storageCode)

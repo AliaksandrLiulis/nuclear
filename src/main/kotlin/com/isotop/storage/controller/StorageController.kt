@@ -42,4 +42,15 @@ open class StorageController(
         payload.sourceTypeCode = 1
         return storageService.addContainerToStorage(payload)
     }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @PostMapping("sources",produces = ["application/json"])
+    open fun addSourceToStorage(
+        @RequestBody
+        payload: AddContainerRequest
+    ): StorageResponse {
+        payload.moutionType = 1
+        payload.sourceTypeCode = 2
+        return storageService.addSourceToStorage(payload)
+    }
 }
