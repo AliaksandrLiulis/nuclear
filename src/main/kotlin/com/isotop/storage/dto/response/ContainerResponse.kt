@@ -18,5 +18,5 @@ data class ContainerResponse(
     val openSourceCount: Int?,
     val openSourceRest: Int?,
     val storageCode: Int?,
-    val sourceActivity: Int?
+    val sourceActivity: Double?
 )
