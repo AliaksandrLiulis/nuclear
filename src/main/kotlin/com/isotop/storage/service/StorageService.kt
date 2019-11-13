@@ -1,7 +1,7 @@
 package com.isotop.storage.service
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
-import com.isotop.storage.dto.AddContainerRequest
+import com.isotop.storage.dto.request.AddContainerToStorageRequest
 import com.isotop.storage.dto.request.UpdateStorageRequest
 import com.isotop.storage.dto.response.ListStorageDataResponse
 import com.isotop.storage.dto.response.StorageResponse
@@ -22,7 +22,7 @@ open class StorageService(
     }
 
     @Transactional
-    open fun addContainerToStorage(payload: AddContainerRequest): StorageResponse {
+    open fun addContainerToStorage(payload: AddContainerToStorageRequest): StorageResponse {
         val storageNote = storageRepository.addContainerToStorage(payload)
         if (storageNote != null) {
             moutionRepository.addMoution(
@@ -42,7 +42,7 @@ open class StorageService(
     }
 
     @Transactional
-    open fun addSourceToStorage(payload: AddContainerRequest): StorageResponse {
+    open fun addSourceToStorage(payload: AddContainerToStorageRequest): StorageResponse {
         val storageNote = storageRepository.addContainerToStorage(payload)
         if (storageNote != null) {
             moutionRepository.addMoution(

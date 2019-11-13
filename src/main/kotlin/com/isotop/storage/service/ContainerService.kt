@@ -1,10 +1,12 @@
 package com.isotop.storage.service
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
+import com.isotop.storage.dto.request.AddContainerRequest
 import com.isotop.storage.dto.response.ListContainerDataResponse
 import com.isotop.storage.repository.ContainerRepository
 import com.isotop.storage.repository.StorageRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 open class ContainerService(
@@ -27,4 +29,14 @@ open class ContainerService(
         return ListContainerDataResponse(containerRepository.getListContainerByStorageCode(idStorageCode))
     }
 
+    @Transactional
+    open fun addContainer(payload: AddContainerRequest) {
+        if (!storageRepository.isExistStorageContainerNoteById(payload.storageCode)) {
+            throw ValidationException(32)
+        }
+        payload.openSourceActivity = payload.sourceActivity / payload.openSourceCount
+        payload.openSourceRest = payload.openSourceCount
+        val commonActivity = containerRepository.addContainerAndGetCommonActivity(payload)
+        storageRepository.updateStorageActivity(commonActivity, payload.storageCode)
+    }
 }

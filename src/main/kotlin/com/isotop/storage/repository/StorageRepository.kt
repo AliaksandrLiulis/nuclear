@@ -1,6 +1,6 @@
 package com.isotop.storage.repository
 
-import com.isotop.storage.dto.AddContainerRequest
+import com.isotop.storage.dto.request.AddContainerToStorageRequest
 import com.isotop.storage.dto.request.UpdateStorageRequest
 import com.isotop.storage.dto.response.StorageResponse
 import com.isotop.storage.jooq.Tables.*
@@ -68,18 +68,18 @@ open class StorageRepository(
             .fetchInto(StorageResponse::class.java)
     }
 
-    open fun addContainerToStorage(addContainerRequest: AddContainerRequest): Int? {
+    open fun addContainerToStorage(addContainerToStorageRequest: AddContainerToStorageRequest): Int? {
 
         val insertValues = mapOf<Any, Any?>(
-            STORAGES.PASSPORT_NUMBER to addContainerRequest.passportNumber,
-            STORAGES.SERIAL_NUMBER to addContainerRequest.serialNumber,
-            STORAGES.MAKE_DATE to addContainerRequest.makeDate,
-            STORAGES.COME_DATE to addContainerRequest.comeDate,
-            STORAGES.ACTIVITY to addContainerRequest.activity,
-            STORAGES.SOURCE_TYPE_CODE to addContainerRequest.sourceTypeCode,
-            STORAGES.NUCLIDE_TYPE_CODE to addContainerRequest.nuclideTypeCode,
-            STORAGES.MAKE_TYPE_CODE to addContainerRequest.makeTypeCode,
-            STORAGES.OWNER_ORG_CODE to addContainerRequest.ownerOrgCode
+            STORAGES.PASSPORT_NUMBER to addContainerToStorageRequest.passportNumber,
+            STORAGES.SERIAL_NUMBER to addContainerToStorageRequest.serialNumber,
+            STORAGES.MAKE_DATE to addContainerToStorageRequest.makeDate,
+            STORAGES.COME_DATE to addContainerToStorageRequest.comeDate,
+            STORAGES.ACTIVITY to addContainerToStorageRequest.activity,
+            STORAGES.SOURCE_TYPE_CODE to addContainerToStorageRequest.sourceTypeCode,
+            STORAGES.NUCLIDE_TYPE_CODE to addContainerToStorageRequest.nuclideTypeCode,
+            STORAGES.MAKE_TYPE_CODE to addContainerToStorageRequest.makeTypeCode,
+            STORAGES.OWNER_ORG_CODE to addContainerToStorageRequest.ownerOrgCode
         )
 
         return dsl
@@ -114,7 +114,22 @@ open class StorageRepository(
             ?.getValue(STORAGES.STORAGE_CODE)
 
         return getStorageNoteByIdStorage(storageId!!)[0]
+    }
 
+    open fun updateStorageActivity(activity: Double, storageCode: Int): Int? {
+
+        val updateValues = mapOf<Any, Any?>(
+            STORAGES.ACTIVITY to activity
+        )
+
+        return dsl.update(STORAGES)
+            .set(updateValues)
+            .where(
+                STORAGES.STORAGE_CODE.eq(storageCode)
+            )
+            .returning(STORAGES.STORAGE_CODE)
+            ?.fetchOne()
+            ?.getValue(STORAGES.STORAGE_CODE)
     }
 
     open fun getStorageNoteByIdStorage(idStorage: Int): List<StorageResponse> {
