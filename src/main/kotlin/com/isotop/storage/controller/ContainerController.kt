@@ -39,12 +39,12 @@ open class ContainerController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PutMapping("sources",produces = ["application/json"])
+    @PutMapping(produces = ["application/json"])
     open fun updateContainer(
         @RequestBody
         payload: AddContainerRequest
     ) {
-        payload.moutionType = 1
+        payload.moutionType == 0
         payload.sourceTypeCode = 2
         containerService.addContainer(payload)
     }
