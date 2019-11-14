@@ -30,7 +30,7 @@ open class ContainerService(
     }
 
     @Transactional
-    open fun addContainer(payload: AddContainerRequest) {
+    open fun addContainer(payload: AddContainerRequest):ListContainerDataResponse {
         if (!storageRepository.isExistStorageContainerNoteById(payload.storageCode)) {
             throw ValidationException(32)
         }
@@ -38,6 +38,7 @@ open class ContainerService(
         payload.openSourceRest = payload.openSourceCount
         val commonActivity = containerRepository.addContainerAndGetCommonActivity(payload)!!.map { it.toDouble() }[0]
         storageRepository.updateStorageActivity(commonActivity, payload.storageCode)
+        return getAllFromContainer()
     }
 
     @Transactional

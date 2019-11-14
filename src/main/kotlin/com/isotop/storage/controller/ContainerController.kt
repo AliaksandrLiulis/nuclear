@@ -32,10 +32,10 @@ open class ContainerController(
     open fun addContainer(
         @RequestBody
         payload: AddContainerRequest
-    ) {
+    ):ListContainerDataResponse {
         payload.moutionType = 1
         payload.sourceTypeCode = 2
-        containerService.addContainer(payload)
+        return containerService.addContainer(payload)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
