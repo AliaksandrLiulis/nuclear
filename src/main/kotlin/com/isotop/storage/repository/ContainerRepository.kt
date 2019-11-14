@@ -1,6 +1,6 @@
 package com.isotop.storage.repository
 
-import com.isotop.storage.dto.request.AddContainerRequest
+import com.isotop.storage.dto.request.containerRequest
 import com.isotop.storage.dto.response.ContainerResponse
 import com.isotop.storage.jooq.Tables.CONTAINERS
 import com.isotop.storage.jooq.Tables.OPEN_SOURCE_TYPES
@@ -84,7 +84,7 @@ open class ContainerRepository(
             ).fetchInto(ContainerResponse::class.java)[0]
     }
 
-    open fun addContainerAndGetCommonActivity(payload: AddContainerRequest): Int? {
+    open fun addContainerAndGetCommonActivity(payload: containerRequest): Int? {
 
         val insertValues = mapOf<Any, Any?>(
             CONTAINERS.CONTAINER_CHIPHER to payload.containerChipher,
@@ -106,7 +106,7 @@ open class ContainerRepository(
             ?.getValue(CONTAINERS.CONTAINER_CODE)
     }
 
-    open fun updateContainerAndGetCommonActivity(payload: AddContainerRequest): Int? {
+    open fun updateContainer(payload: containerRequest): Int? {
 
         val updateValues = mapOf<Any, Any?>(
             CONTAINERS.CONTAINER_CODE to payload.containerCode,
@@ -123,11 +123,12 @@ open class ContainerRepository(
         )
 
         return dsl
-            .insertInto(CONTAINERS)
+            .update(CONTAINERS)
             .set(updateValues)
-            .onConflict(CONTAINERS.CONTAINER_CODE, CONTAINERS.STORAGE_CODE)
-            .doUpdate()
-            .set(updateValues)
+            .where(
+                CONTAINERS.CONTAINER_CODE.eq(payload.containerCode)
+                    .and(CONTAINERS.STORAGE_CODE.eq(payload.storageCode))
+            )
             .returning(CONTAINERS.CONTAINER_CODE)
             ?.fetchOne()
             ?.getValue(CONTAINERS.CONTAINER_CODE)

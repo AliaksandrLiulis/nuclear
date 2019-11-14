@@ -1,6 +1,6 @@
 package com.isotop.storage.controller
 
-import com.isotop.storage.dto.request.AddContainerRequest
+import com.isotop.storage.dto.request.containerRequest
 import com.isotop.storage.dto.response.ContainerResponse
 import com.isotop.storage.dto.response.ListContainerDataResponse
 import com.isotop.storage.service.ContainerService
@@ -32,7 +32,7 @@ open class ContainerController(
     @PostMapping(produces = ["application/json"])
     open fun addContainer(
         @RequestBody
-        payload: AddContainerRequest
+        payload: containerRequest
     ): ContainerResponse {
         payload.moutionType = 1
         payload.sourceTypeCode = 2
@@ -43,13 +43,12 @@ open class ContainerController(
     @PutMapping(produces = ["application/json"])
     open fun updateContainer(
         @RequestBody
-        payload: AddContainerRequest
-    ) {
+        payload: containerRequest
+    ): ContainerResponse {
         if (payload.moutionType == null) {
             payload.moutionType = 1
         }
-
         payload.sourceTypeCode = 2
-        containerService.updateContainer(payload)
+        return containerService.updateContainer(payload)
     }
 }
