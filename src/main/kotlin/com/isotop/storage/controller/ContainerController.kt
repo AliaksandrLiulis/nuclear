@@ -1,6 +1,6 @@
 package com.isotop.storage.controller
 
-import com.isotop.storage.dto.request.containerRequest
+import com.isotop.storage.dto.request.ContainerRequest
 import com.isotop.storage.dto.response.ContainerResponse
 import com.isotop.storage.dto.response.ListContainerDataResponse
 import com.isotop.storage.service.ContainerService
@@ -32,7 +32,7 @@ open class ContainerController(
     @PostMapping(produces = ["application/json"])
     open fun addContainer(
         @RequestBody
-        payload: containerRequest
+        payload: ContainerRequest
     ): ContainerResponse {
         payload.moutionType = 1
         payload.sourceTypeCode = 2
@@ -43,12 +43,21 @@ open class ContainerController(
     @PutMapping(produces = ["application/json"])
     open fun updateContainer(
         @RequestBody
-        payload: containerRequest
+        payload: ContainerRequest
     ): ContainerResponse {
         if (payload.moutionType == null) {
             payload.moutionType = 1
         }
         payload.sourceTypeCode = 2
         return containerService.updateContainer(payload)
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @DeleteMapping("/{containerId}")
+    open fun deleteContainer(
+        @PathVariable(value = "containerId")
+        containerId: Int
+    ) {
+        return containerService.removeCotainer(containerId)
     }
 }

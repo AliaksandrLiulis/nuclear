@@ -1,6 +1,7 @@
 package com.isotop.storage.repository
 
-import com.isotop.storage.dto.request.containerRequest
+import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
+import com.isotop.storage.dto.request.ContainerRequest
 import com.isotop.storage.dto.response.ContainerResponse
 import com.isotop.storage.jooq.Tables.CONTAINERS
 import com.isotop.storage.jooq.Tables.OPEN_SOURCE_TYPES
@@ -84,7 +85,7 @@ open class ContainerRepository(
             ).fetchInto(ContainerResponse::class.java)[0]
     }
 
-    open fun addContainerAndGetCommonActivity(payload: containerRequest): Int? {
+    open fun addContainerAndGetCommonActivity(payload: ContainerRequest): Int? {
 
         val insertValues = mapOf<Any, Any?>(
             CONTAINERS.CONTAINER_CHIPHER to payload.containerChipher,
@@ -106,7 +107,7 @@ open class ContainerRepository(
             ?.getValue(CONTAINERS.CONTAINER_CODE)
     }
 
-    open fun updateContainer(payload: containerRequest): Int? {
+    open fun updateContainer(payload: ContainerRequest): Int? {
 
         val updateValues = mapOf<Any, Any?>(
             CONTAINERS.CONTAINER_CODE to payload.containerCode,
@@ -143,6 +144,18 @@ open class ContainerRepository(
             .fetch().map { record1: Record1<BigDecimal>? -> record1!![0].toString() }
     }
 
+    open fun getStorageCodeByContainerCode(containerStorageCoe: Int): Int {
+
+        return dsl.select(
+            CONTAINERS.STORAGE_CODE
+        )
+            .from(CONTAINERS)
+            .where(
+                CONTAINERS.CONTAINER_CODE.eq(containerStorageCoe)
+            )
+            .fetchInto(Int::class.java)[0]
+    }
+
 
     open fun isExistContainerByStorageCode(payload: Int): Boolean {
 
@@ -161,6 +174,19 @@ open class ContainerRepository(
                     CONTAINERS.CONTAINER_CODE.eq(containerCode)
                 )
         )
+    }
+
+    open fun removeContainer(storageCode: Int, containerCode: Int) {
+        try {
+            dsl.delete(
+                CONTAINERS
+            ).where(
+                CONTAINERS.CONTAINER_CODE.eq(containerCode)
+                    .and(CONTAINERS.STORAGE_CODE.eq(storageCode))
+            ).execute()
+        } catch (ex: Exception) {
+            throw ValidationException(30)
+        }
     }
 
 

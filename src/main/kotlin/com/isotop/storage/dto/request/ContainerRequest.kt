@@ -1,6 +1,6 @@
 package com.isotop.storage.dto.request
 
-class containerRequest(
+class ContainerRequest(
     val containerChipher: String,
     val openSourceTypeCode: Int,
     val sourceDiametr: Double,
