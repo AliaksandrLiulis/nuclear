@@ -1,6 +1,7 @@
 package com.isotop.storage.controller
 
 import com.isotop.storage.dto.request.AddContainerRequest
+import com.isotop.storage.dto.response.ContainerResponse
 import com.isotop.storage.dto.response.ListContainerDataResponse
 import com.isotop.storage.service.ContainerService
 import org.springframework.security.access.prepost.PreAuthorize
@@ -19,12 +20,12 @@ open class ContainerController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @GetMapping("/{storageCode}", produces = ["application/json"])
-    open fun getContainerByStorageCode(
-        @PathVariable(value = "storageCode")
+    @GetMapping("/{containerCode}", produces = ["application/json"])
+    open fun getContainerByContainerCode(
+        @PathVariable(value = "containerCode")
         containerId: Int
-    ): ListContainerDataResponse {
-        return containerService.getContainersByStorageCode(containerId)
+    ): ContainerResponse {
+        return containerService.getContainerByContainerCode(containerId)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -32,7 +33,7 @@ open class ContainerController(
     open fun addContainer(
         @RequestBody
         payload: AddContainerRequest
-    ):ListContainerDataResponse {
+    ):ContainerResponse {
         payload.moutionType = 1
         payload.sourceTypeCode = 2
         return containerService.addContainer(payload)

@@ -38,7 +38,7 @@ open class ContainerRepository(
             .fetchInto(ContainerResponse::class.java)
     }
 
-    open fun getListContainerByStorageCode(storageCodeId: Int): List<ContainerResponse> {
+    open fun getContainerByStorageCode(containerCodeId: Int): ContainerResponse {
         return dsl.select(
             CONTAINERS.CONTAINER_CODE,
             CONTAINERS.CONTAINER_CHIPHER,
@@ -57,11 +57,11 @@ open class ContainerRepository(
             .leftOuterJoin(OPEN_SOURCE_TYPES)
             .on(OPEN_SOURCE_TYPES.OPEN_SOURCE_TYPE_CODE.eq(CONTAINERS.OPEN_SOURCE_TYPE_CODE))
             .where(
-                CONTAINERS.STORAGE_CODE.eq(storageCodeId)
-            ).fetchInto(ContainerResponse::class.java)
+                CONTAINERS.CONTAINER_CODE.eq(containerCodeId)
+            ).fetchInto(ContainerResponse::class.java)[0]
     }
 
-    open fun addContainerAndGetCommonActivity(payload: AddContainerRequest): MutableList<String>? {
+    open fun addContainerAndGetCommonActivity(payload: AddContainerRequest): Int? {
 
         val insertValues = mapOf<Any, Any?>(
             CONTAINERS.CONTAINER_CHIPHER to payload.containerChipher,
@@ -75,19 +75,15 @@ open class ContainerRepository(
             CONTAINERS.SOURCE_ACTIVITY to payload.sourceActivity
         )
 
-        dsl
+        return dsl
             .insertInto(CONTAINERS)
             .set(insertValues)
-            .execute()
-
-        return  dsl.select(
-            sum(CONTAINERS.OPEN_SOURCE_ACTIVITY * CONTAINERS.OPEN_SOURCE_COUNT)
-        ).from(CONTAINERS)
-            .where(CONTAINERS.STORAGE_CODE.eq(payload.storageCode))
-            .fetch().map { record1: Record1<BigDecimal>? -> record1!![0].toString() }
+            .returning(CONTAINERS.CONTAINER_CODE)
+            ?.fetchOne()
+            ?.getValue(CONTAINERS.CONTAINER_CODE)
     }
 
-    open fun updateContainerAndGetCommonActivity(payload: AddContainerRequest): MutableList<String>? {
+    open fun updateContainerAndGetCommonActivity(payload: AddContainerRequest): Int? {
 
         val updateValues = mapOf<Any, Any?>(
             CONTAINERS.CONTAINER_CODE to payload.containerCode,
@@ -103,18 +99,23 @@ open class ContainerRepository(
             CONTAINERS.SOURCE_ACTIVITY to payload.sourceActivity
         )
 
-        dsl
+        return dsl
             .insertInto(CONTAINERS)
             .set(updateValues)
-            .onConflict(CONTAINERS.CONTAINER_CODE,CONTAINERS.STORAGE_CODE )
+            .onConflict(CONTAINERS.CONTAINER_CODE, CONTAINERS.STORAGE_CODE)
             .doUpdate()
             .set(updateValues)
-            .execute()
+            .returning(CONTAINERS.CONTAINER_CODE)
+            ?.fetchOne()
+            ?.getValue(CONTAINERS.CONTAINER_CODE)
+    }
 
-        return  dsl.select(
+    open fun getCommonActivityByStorageCode(containerStorageCoe: Int): MutableList<String>? {
+
+        return dsl.select(
             sum(CONTAINERS.OPEN_SOURCE_ACTIVITY * CONTAINERS.OPEN_SOURCE_COUNT)
         ).from(CONTAINERS)
-            .where(CONTAINERS.STORAGE_CODE.eq(payload.storageCode))
+            .where(CONTAINERS.STORAGE_CODE.eq(containerStorageCoe))
             .fetch().map { record1: Record1<BigDecimal>? -> record1!![0].toString() }
     }
 
@@ -137,4 +138,6 @@ open class ContainerRepository(
                 )
         )
     }
+
+
 }
