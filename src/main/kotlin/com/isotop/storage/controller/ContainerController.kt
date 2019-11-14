@@ -20,12 +20,12 @@ open class ContainerController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @GetMapping("/{containerCode}", produces = ["application/json"])
-    open fun getContainerByContainerCode(
-        @PathVariable(value = "containerCode")
+    @GetMapping("/{storageCode}", produces = ["application/json"])
+    open fun getContainerByStorageCode(
+        @PathVariable(value = "storageCode")
         containerId: Int
-    ): ContainerResponse {
-        return containerService.getContainerByContainerCode(containerId)
+    ): ListContainerDataResponse {
+        return containerService.getContainerByStorageCode(containerId)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -33,7 +33,7 @@ open class ContainerController(
     open fun addContainer(
         @RequestBody
         payload: AddContainerRequest
-    ):ContainerResponse {
+    ): ContainerResponse {
         payload.moutionType = 1
         payload.sourceTypeCode = 2
         return containerService.addContainer(payload)

@@ -38,7 +38,30 @@ open class ContainerRepository(
             .fetchInto(ContainerResponse::class.java)
     }
 
-    open fun getContainerByStorageCode(containerCodeId: Int): ContainerResponse {
+    open fun getContainerByStorageCode(storageCodeId: Int): List<ContainerResponse> {
+        return dsl.select(
+            CONTAINERS.CONTAINER_CODE,
+            CONTAINERS.CONTAINER_CHIPHER,
+            CONTAINERS.OPEN_SOURCE_TYPE_CODE,
+            CONTAINERS.SOURCE_DIAMETR,
+            CONTAINERS.SOURCE_HEIGHT,
+            CONTAINERS.OPEN_SOURCE_ACTIVITY,
+            CONTAINERS.OPEN_SOURCE_COUNT,
+            CONTAINERS.OPEN_SOURCE_REST,
+            CONTAINERS.STORAGE_CODE,
+            CONTAINERS.SOURCE_ACTIVITY,
+            OPEN_SOURCE_TYPES.OPEN_SOURCE_TYPE_NAME
+        ).from(
+            CONTAINERS
+        )
+            .leftOuterJoin(OPEN_SOURCE_TYPES)
+            .on(OPEN_SOURCE_TYPES.OPEN_SOURCE_TYPE_CODE.eq(CONTAINERS.OPEN_SOURCE_TYPE_CODE))
+            .where(
+                CONTAINERS.STORAGE_CODE.eq(storageCodeId)
+            ).fetchInto(ContainerResponse::class.java)
+    }
+
+    open fun getContainerByContainerCode(containerCodeId: Int): ContainerResponse {
         return dsl.select(
             CONTAINERS.CONTAINER_CODE,
             CONTAINERS.CONTAINER_CHIPHER,

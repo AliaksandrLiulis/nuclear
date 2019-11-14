@@ -20,11 +20,22 @@ open class ContainerService(
         return ListContainerDataResponse(containerRepository.getAllFromContainer())
     }
 
+    open fun getContainerByStorageCode(storageId: Int): ListContainerDataResponse {
+        if (!containerRepository.isExistContainerByStorageCode(storageId)) {
+            throw ValidationException(31)
+        }
+        if (!storageRepository.isExistStorageContainerNoteById(storageId)) {
+            throw ValidationException(32)
+        }
+
+        return ListContainerDataResponse(containerRepository.getContainerByStorageCode(storageId))
+    }
+
     open fun getContainerByContainerCode(containerCode: Int): ContainerResponse {
         if (!containerRepository.isExistContainerByContainerCode(containerCode)) {
             throw ValidationException(33)
         }
-        return containerRepository.getContainerByStorageCode(containerCode)
+        return containerRepository.getContainerByContainerCode(containerCode)
     }
 
     @Transactional
