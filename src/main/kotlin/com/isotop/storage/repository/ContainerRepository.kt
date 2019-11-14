@@ -5,8 +5,11 @@ import com.isotop.storage.dto.response.ContainerResponse
 import com.isotop.storage.jooq.Tables.CONTAINERS
 import com.isotop.storage.jooq.Tables.OPEN_SOURCE_TYPES
 import org.jooq.DSLContext
+import org.jooq.Record1
 import org.jooq.impl.DSL
+import org.jooq.impl.DSL.sum
 import org.springframework.stereotype.Repository
+import java.math.BigDecimal
 
 @Repository
 open class ContainerRepository(
@@ -58,7 +61,7 @@ open class ContainerRepository(
             ).fetchInto(ContainerResponse::class.java)
     }
 
-    open fun addContainerAndGetCommonActivity(payload: AddContainerRequest): Double {
+    open fun addContainerAndGetCommonActivity(payload: AddContainerRequest): MutableList<String>? {
 
         val insertValues = mapOf<Any, Any?>(
             CONTAINERS.CONTAINER_CHIPHER to payload.containerСhipher,
@@ -72,19 +75,17 @@ open class ContainerRepository(
             CONTAINERS.SOURCE_ACTIVITY to payload.sourceActivity
         )
 
-        val storageCode = dsl
+        dsl
             .insertInto(CONTAINERS)
             .set(insertValues)
-            .returning(CONTAINERS.STORAGE_CODE)
-            ?.fetchOne()
-            ?.getValue(CONTAINERS.STORAGE_CODE)
+            .execute()
 
-        return dsl.select(
-            (CONTAINERS.OPEN_SOURCE_ACTIVITY * CONTAINERS.OPEN_SOURCE_COUNT).`as`("allContainerActivity")
-        ).where(CONTAINERS.STORAGE_CODE.eq(storageCode))
-            .fetchOne(0, Double::class.java)
+        return  dsl.select(
+            sum(CONTAINERS.OPEN_SOURCE_ACTIVITY * CONTAINERS.OPEN_SOURCE_COUNT)
+        ).from(CONTAINERS)
+            .where(CONTAINERS.STORAGE_CODE.eq(payload.storageCode))
+            .fetch().map { record1: Record1<BigDecimal>? -> record1!![0].toString() }
     }
-
 
 
     open fun isExistContainerByStorageCode(payload: Int): Boolean {

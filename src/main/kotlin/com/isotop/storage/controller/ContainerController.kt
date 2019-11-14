@@ -44,7 +44,10 @@ open class ContainerController(
         @RequestBody
         payload: AddContainerRequest
     ) {
-        payload.moutionType == 0
+        if (payload.moutionType == null) {
+            payload.moutionType = 1
+        }
+
         payload.sourceTypeCode = 2
         containerService.addContainer(payload)
     }

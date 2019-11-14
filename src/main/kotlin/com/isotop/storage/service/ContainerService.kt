@@ -36,7 +36,7 @@ open class ContainerService(
         }
         payload.openSourceActivity = payload.sourceActivity / payload.openSourceCount
         payload.openSourceRest = payload.openSourceCount
-        val commonActivity = containerRepository.addContainerAndGetCommonActivity(payload)
+        val commonActivity = containerRepository.addContainerAndGetCommonActivity(payload)!!.map { it.toDouble() }[0]
         storageRepository.updateStorageActivity(commonActivity, payload.storageCode)
     }
 }
