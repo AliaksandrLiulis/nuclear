@@ -49,6 +49,6 @@ open class ContainerController(
         }
 
         payload.sourceTypeCode = 2
-        containerService.addContainer(payload)
+        containerService.updateContainer(payload)
     }
 }

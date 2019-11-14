@@ -39,4 +39,16 @@ open class ContainerService(
         val commonActivity = containerRepository.addContainerAndGetCommonActivity(payload)!!.map { it.toDouble() }[0]
         storageRepository.updateStorageActivity(commonActivity, payload.storageCode)
     }
+
+    @Transactional
+    open fun updateContainer(payload: AddContainerRequest) {
+        if (!containerRepository.isExistContainerByContainerCode(payload.containerCode?:0)) {
+            throw ValidationException(33)
+        }
+        payload.openSourceActivity = payload.sourceActivity / payload.openSourceCount
+        payload.openSourceRest = payload.openSourceCount
+        val commonActivity = containerRepository.updateContainerAndGetCommonActivity(payload)!!.map { it.toDouble() }[0]
+        storageRepository.updateStorageActivity(commonActivity, payload.storageCode)
+    }
 }
+

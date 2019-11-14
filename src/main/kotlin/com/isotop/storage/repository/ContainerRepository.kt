@@ -64,7 +64,7 @@ open class ContainerRepository(
     open fun addContainerAndGetCommonActivity(payload: AddContainerRequest): MutableList<String>? {
 
         val insertValues = mapOf<Any, Any?>(
-            CONTAINERS.CONTAINER_CHIPHER to payload.containerСhipher,
+            CONTAINERS.CONTAINER_CHIPHER to payload.containerChipher,
             CONTAINERS.OPEN_SOURCE_TYPE_CODE to payload.openSourceTypeCode,
             CONTAINERS.SOURCE_DIAMETR to payload.sourceDiametr,
             CONTAINERS.SOURCE_HEIGHT to payload.sourceHeight,
@@ -87,6 +87,37 @@ open class ContainerRepository(
             .fetch().map { record1: Record1<BigDecimal>? -> record1!![0].toString() }
     }
 
+    open fun updateContainerAndGetCommonActivity(payload: AddContainerRequest): MutableList<String>? {
+
+        val updateValues = mapOf<Any, Any?>(
+            CONTAINERS.CONTAINER_CODE to payload.containerCode,
+            CONTAINERS.STORAGE_CODE to payload.storageCode,
+            CONTAINERS.CONTAINER_CHIPHER to payload.containerChipher,
+            CONTAINERS.OPEN_SOURCE_TYPE_CODE to payload.openSourceTypeCode,
+            CONTAINERS.SOURCE_DIAMETR to payload.sourceDiametr,
+            CONTAINERS.SOURCE_HEIGHT to payload.sourceHeight,
+            CONTAINERS.OPEN_SOURCE_ACTIVITY to payload.openSourceActivity,
+            CONTAINERS.OPEN_SOURCE_COUNT to payload.openSourceCount,
+            CONTAINERS.OPEN_SOURCE_REST to payload.openSourceRest,
+            CONTAINERS.STORAGE_CODE to payload.storageCode,
+            CONTAINERS.SOURCE_ACTIVITY to payload.sourceActivity
+        )
+
+        dsl
+            .insertInto(CONTAINERS)
+            .set(updateValues)
+            .onConflict(CONTAINERS.CONTAINER_CODE,CONTAINERS.STORAGE_CODE )
+            .doUpdate()
+            .set(updateValues)
+            .execute()
+
+        return  dsl.select(
+            sum(CONTAINERS.OPEN_SOURCE_ACTIVITY * CONTAINERS.OPEN_SOURCE_COUNT)
+        ).from(CONTAINERS)
+            .where(CONTAINERS.STORAGE_CODE.eq(payload.storageCode))
+            .fetch().map { record1: Record1<BigDecimal>? -> record1!![0].toString() }
+    }
+
 
     open fun isExistContainerByStorageCode(payload: Int): Boolean {
 
@@ -94,6 +125,16 @@ open class ContainerRepository(
             DSL.select(CONTAINERS.CONTAINER_CODE)
                 .from(CONTAINERS)
                 .where(CONTAINERS.STORAGE_CODE.eq(payload))
+        )
+    }
+
+    open fun isExistContainerByContainerCode(containerCode: Int): Boolean {
+        return dsl.fetchExists(
+            DSL.select(CONTAINERS.CONTAINER_CODE)
+                .from(CONTAINERS)
+                .where(
+                    CONTAINERS.CONTAINER_CODE.eq(containerCode)
+                )
         )
     }
 }
