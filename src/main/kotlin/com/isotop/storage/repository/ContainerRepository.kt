@@ -144,16 +144,16 @@ open class ContainerRepository(
             .fetch().map { record1: Record1<BigDecimal>? -> record1!![0].toString() }
     }
 
-    open fun getStorageCodeByContainerCode(containerStorageCoe: Int): Int {
+    open fun getStorageCodeByContainerCode(containerCode: Int): Int {
 
         return dsl.select(
             CONTAINERS.STORAGE_CODE
         )
             .from(CONTAINERS)
             .where(
-                CONTAINERS.CONTAINER_CODE.eq(containerStorageCoe)
+                CONTAINERS.CONTAINER_CODE.eq(containerCode)
             )
-            .fetchInto(Int::class.java)[0]
+            .fetch(CONTAINERS.STORAGE_CODE)[0]
     }
 
 
