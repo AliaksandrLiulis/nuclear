@@ -132,6 +132,22 @@ open class StorageRepository(
             ?.getValue(STORAGES.STORAGE_CODE)
     }
 
+    open fun setStorageActivityToNull(storageCode: Int): Int? {
+
+        val updateValues = mapOf<Any, Any?>(
+            STORAGES.ACTIVITY to 0
+        )
+
+        return dsl.update(STORAGES)
+            .set(updateValues)
+            .where(
+                STORAGES.STORAGE_CODE.eq(storageCode)
+            )
+            .returning(STORAGES.STORAGE_CODE)
+            ?.fetchOne()
+            ?.getValue(STORAGES.STORAGE_CODE)
+    }
+
     open fun getStorageNoteByIdStorage(idStorage: Int): List<StorageResponse> {
 
         return dsl.with(outOrgNameQuery).select(

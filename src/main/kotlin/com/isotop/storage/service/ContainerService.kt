@@ -70,7 +70,11 @@ open class ContainerService(
         }
         val storageCode = containerRepository.getStorageCodeByContainerCode(containerCode)
         containerRepository.removeContainer(storageCode, containerCode)
-        updateDataStorageAfterChanges(storageCode)
+        if (containerRepository.isExistContainerByContainerCode(containerCode)) {
+            updateDataStorageAfterChanges(storageCode)
+        }else{
+            storageRepository.setStorageActivityToNull(storageCode)
+        }
     }
 
     private fun updateDataStorageAfterChanges(storageCode: Int){
