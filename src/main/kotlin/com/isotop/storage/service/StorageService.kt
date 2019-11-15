@@ -86,7 +86,7 @@ open class StorageService(
         if (!storageRepository.isExistStorageNoteById(storageCode)) {
             throw ValidationException(34)
         }
-        if(moutionRepository.getCountByStorageId(storageCode) <= 1){
+        if(moutionRepository.getCountByStorageId(storageCode) > 1){
             throw ValidationException(31)
         }
         storageRepository.removeStorageNote(storageCode)

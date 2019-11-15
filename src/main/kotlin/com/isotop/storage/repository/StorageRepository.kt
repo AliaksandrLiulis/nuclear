@@ -205,7 +205,7 @@ open class StorageRepository(
 
     open fun isExistStorageNoteById(idStorage: Int): Boolean {
         return dsl.fetchExists(
-            DSL.select(STORAGES.SOURCE_TYPE_CODE)
+            DSL.select(STORAGES.STORAGE_CODE)
                 .from(STORAGES)
                 .where(STORAGES.STORAGE_CODE.eq(idStorage))
         )
