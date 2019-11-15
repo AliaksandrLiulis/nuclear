@@ -44,7 +44,7 @@ open class StorageController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PostMapping("sources",produces = ["application/json"])
+    @PostMapping("sources", produces = ["application/json"])
     open fun addSourceToStorage(
         @RequestBody
         payload: AddContainerToStorageRequest
@@ -52,5 +52,14 @@ open class StorageController(
         payload.moutionType = 1
         payload.sourceTypeCode = 2
         return storageService.addSourceToStorage(payload)
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @DeleteMapping("/{storageId}")
+    open fun removeStorageNote(
+        @PathVariable(value = "storageId")
+        storageId: Int
+    ) {
+        return storageService.removeStorageNote(storageId)
     }
 }

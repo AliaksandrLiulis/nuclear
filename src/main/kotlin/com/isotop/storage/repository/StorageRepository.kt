@@ -1,5 +1,6 @@
 package com.isotop.storage.repository
 
+import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.AddContainerToStorageRequest
 import com.isotop.storage.dto.request.UpdateStorageRequest
 import com.isotop.storage.dto.response.StorageResponse
@@ -188,6 +189,18 @@ open class StorageRepository(
             ).and(STORAGES.STORAGE_CODE.eq(idStorage))
             .orderBy(STORAGES.COME_DATE.desc())
             .fetchInto(StorageResponse::class.java)
+    }
+
+    open fun removeStorageNote(storageCode: Int) {
+        try {
+            dsl.delete(
+                STORAGES
+            ).where(
+                STORAGES.STORAGE_CODE.eq(storageCode)
+            ).execute()
+        } catch (ex: Exception) {
+            throw ValidationException(30)
+        }
     }
 
     open fun isExistStorageNoteById(idStorage: Int): Boolean {

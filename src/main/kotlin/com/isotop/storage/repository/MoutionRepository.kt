@@ -1,5 +1,6 @@
 package com.isotop.storage.repository
 
+import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.response.MoutionDto
 import com.isotop.storage.jooq.Tables.MOUTIONS
 import org.jooq.DSLContext
@@ -96,11 +97,30 @@ open class MoutionRepository(
         return getMoutionById(moutionId!!)[0]
     }
 
+    open fun removeMoutions(storageCode: Int) {
+        try {
+            dsl.delete(
+                MOUTIONS
+            ).where(
+                MOUTIONS.STORAGE_CODE.eq(storageCode)
+            ).execute()
+        } catch (ex: Exception) {
+            throw ValidationException(30)
+        }
+    }
+
     open fun isExistMotionByStorageId(idStorage: Int): Boolean {
         return dsl.fetchExists(
             DSL.select(MOUTIONS.STORAGE_CODE)
                 .from(MOUTIONS)
                 .where(MOUTIONS.STORAGE_CODE.eq(idStorage))
         )
+    }
+
+    open fun getCountByStorageId(idStorage: Int): Int {
+        return dsl.selectCount()
+            .from(MOUTIONS)
+            .where(MOUTIONS.STORAGE_CODE.eq(idStorage))
+            ?.fetchOne(0, Int::class.java) ?: 0
     }
 }

@@ -80,4 +80,16 @@ open class StorageService(
         storageRepository.updateStorageNote(payload)
         return storageRepository.getStorageNoteByIdStorage(payload.storageCode)[0]
     }
+
+    @Transactional
+    open fun removeStorageNote(storageCode: Int) {
+        if (!storageRepository.isExistStorageNoteById(storageCode)) {
+            throw ValidationException(34)
+        }
+        if(moutionRepository.getCountByStorageId(storageCode) <= 1){
+            throw ValidationException(31)
+        }
+        storageRepository.removeStorageNote(storageCode)
+        moutionRepository.removeMoutions(storageCode)
+    }
 }
