@@ -18,7 +18,7 @@ open class StorageService(
 ) {
 
     open fun getAllStorage(): ListStorageDataResponse {
-        return ListStorageDataResponse(storageRepository.getAllFromStorage())
+        return ListStorageDataResponse(storageRepository.getAllFromStorageWhereComeDateIsNotNull())
     }
 
     @Transactional
