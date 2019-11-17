@@ -1,8 +1,9 @@
 package com.isotop.storage.repository
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
+import com.isotop.storage.dto.response.EventResponse
 import com.isotop.storage.dto.response.MoutionDto
-import com.isotop.storage.jooq.Tables.MOUTIONS
+import com.isotop.storage.jooq.Tables.*
 import org.jooq.DSLContext
 import org.jooq.impl.DSL
 import org.springframework.stereotype.Repository
@@ -32,6 +33,28 @@ open class MoutionRepository(
             .where(
                 MOUTIONS.MOUTION_CODE.eq(idMoution)
             ).fetchInto(MoutionDto::class.java)
+    }
+
+    open fun getActiveMotionEvent(): List<EventResponse> {
+
+        return dsl.select(
+            MAKE_TYPES.MAKE_TYPE_NAME,
+            STORAGES.PASSPORT_NUMBER,
+            STORAGES.SERIAL_NUMBER,
+            ORGS.SHORT_ORG_NAME,
+            MOUTIONS.MOUTION_TYPE,
+            MOUTIONS.MOUTION_DATE,
+            MOUTIONS.MOUTION_CODE
+        ).from(
+            MOUTIONS
+        )
+            .leftOuterJoin(STORAGES).on(STORAGES.STORAGE_CODE.eq(MOUTIONS.STORAGE_CODE))
+            .leftOuterJoin(ORGS).on(ORGS.ORG_CODE.eq(MOUTIONS.ORG_CODE))
+            .leftOuterJoin(MAKE_TYPES).on(STORAGES.MAKE_TYPE_CODE.eq(MAKE_TYPES.MAKE_TYPE_CODE))
+            .where(
+                MOUTIONS.HIDE_EVENT.eq(0)
+            ).orderBy(MOUTIONS.MOUTION_DATE)
+            .fetchInto(EventResponse::class.java)
     }
 
     open fun addMoution(
