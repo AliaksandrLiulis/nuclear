@@ -28,12 +28,12 @@ open class MakeSourceController(
         return makeSourceService.addMakeSource(payload)
     }
 
-//    @PreAuthorize("hasRole('STORAGE')")
-//    @PutMapping
-//    open fun addMakeSource(
-//        @RequestBody
-//        payload: MakeSourceRequest
-//    ): MakeSourceResponse {
-//        return makeSourceService.addMakeSource(payload)
-//    }
+    @PreAuthorize("hasRole('STORAGE')")
+    @PutMapping
+    open fun updateMakeSource(
+        @RequestBody
+        payload: MakeSourceRequest
+    ): MakeSourceResponse {
+        return makeSourceService.updateMakeSource(payload)
+    }
 }

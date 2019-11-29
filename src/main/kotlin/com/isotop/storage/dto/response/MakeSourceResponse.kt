@@ -18,5 +18,5 @@ data class MakeSourceResponse (
     val makeTypeCode: Int?,
     val makeTypeName: String?,
     val nuclideTypeCode: Int?,
-    val nuclideTypeName: String?
+    val nuclideType: String?
 )

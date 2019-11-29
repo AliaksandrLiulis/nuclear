@@ -22,7 +22,7 @@ open class MakeSourcesRepository(
             MAKE_TYPES.MAKE_TYPE_CODE,
             MAKE_TYPES.MAKE_TYPE_NAME,
             NUCLIDE_TYPES.NUCLIDE_TYPE_CODE,
-            NUCLIDE_TYPES.NUCLIDE_TYPE_NAME
+            NUCLIDE_TYPES.NUCLIDE_TYPE
         )
             .from(
                 STORAGES
@@ -46,7 +46,7 @@ open class MakeSourcesRepository(
             MAKE_TYPES.MAKE_TYPE_CODE,
             MAKE_TYPES.MAKE_TYPE_NAME,
             NUCLIDE_TYPES.NUCLIDE_TYPE_CODE,
-            NUCLIDE_TYPES.NUCLIDE_TYPE_NAME
+            NUCLIDE_TYPES.NUCLIDE_TYPE
         )
             .from(
                 STORAGES
@@ -72,6 +72,27 @@ open class MakeSourcesRepository(
         val sourceId =  dsl
             .insertInto(STORAGES)
             .set(insertValues)
+            .returning(STORAGES.STORAGE_CODE)
+            .fetchOne()
+            .getValue(STORAGES.STORAGE_CODE)
+
+        return getAllMakeSourcesBySourceId(sourceId)[0]
+    }
+
+    open fun updateMakeSource(payload: MakeSourceRequest): MakeSourceResponse {
+
+        val updateValues = mapOf<Any, Any?>(
+            STORAGES.PASSPORT_NUMBER to payload.passportNumber,
+            STORAGES.SERIAL_NUMBER to payload.serialNumber,
+            STORAGES.NUCLIDE_TYPE_CODE to payload.nuclideTypeCode,
+            STORAGES.MAKE_TYPE_CODE to payload.makeTypeCode,
+            STORAGES.ACTIVITY to 0
+        )
+
+        val sourceId =  dsl
+            .update(STORAGES)
+            .set(updateValues)
+            .where(STORAGES.STORAGE_CODE.eq(payload.storageCode))
             .returning(STORAGES.STORAGE_CODE)
             .fetchOne()
             .getValue(STORAGES.STORAGE_CODE)
