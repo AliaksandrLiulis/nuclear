@@ -7,6 +7,7 @@ import com.isotop.storage.dto.response.MakeSourceResponse
 import com.isotop.storage.repository.MakeSourcesRepository
 import com.isotop.storage.repository.StorageRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 open class MakeSourceService(
@@ -14,20 +15,28 @@ open class MakeSourceService(
     private val storageRepository: StorageRepository
 ) {
 
-    fun getMakeSources(): ListMakeSourceDataResponse {
+    open fun getMakeSources(): ListMakeSourceDataResponse {
         return ListMakeSourceDataResponse(makeSourcesRepository.getAllMakeSources())
     }
 
-    fun addMakeSource(payload: MakeSourceRequest): MakeSourceResponse {
+    @Transactional
+    open fun addMakeSource(payload: MakeSourceRequest): MakeSourceResponse {
         return makeSourcesRepository.addMakeSource(payload)
     }
 
-    fun updateMakeSource(payload: MakeSourceRequest): MakeSourceResponse {
+    @Transactional
+    open fun updateMakeSource(payload: MakeSourceRequest): MakeSourceResponse {
         if (!storageRepository.isExistStorageNoteById(payload.storageCode!!)) {
             throw ValidationException(35)
         }
         return makeSourcesRepository.updateMakeSource(payload)
     }
 
-
+    @Transactional
+    open fun removeMakeSource(storageCode: Int) {
+        if (!storageRepository.isExistStorageNoteById(storageCode)) {
+            throw ValidationException(35)
+        }
+        storageRepository.removeStorageNote(storageCode)
+    }
 }

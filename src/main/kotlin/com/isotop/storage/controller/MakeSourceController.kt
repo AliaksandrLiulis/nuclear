@@ -36,4 +36,13 @@ open class MakeSourceController(
     ): MakeSourceResponse {
         return makeSourceService.updateMakeSource(payload)
     }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @DeleteMapping("/{storageId}")
+    open fun removeMakeSource(
+        @PathVariable(value = "storageId")
+        storageId: Int
+    ) {
+        return makeSourceService.removeMakeSource(storageId)
+    }
 }
