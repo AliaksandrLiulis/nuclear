@@ -152,7 +152,7 @@ open class MoutionRepository(
         )
     }
 
-    open fun isExistMotionByMotionCodeId(idMoution: Int): Boolean {
+    open fun isExistMotionByMotionCode(idMoution: Int): Boolean {
         return dsl.fetchExists(
             DSL.select(MOUTIONS.MOUTION_CODE)
                 .from(MOUTIONS)
