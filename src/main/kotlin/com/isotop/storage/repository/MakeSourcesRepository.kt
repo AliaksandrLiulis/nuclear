@@ -64,7 +64,6 @@ open class MakeSourcesRepository(
         val insertValues = mapOf<Any, Any?>(
             STORAGES.PASSPORT_NUMBER to payload.passportNumber,
             STORAGES.SERIAL_NUMBER to payload.serialNumber,
-            STORAGES.MAKE_DATE to payload.makeDate,
             STORAGES.NUCLIDE_TYPE_CODE to payload.nuclideTypeCode,
             STORAGES.MAKE_TYPE_CODE to payload.makeTypeCode,
             STORAGES.ACTIVITY to 0
