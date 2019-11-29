@@ -15,7 +15,7 @@ open class EventService(
     }
 
     open fun deactivateEvent(motionCodeId: Int) {
-        if (!motionRepository.isExistMotionByStorageId(motionCodeId)) {
+        if (!motionRepository.isExistMotionByMotionCodeId(motionCodeId)) {
             throw ValidationException(34)
         }
         motionRepository.deactivateEvent(motionCodeId)
