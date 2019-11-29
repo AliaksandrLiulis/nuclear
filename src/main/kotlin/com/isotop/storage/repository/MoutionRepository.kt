@@ -152,6 +152,14 @@ open class MoutionRepository(
         )
     }
 
+    open fun isExistMotionByMotionCodeId(idMoution: Int): Boolean {
+        return dsl.fetchExists(
+            DSL.select(MOUTIONS.MOUTION_CODE)
+                .from(MOUTIONS)
+                .where(MOUTIONS.MOUTION_CODE.eq(idMoution))
+        )
+    }
+
     open fun getCountByStorageId(idStorage: Int): Int {
         return dsl.selectCount()
             .from(MOUTIONS)
