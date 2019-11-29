@@ -14,28 +14,7 @@ data class EventResponse(
     val passportNumber: String?,
     val serialNumber: String?,
     val shortOrgName: String,
-    val motionCode: Int?,
-    val motionDate: LocalDate?,
-    val motionType: Int?
-//
-//    val docDate: LocalDate?,
-//    val docNumber: String?,
-//    val docTypeCode: Int?,
-//    val hideEvent: Int?,
-//
-//
-//    val makeDate: LocalDate?,
-//    val comeDate: LocalDate?,
-//    val leaveDate: LocalDate?,
-//    val activity: Double?,
-//    val sourceTypeCode: Int?,
-//    val makeTypeCode: Int?,
-//    val ownerOrgCode: Int?,
-//    val orgName: Int,
-//
-//    val iconOrgName: String,
-//    val orgAdress: String,
-//
-//    val nuclideType: String?,
-//    val nuclideName: Int?
+    val moutionCode: Int?,
+    val moutionDate: LocalDate?,
+    val moutionType: Int?
 )

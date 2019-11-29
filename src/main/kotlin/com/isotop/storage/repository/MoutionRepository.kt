@@ -42,9 +42,9 @@ open class MoutionRepository(
             STORAGES.PASSPORT_NUMBER,
             STORAGES.SERIAL_NUMBER,
             ORGS.SHORT_ORG_NAME,
-            MOUTIONS.MOUTION_TYPE,
+            MOUTIONS.MOUTION_CODE,
             MOUTIONS.MOUTION_DATE,
-            MOUTIONS.MOUTION_CODE
+            MOUTIONS.MOUTION_TYPE
         ).from(
             MOUTIONS
         )
@@ -55,6 +55,18 @@ open class MoutionRepository(
                 MOUTIONS.HIDE_EVENT.eq(0)
             ).orderBy(MOUTIONS.MOUTION_DATE)
             .fetchInto(EventResponse::class.java)
+    }
+
+    open fun deactivateEvent(motionCodeId: Int) {
+
+        val updateValues = mapOf<Any, Any?>(
+            MOUTIONS.MOUTION_DATE to 1
+        )
+
+        dsl.update(MOUTIONS)
+            .set(updateValues)
+            .where(MOUTIONS.MOUTION_CODE.eq(motionCodeId))
+            .execute()
     }
 
     open fun addMoution(
