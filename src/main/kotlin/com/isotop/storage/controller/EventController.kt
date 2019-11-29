@@ -18,7 +18,7 @@ open class EventController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PostMapping("/{motionCodeId}")
+    @PutMapping("/{motionCodeId}")
     open fun hideEvent(
         @PathVariable(value = "motionCodeId")
         motionCodeId: Int

@@ -60,7 +60,7 @@ open class MoutionRepository(
     open fun deactivateEvent(motionCodeId: Int) {
 
         val updateValues = mapOf<Any, Any?>(
-            MOUTIONS.MOUTION_DATE to 1
+            MOUTIONS.HIDE_EVENT to 1
         )
 
         dsl.update(MOUTIONS)
