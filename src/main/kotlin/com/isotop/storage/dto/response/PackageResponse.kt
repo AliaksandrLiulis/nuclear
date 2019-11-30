@@ -13,7 +13,7 @@ data class PackageResponse(
     val openSourceUsing: Int,
     val sourceActivity: Double,
     val nuclideType: String,
-    val containerChipher: String,
+    val containerHeight: String,
     val sourceDiametr: Double,
     val makeTypeName: Double
 )
