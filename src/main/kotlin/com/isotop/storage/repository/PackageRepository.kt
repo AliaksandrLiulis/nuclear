@@ -15,7 +15,7 @@ open class PackageRepository(
     val dsl: DefaultDSLContext
 ) {
 
-    open fun getPackagesByStorageCode(storageCode: Int): List<PackageResponse> {
+    open fun getPackagesByPackageCode(packageCode: Int): List<PackageResponse> {
 
         return dsl.select(
             PACKAGES.OPEN_SOURCE_USING,
@@ -32,7 +32,7 @@ open class PackageRepository(
             .leftOuterJoin(STORAGES).on(PACKAGES.STORAGE_CODE.eq(STORAGES.STORAGE_CODE))
             .leftOuterJoin(NUCLIDE_TYPES).on(NUCLIDE_TYPES.NUCLIDE_TYPE_CODE.eq(NUCLIDE_TYPES.NUCLIDE_TYPE_CODE))
             .where(
-                PACKAGES.STORAGE_CODE.eq(storageCode)
+                PACKAGES.PACKAGE_CODE.eq(packageCode)
             )
             .fetchInto(PackageResponse::class.java)
     }

@@ -9,7 +9,7 @@ open class PackagesService(
     private val packageRepository: PackageRepository
 ) {
 
-    open fun getPackagesByStorageCode(storageCode: Int): ListPackagesDataResponse {
-        return ListPackagesDataResponse(packageRepository.getPackagesByStorageCode(storageCode))
+    open fun getPackagesByPackageCode(packageCode: Int): ListPackagesDataResponse {
+        return ListPackagesDataResponse(packageRepository.getPackagesByPackageCode(packageCode))
     }
 }

@@ -15,11 +15,11 @@ open class PackagesController(
 ) {
 
     @PreAuthorize("hasRole('STORAGE')")
-    @GetMapping("/{storageId}", produces = ["application/json"])
-    open fun getPackagesByStorageId(
-        @PathVariable(value = "storageId")
-        storageId: Int
+    @GetMapping("/{packageCode}", produces = ["application/json"])
+    open fun getPackagesByPackageCode(
+        @PathVariable(value = "packageCode")
+        packageCode: Int
     ): ListPackagesDataResponse {
-        return packagesService.getPackagesByStorageCode(storageId)
+        return packagesService.getPackagesByPackageCode(packageCode)
     }
 }
