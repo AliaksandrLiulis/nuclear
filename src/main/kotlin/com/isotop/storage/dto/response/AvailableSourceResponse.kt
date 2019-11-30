@@ -10,6 +10,7 @@ data class ListAvailableSourceDataResponse(
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class AvailableSourceResponse (
+    val containerCode: Int,
     val containerChipher: String?,
     val openSourceRest: Int?,
     val sourceDiametr: Double?,

@@ -178,6 +178,7 @@ open class ContainerRepository(
     open fun getAvailableSources(): List<AvailableSourceResponse> {
 
         return dsl.select(
+            CONTAINERS.CONTAINER_CODE,
             CONTAINERS.CONTAINER_CHIPHER,
             CONTAINERS.OPEN_SOURCE_REST,
             CONTAINERS.SOURCE_DIAMETR,
