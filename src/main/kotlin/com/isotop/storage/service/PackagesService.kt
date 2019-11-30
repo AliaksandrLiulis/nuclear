@@ -12,4 +12,8 @@ open class PackagesService(
     open fun getPackagesByStorageCode(storageCode: Int): ListPackagesDataResponse {
         return ListPackagesDataResponse(packageRepository.getPackagesByStorageCode(storageCode))
     }
+
+    open fun removePackageById(packageId: Int) {
+//        return ListPackagesDataResponse(packageRepository.getPackagesByStorageCode(storageCode))
+    }
 }
