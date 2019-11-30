@@ -18,6 +18,7 @@ open class PackageRepository(
     open fun getPackagesByStorageCode(storageCode: Int): List<PackageResponse> {
 
         return dsl.select(
+            PACKAGES.PACKAGE_CODE,
             PACKAGES.OPEN_SOURCE_USING,
             PACKAGES.SOURCE_ACTIVITY,
             NUCLIDE_TYPES.NUCLIDE_TYPE,

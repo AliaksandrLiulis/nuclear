@@ -9,6 +9,7 @@ data class ListPackagesDataResponse(
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class PackageResponse(
+    val packageCode: Int,
     val openSourceUsing: Int,
     val sourceActivity: Double,
     val nuclideType: String,
