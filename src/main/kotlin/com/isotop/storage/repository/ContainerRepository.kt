@@ -135,6 +135,25 @@ open class ContainerRepository(
             ?.getValue(CONTAINERS.CONTAINER_CODE)
     }
 
+    open fun updateOpenSourceRestInContainer(openSourceRest:Int, containerCode: Int): Int? {
+
+        val updateValues = mapOf<Any, Any?>(
+            CONTAINERS.OPEN_SOURCE_REST to openSourceRest
+         )
+
+        return dsl
+            .update(CONTAINERS)
+            .set(updateValues)
+            .where(
+                CONTAINERS.CONTAINER_CODE.eq(containerCode)
+            )
+            .returning(CONTAINERS.CONTAINER_CODE)
+            ?.fetchOne()
+            ?.getValue(CONTAINERS.CONTAINER_CODE)
+    }
+
+
+
     open fun getCommonActivityByStorageCode(containerStorageCoe: Int): MutableList<String>? {
 
         return dsl.select(

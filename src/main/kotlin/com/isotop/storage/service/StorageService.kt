@@ -41,6 +41,10 @@ open class StorageService(
         }
     }
 
+    open fun getActivityByStorageCode(storageCode:Int): Double {
+        return storageRepository.getContainerActivityByStorageCode(storageCode)
+    }
+
     @Transactional
     open fun addSourceToStorage(payload: AddContainerToStorageRequest): StorageResponse {
         val storageNote = storageRepository.addContainerToStorage(payload)

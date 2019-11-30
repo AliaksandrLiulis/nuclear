@@ -42,6 +42,7 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             34 -> "Event by Id not exist"
             35 -> "Make source by Id not exist"
             36 -> "Package by Id not exist"
+            37 -> "OpenSourceUsing more than OpenSourceRest"
             else -> ""
         }
     }

@@ -244,6 +244,36 @@ open class StorageRepository(
         }
     }
 
+    open fun getContainerActivityByStorageCode(storageCode: Int): Double {
+        return dsl.select(
+            STORAGES.ACTIVITY
+        )
+            .from(
+                STORAGES
+            ).where(
+                STORAGES.STORAGE_CODE.eq(storageCode)
+            ).fetchOne(STORAGES.ACTIVITY)
+    }
+
+    open fun updateStorageContainerActivity(commonActivity:Double, storageCode:Int): StorageResponse {
+
+        val updateValues = mapOf<Any, Any?>(
+            STORAGES.ACTIVITY to commonActivity
+        )
+
+        val storageId = dsl
+            .update(STORAGES)
+            .set(updateValues)
+            .where(
+                STORAGES.STORAGE_CODE.eq(storageCode)
+            )
+            .returning(STORAGES.STORAGE_CODE)
+            ?.fetchOne()
+            ?.getValue(STORAGES.STORAGE_CODE)
+
+        return getStorageNoteByIdStorage(storageId!!)[0]
+    }
+
     open fun isExistStorageNoteById(idStorage: Int): Boolean {
         return dsl.fetchExists(
             DSL.select(STORAGES.STORAGE_CODE)

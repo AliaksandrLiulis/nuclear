@@ -1,5 +1,6 @@
 package com.isotop.storage.repository
 
+import com.isotop.storage.dto.request.OpenSourceUsingRequest
 import com.isotop.storage.dto.response.PackageResponse
 import com.isotop.storage.jooq.Tables.*
 import org.jooq.impl.DSL
@@ -35,6 +36,24 @@ open class PackageRepository(
             )
             .fetchInto(PackageResponse::class.java)
     }
+
+    open fun addPackage(payload: OpenSourceUsingRequest): Int {
+
+        val insertValues = mapOf<Any, Any?>(
+            PACKAGES.STORAGE_CODE to payload.storageCode,
+            PACKAGES.CONTAINER_CODE to payload.containerCode,
+            PACKAGES.OPEN_SOURCE_USING to payload.openSourceUsing,
+            PACKAGES.SOURCE_ACTIVITY to payload.sourceActivity
+        )
+
+        return dsl
+            .insertInto(PACKAGES)
+            .set(insertValues)
+            .returning(PACKAGES.PACKAGE_CODE)
+            .fetchOne()
+            .getValue(PACKAGES.PACKAGE_CODE)
+    }
+
 
     open fun isExistPackageByStorageCode(StorageCode: Int): Boolean {
         return dsl.fetchExists(

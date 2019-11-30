@@ -15,8 +15,8 @@ data class ContainerResponse(
     val sourceDiametr: Double?,
     val sourceHeight: Double?,
     val openSourceActivity: Double?,
-    val openSourceCount: Int?,
-    val openSourceRest: Int?,
+    val openSourceCount: Int,
+    val openSourceRest: Int,
     val storageCode: Int?,
     val sourceActivity: Double?,
     val openSourceTypeName: String?
