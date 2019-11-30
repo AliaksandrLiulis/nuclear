@@ -41,6 +41,7 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             33 -> "Container by Id not exist"
             34 -> "Event by Id not exist"
             35 -> "Make source by Id not exist"
+            36 -> "Package by Id not exist"
             else -> ""
         }
     }
