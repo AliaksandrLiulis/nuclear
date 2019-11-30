@@ -1,5 +1,6 @@
 package com.isotop.storage.controller
 
+import com.isotop.storage.dto.response.ListAvailableSourceDataResponse
 import com.isotop.storage.dto.response.ListSourceTypeDataResponse
 import com.isotop.storage.dto.response.SourceTypeResponse
 import com.isotop.storage.service.SourceService
@@ -21,6 +22,12 @@ open class SourceController(
     @GetMapping("/types", produces = ["application/json"])
     open fun getAllSourceTypes(): ListSourceTypeDataResponse {
         return sourceTypeService.getSourceTypes()
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @GetMapping("/available", produces = ["application/json"])
+    open fun getAvailableSources(): ListAvailableSourceDataResponse {
+        return sourceService.getAvailableSources()
     }
 
     @PreAuthorize("hasRole('STORAGE')")

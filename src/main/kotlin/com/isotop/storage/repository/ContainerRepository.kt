@@ -2,9 +2,9 @@ package com.isotop.storage.repository
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.ContainerRequest
+import com.isotop.storage.dto.response.AvailableSourceResponse
 import com.isotop.storage.dto.response.ContainerResponse
-import com.isotop.storage.jooq.Tables.CONTAINERS
-import com.isotop.storage.jooq.Tables.OPEN_SOURCE_TYPES
+import com.isotop.storage.jooq.Tables.*
 import org.jooq.DSLContext
 import org.jooq.Record1
 import org.jooq.impl.DSL
@@ -154,6 +154,28 @@ open class ContainerRepository(
                 CONTAINERS.CONTAINER_CODE.eq(containerCode)
             )
             .fetch(CONTAINERS.STORAGE_CODE)[0]
+    }
+
+    open fun getAvailableSources(): List<AvailableSourceResponse> {
+
+        return dsl.select(
+            CONTAINERS.CONTAINER_CHIPHER,
+            CONTAINERS.OPEN_SOURCE_REST,
+            CONTAINERS.SOURCE_DIAMETR,
+            CONTAINERS.SOURCE_HEIGHT,
+            OPEN_SOURCE_TYPES.OPEN_SOURCE_TYPE_NAME,
+            STORAGES.COME_DATE,
+            STORAGES.PASSPORT_NUMBER
+        )
+            .from(
+                CONTAINERS
+            )
+            .leftOuterJoin(OPEN_SOURCE_TYPES).on(CONTAINERS.OPEN_SOURCE_TYPE_CODE.eq(OPEN_SOURCE_TYPES.OPEN_SOURCE_TYPE_CODE))
+            .leftOuterJoin(STORAGES).on(CONTAINERS.STORAGE_CODE.eq(STORAGES.STORAGE_CODE))
+            .where(
+                CONTAINERS.OPEN_SOURCE_REST.isNotNull.and(CONTAINERS.OPEN_SOURCE_REST.greaterOrEqual(1))
+            )
+            .fetchInto(AvailableSourceResponse::class.java)
     }
 
 
