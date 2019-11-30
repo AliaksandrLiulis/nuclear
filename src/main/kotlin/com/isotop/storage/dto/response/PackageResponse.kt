@@ -15,5 +15,5 @@ data class PackageResponse(
     val nuclideType: String,
     val sourceHeight: String,
     val sourceDiametr: Double,
-    val makeTypeName: Double
+    val makeTypeName: String
 )
