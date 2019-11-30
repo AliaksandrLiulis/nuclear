@@ -7,9 +7,9 @@ data class MoutionDto(
     val moutionType: Int,
     val moutionDate: LocalDate,
     val orgCode: Int,
-    val storageCode: Int,
+    val storageCode: String,
     val docDate: LocalDate,
-    val docNumber: Int,
+    val docNumber: String,
     val docTypeCode: Int,
     val actCode: Int,
     val hideEvent: Int

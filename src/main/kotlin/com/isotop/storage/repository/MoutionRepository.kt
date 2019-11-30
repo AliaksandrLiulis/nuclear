@@ -75,7 +75,7 @@ open class MoutionRepository(
         orgCode: Int,
         storageCode: Int,
         docDate: LocalDate,
-        docNumber: Int,
+        docNumber: String,
         docTypeCode: Int,
         actCode: Int
     ): Int? {
@@ -105,7 +105,7 @@ open class MoutionRepository(
         orgCode: Int,
         storageCode: Int,
         docDate: LocalDate,
-        docNumber: Int,
+        docNumber: String,
         docTypeCode: Int,
         actCode: Int
     ): MoutionDto {

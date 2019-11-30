@@ -10,7 +10,7 @@ data class AddContainerToStorageRequest(
     val activity: Double,
     val comeDate: LocalDate,
     val docDate: LocalDate,
-    val docNumber: Int,
+    val docNumber: String,
     val docTypeCode: Int,
     val makeDate: LocalDate,
     val makeTypeCode: Int,
