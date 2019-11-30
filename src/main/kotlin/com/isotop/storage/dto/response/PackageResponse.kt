@@ -12,7 +12,6 @@ data class PackageResponse(
     val packageCode: Int,
     val openSourceUsing: Int,
     val sourceActivity: Double,
-    val nuclideTypeCode: String,
     val nuclideType: String,
     val containerChipher: String,
     val sourceDiametr: Double,

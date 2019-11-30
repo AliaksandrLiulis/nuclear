@@ -21,11 +21,10 @@ open class PackageRepository(
             PACKAGES.PACKAGE_CODE,
             PACKAGES.OPEN_SOURCE_USING,
             PACKAGES.SOURCE_ACTIVITY,
-            NUCLIDE_TYPES.NUCLIDE_TYPE_CODE,
             NUCLIDE_TYPES.NUCLIDE_TYPE,
-            CONTAINERS.CONTAINER_CHIPHER,
             CONTAINERS.SOURCE_DIAMETR,
-            CONTAINERS.SOURCE_HEIGHT
+            CONTAINERS.SOURCE_HEIGHT,
+            MAKE_TYPES.MAKE_TYPE_NAME
         )
             .from(
                 PACKAGES
@@ -33,6 +32,7 @@ open class PackageRepository(
             .leftOuterJoin(CONTAINERS).on(PACKAGES.CONTAINER_CODE.eq(CONTAINERS.CONTAINER_CODE))
             .leftOuterJoin(STORAGES).on(PACKAGES.STORAGE_CODE.eq(STORAGES.STORAGE_CODE))
             .leftOuterJoin(NUCLIDE_TYPES).on(STORAGES.NUCLIDE_TYPE_CODE.eq(NUCLIDE_TYPES.NUCLIDE_TYPE_CODE))
+            .leftOuterJoin(MAKE_TYPES).on(STORAGES.MAKE_TYPE_CODE.eq(MAKE_TYPES.MAKE_TYPE_CODE))
             .where(
                 PACKAGES.STORAGE_CODE.eq(storageCode)
             )
