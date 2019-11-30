@@ -45,7 +45,7 @@ open class PackageRepository(
             PACKAGES.STORAGE_CODE to payload.storageCode,
             PACKAGES.CONTAINER_CODE to payload.containerCode,
             PACKAGES.OPEN_SOURCE_USING to payload.openSourceUsing,
-            PACKAGES.SOURCE_ACTIVITY to payload.sourceActivity
+            PACKAGES.SOURCE_ACTIVITY to payload.sourceActivity * payload.openSourceUsing
         )
 
         return dsl
