@@ -27,12 +27,12 @@ open class PackagesService(
             throw ValidationException(36)
         }
         val packages = packageRepository.getPackageByPackageCode(packageId)
-        val commonActivity = packageRepository.getCommonActivityByStorageCode(packages.storageCode)
         val containers = containerService.getContainerByContainerCode(packages.containerCode)
         containerRepository.updateOpenSourceRestInContainer(
             (containers.openSourceCount + packages.openSourceUsing),
             packages.containerCode
         )
+        val commonActivity = packageRepository.getCommonActivityByStorageCode(packages.storageCode)
         packageRepository.removePackage(packageId)
         storageRepository.updateStorageActivity(commonActivity, packages.storageCode)
     }
