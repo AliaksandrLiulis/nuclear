@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 open class OpenSourceService(
     private val containerService: ContainerService,
     private val containerRepository: ContainerRepository,
-    private val storageService: StorageService,
+//    private val storageService: StorageService,
     private val storageRepository: StorageRepository,
     private val packageRepository: PackageRepository
 ) {
@@ -26,13 +26,14 @@ open class OpenSourceService(
         if (!storageRepository.isExistStorageNoteById(payload.storageCode)) {
             throw ValidationException(31)
         }
-        val containerActivity = storageService.getActivityByStorageCode(payload.storageCode)
-        val commonActivity = (payload.sourceActivity * payload.openSourceUsing) + containerActivity
-        storageRepository.updateStorageActivity(commonActivity, payload.storageCode)
+//        val containerActivity = storageService.getActivityByStorageCode(payload.storageCode)
+//        val commonActivity = (payload.sourceActivity * payload.openSourceUsing) + containerActivity
+//        storageRepository.updateStorageActivity(commonActivity, payload.storageCode)
         containerRepository.updateOpenSourceRestInContainer(
             (container.openSourceCount - payload.openSourceUsing),
             payload.containerCode
         )
         packageRepository.addPackage(payload)
+        containerService.updateDataStorageAfterChanges(payload.storageCode)
     }
 }

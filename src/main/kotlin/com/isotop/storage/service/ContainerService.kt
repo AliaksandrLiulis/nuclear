@@ -77,7 +77,8 @@ open class ContainerService(
         }
     }
 
-    private fun updateDataStorageAfterChanges(storageCode: Int){
+    @Transactional
+    open fun updateDataStorageAfterChanges(storageCode: Int){
         val commonActivity = containerRepository.getCommonActivityByStorageCode(storageCode)!!
             .map { it.toDouble() }[0]
         storageRepository.updateStorageActivity(commonActivity, storageCode)

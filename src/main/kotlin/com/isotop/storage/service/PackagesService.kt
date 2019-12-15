@@ -13,8 +13,9 @@ import org.springframework.transaction.annotation.Transactional
 open class PackagesService(
     private val packageRepository: PackageRepository,
     private val containerRepository: ContainerRepository,
-    private val storageRepository: StorageRepository,
-    private val storageService: StorageService
+//    private val storageRepository: StorageRepository,
+//    private val storageService: StorageService,
+    private val containerService: ContainerService
 
 ) {
 
@@ -28,7 +29,7 @@ open class PackagesService(
             throw ValidationException(36)
         }
         val packageByCode = packageRepository.getPackageByPackageCode(packageId)
-        val containerActivity = storageService.getActivityByStorageCode(packageByCode.storageCode)
+//        val containerActivity = storageService.getActivityByStorageCode(packageByCode.storageCode)
         val containerByContainerCode =
             containerRepository.getContainersByContainerCode(packageByCode.containerCode)
         containerRepository.updateOpenSourceRestInContainer(
@@ -36,8 +37,9 @@ open class PackagesService(
             packageByCode.containerCode
         )
         packageRepository.removePackage(packageId)
-        storageRepository.updateStorageActivity(
-            containerActivity - (packageByCode.souceActivity * packageByCode.openSourceUsing),
-            packageByCode.storageCode)
+        containerService.updateDataStorageAfterChanges(packageByCode.storageCode)
+//        storageRepository.updateStorageActivity(
+//            containerActivity - (packageByCode.souceActivity * packageByCode.openSourceUsing),
+//            packageByCode.storageCode)
     }
 }
