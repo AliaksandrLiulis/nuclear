@@ -225,6 +225,7 @@ open class MoutionRepository(
 
     open fun getMoutions(): List<MoutionResponse> {
         return dsl.select(
+            MOUTIONS.MOUTION_CODE,
             MOUTIONS.MOUTION_DATE,
             MOUTIONS.ACT_CODE,
             MOUTIONS.DOC_TYPE_CODE,

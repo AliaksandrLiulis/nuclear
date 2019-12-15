@@ -10,6 +10,7 @@ data class ListMoutionDataResponse(
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class MoutionResponse (
+    val moutionCode: Int,
     val moutionDate: LocalDate,
     val moutionType: Int,
     val actCode: Int,
