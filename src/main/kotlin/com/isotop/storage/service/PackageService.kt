@@ -45,8 +45,12 @@ open class PackageService(
 
     @Transactional
     open fun updateDataStorageAfterChangesInPackage(storageCode: Int){
-        val commonActivity = packageRepository.getCommonActivityFromPackageByStorageCode(storageCode)!!
-            .map { it.toDouble() }[0]
-        storageRepository.updateStorageActivity(commonActivity, storageCode)
+        if (packageRepository.isExistPackageByStorageCode(storageCode)) {
+            val commonActivity = packageRepository.getCommonActivityFromPackageByStorageCode(storageCode)!!
+                .map { it.toDouble() }[0]
+            storageRepository.updateStorageActivity(commonActivity, storageCode)
+        }else{
+            storageRepository.updateStorageActivity(0.0, storageCode)
+        }
     }
 }

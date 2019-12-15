@@ -100,10 +100,17 @@ open class PackageRepository(
         )
     }
 
-    open fun getCommonActivityFromPackageByStorageCode(storageCode: Int): MutableList<String>? {
+    open fun isExistPackageByStorageCode(storageCode: Int): Boolean {
+        return dsl.fetchExists(
+            DSL.select(PACKAGES.STORAGE_CODE)
+                .from(PACKAGES)
+                .where(PACKAGES.STORAGE_CODE.eq(storageCode))
+        )
+    }
 
+    open fun getCommonActivityFromPackageByStorageCode(storageCode: Int): MutableList<String>? {
         return dsl.select(
-            sum(PACKAGES.OPEN_SOURCE_USING * PACKAGES.SOURCE_ACTIVITY)
+            sum(PACKAGES.SOURCE_ACTIVITY)
         ).from(PACKAGES)
             .where(PACKAGES.STORAGE_CODE.eq(storageCode))
             .fetch().map { record1: Record1<BigDecimal>? -> record1!![0].toString() }
