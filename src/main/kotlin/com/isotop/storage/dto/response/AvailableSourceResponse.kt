@@ -17,5 +17,6 @@ data class AvailableSourceResponse (
     val sourceHeight: Double?,
     val openSourceTypeName: String?,
     val comeDate: LocalDate?,
-    val passportNumber: String?
+    val passportNumber: String?,
+    val openSourceActivity: String?
 )
