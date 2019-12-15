@@ -6,7 +6,6 @@ import com.isotop.storage.dto.response.PackageCodesResponse
 import com.isotop.storage.dto.response.PackageResponse
 import com.isotop.storage.jooq.Tables.*
 import org.jooq.impl.DSL
-import org.jooq.impl.DSL.sum
 import org.jooq.impl.DefaultDSLContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
@@ -48,7 +47,8 @@ open class PackageRepository(
         return dsl.select(
             PACKAGES.STORAGE_CODE,
             PACKAGES.CONTAINER_CODE,
-            PACKAGES.OPEN_SOURCE_USING
+            PACKAGES.OPEN_SOURCE_USING,
+            PACKAGES.SOURCE_ACTIVITY
         )
             .from(
                 PACKAGES
@@ -57,20 +57,6 @@ open class PackageRepository(
                 PACKAGES.PACKAGE_CODE.eq(packageCode)
             )
             .fetchInto(PackageCodesResponse::class.java)[0]
-    }
-
-    open fun getCommonActivityByStorageCode(storageCode: Int): Double {
-
-        return dsl.select(
-            sum(PACKAGES.OPEN_SOURCE_USING * PACKAGES.SOURCE_ACTIVITY)
-        )
-            .from(
-                PACKAGES
-            )
-            .where(
-                PACKAGES.STORAGE_CODE.eq(storageCode)
-            )
-            .fetchOne(0, Double::class.java)
     }
 
     open fun addPackage(payload: OpenSourceUsingRequest): Int? {

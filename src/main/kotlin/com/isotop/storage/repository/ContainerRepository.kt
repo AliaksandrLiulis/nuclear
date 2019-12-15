@@ -85,6 +85,29 @@ open class ContainerRepository(
             ).fetchInto(ContainerResponse::class.java)[0]
     }
 
+    open fun getContainersByContainerCode(containerCodeId: Int): ContainerResponse {
+        return dsl.select(
+            CONTAINERS.CONTAINER_CODE,
+            CONTAINERS.CONTAINER_CHIPHER,
+            CONTAINERS.OPEN_SOURCE_TYPE_CODE,
+            CONTAINERS.SOURCE_DIAMETR,
+            CONTAINERS.SOURCE_HEIGHT,
+            CONTAINERS.OPEN_SOURCE_ACTIVITY,
+            CONTAINERS.OPEN_SOURCE_COUNT,
+            CONTAINERS.OPEN_SOURCE_REST,
+            CONTAINERS.STORAGE_CODE,
+            CONTAINERS.SOURCE_ACTIVITY,
+            OPEN_SOURCE_TYPES.OPEN_SOURCE_TYPE_NAME
+        ).from(
+            CONTAINERS
+        )
+            .leftOuterJoin(OPEN_SOURCE_TYPES)
+            .on(OPEN_SOURCE_TYPES.OPEN_SOURCE_TYPE_CODE.eq(CONTAINERS.OPEN_SOURCE_TYPE_CODE))
+            .where(
+                CONTAINERS.CONTAINER_CODE.eq(containerCodeId)
+            ).fetchInto(ContainerResponse::class.java)[0]
+    }
+
     open fun addContainerAndGetCommonActivity(payload: ContainerRequest): Int? {
 
         val insertValues = mapOf<Any, Any?>(

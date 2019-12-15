@@ -158,21 +158,7 @@ open class StorageRepository(
         return getStorageNoteByIdStorage(storageId!!)[0]
     }
 
-    open fun updateStorageActivity(activity: Double, storageCode: Int): Int? {
 
-        val updateValues = mapOf<Any, Any?>(
-            STORAGES.ACTIVITY to activity
-        )
-
-        return dsl.update(STORAGES)
-            .set(updateValues)
-            .where(
-                STORAGES.STORAGE_CODE.eq(storageCode)
-            )
-            .returning(STORAGES.STORAGE_CODE)
-            ?.fetchOne()
-            ?.getValue(STORAGES.STORAGE_CODE)
-    }
 
     open fun setStorageActivityToNull(storageCode: Int): Int? {
 
@@ -255,14 +241,13 @@ open class StorageRepository(
             ).fetchOne(STORAGES.ACTIVITY)
     }
 
-    open fun updateStorageContainerActivity(commonActivity:Double, storageCode:Int): StorageResponse {
+    open fun updateStorageActivity(activity: Double, storageCode: Int): Int? {
 
         val updateValues = mapOf<Any, Any?>(
-            STORAGES.ACTIVITY to commonActivity
+            STORAGES.ACTIVITY to activity
         )
 
-        val storageId = dsl
-            .update(STORAGES)
+        return dsl.update(STORAGES)
             .set(updateValues)
             .where(
                 STORAGES.STORAGE_CODE.eq(storageCode)
@@ -270,8 +255,6 @@ open class StorageRepository(
             .returning(STORAGES.STORAGE_CODE)
             ?.fetchOne()
             ?.getValue(STORAGES.STORAGE_CODE)
-
-        return getStorageNoteByIdStorage(storageId!!)[0]
     }
 
     open fun isExistStorageNoteById(idStorage: Int): Boolean {
