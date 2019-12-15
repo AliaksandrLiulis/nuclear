@@ -66,7 +66,8 @@ open class MakeSourcesRepository(
             STORAGES.SERIAL_NUMBER to payload.serialNumber,
             STORAGES.NUCLIDE_TYPE_CODE to payload.nuclideTypeCode,
             STORAGES.MAKE_TYPE_CODE to payload.makeTypeCode,
-            STORAGES.ACTIVITY to 0
+            STORAGES.ACTIVITY to 0,
+            STORAGES.MAKE_DATE to payload.makeDate
             )
 
         val sourceId =  dsl
