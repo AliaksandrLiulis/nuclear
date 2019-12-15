@@ -69,7 +69,7 @@ open class StorageService(
         ) {
             throw ValidationException(25)
         }
-        moutionRepository.updateMoution(
+        moutionRepository.updateMoutionByStorageCode(
             payload.makeDate,
             payload.orgCode,
             payload.storageCode,

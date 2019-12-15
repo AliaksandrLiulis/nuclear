@@ -7,17 +7,17 @@ import org.springframework.stereotype.Service
 
 @Service
 open class EventService(
-    private val motionRepository: MoutionRepository
+    private val moutionRepository: MoutionRepository
 ) {
 
     open fun getAllActiveEvent(): ListEventDataResponse {
-        return ListEventDataResponse(motionRepository.getActiveMotionEvent())
+        return ListEventDataResponse(moutionRepository.getActiveMotionEvent())
     }
 
     open fun deactivateEvent(motionCodeId: Int) {
-        if (!motionRepository.isExistMotionByMotionCode(motionCodeId)) {
+        if (!moutionRepository.isExistMotionByMotionCode(motionCodeId)) {
             throw ValidationException(34)
         }
-        motionRepository.deactivateEvent(motionCodeId)
+        moutionRepository.deactivateEvent(motionCodeId)
     }
 }

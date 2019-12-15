@@ -2,6 +2,7 @@ package com.isotop.storage.repository
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.TransferRequest
+import com.isotop.storage.dto.request.UpdateMotionRequest
 import com.isotop.storage.dto.response.EventResponse
 import com.isotop.storage.dto.response.MoutionDto
 import com.isotop.storage.dto.response.MoutionResponse
@@ -103,7 +104,7 @@ open class MoutionRepository(
             ?.getValue(MOUTIONS.MOUTION_CODE)
     }
 
-    open fun updateMoution(
+    open fun updateMoutionByStorageCode(
         moutionDate: LocalDate,
         orgCode: Int,
         storageCode: Int,
@@ -133,6 +134,31 @@ open class MoutionRepository(
             ?.getValue(MOUTIONS.MOUTION_CODE)
 
         return getMoutionById(moutionId!!)[0]
+    }
+
+    open fun updateMoutionByMotionCode(
+        payload: UpdateMotionRequest
+    ): MoutionDto {
+
+        val updateValues = mapOf<Any, Any?>(
+            MOUTIONS.MOUTION_DATE to payload.moutionDate,
+            MOUTIONS.ORG_CODE to payload.orgCode,
+            MOUTIONS.DOC_NUMBER to payload.docNumber,
+            MOUTIONS.DOC_TYPE_CODE to payload.docTypeCode,
+            MOUTIONS.DOC_DATE to payload.docDate
+        )
+
+        val moutionCode = dsl
+            .update(MOUTIONS)
+            .set(updateValues)
+            .where(
+                MOUTIONS.STORAGE_CODE.eq(payload.moutionCode)
+            )
+            .returning(MOUTIONS.MOUTION_CODE)
+            ?.fetchOne()
+            ?.getValue(MOUTIONS.MOUTION_CODE)
+
+        return getMoutionById(moutionCode!!)[0]
     }
 
     open fun insertInMoutionNoteWhenGoToStorage(
