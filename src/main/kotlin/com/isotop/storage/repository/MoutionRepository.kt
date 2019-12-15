@@ -228,6 +228,8 @@ open class MoutionRepository(
             MOUTIONS.MOUTION_DATE,
             MOUTIONS.ACT_CODE,
             MOUTIONS.DOC_TYPE_CODE,
+            MOUTIONS.DOC_NUMBER,
+            MOUTIONS.DOC_DATE,
             ORGS.ICON_ORG_NAME,
             ORGS.ORG_CODE,
             MOUTION_TYPES.MOUTION_TYPE_NAME,

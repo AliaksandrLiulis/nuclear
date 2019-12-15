@@ -13,6 +13,8 @@ data class MoutionResponse (
     val moutionDate: LocalDate,
     val actCode: Int,
     val docTypeCode: Int,
+    val docNumber: String,
+    val docDate: LocalDate,
     val iconOrgName: String,
     val orgCode: Int,
     val moutionTypeName: String,
