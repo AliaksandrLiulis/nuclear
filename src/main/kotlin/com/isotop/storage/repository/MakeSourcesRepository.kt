@@ -30,7 +30,7 @@ open class MakeSourcesRepository(
             .leftOuterJoin(MAKE_TYPES).on(STORAGES.MAKE_TYPE_CODE.eq(MAKE_TYPES.MAKE_TYPE_CODE))
             .leftOuterJoin(NUCLIDE_TYPES).on(STORAGES.NUCLIDE_TYPE_CODE.eq(NUCLIDE_TYPES.NUCLIDE_TYPE_CODE))
             .where(
-                STORAGES.MAKE_DATE.isNull
+                STORAGES.COME_DATE.isNull
             ).orderBy(STORAGES.COME_DATE.desc())
             .fetchInto(MakeSourceResponse::class.java)
     }
