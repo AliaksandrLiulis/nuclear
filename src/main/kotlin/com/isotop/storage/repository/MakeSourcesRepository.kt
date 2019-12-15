@@ -55,7 +55,7 @@ open class MakeSourcesRepository(
             .leftOuterJoin(NUCLIDE_TYPES).on(STORAGES.NUCLIDE_TYPE_CODE.eq(NUCLIDE_TYPES.NUCLIDE_TYPE_CODE))
             .where(
                 STORAGES.STORAGE_CODE.eq(sourceId)
-            )
+            ).orderBy(STORAGES.STORAGE_CODE)
             .fetchInto(MakeSourceResponse::class.java)
     }
 
