@@ -18,6 +18,7 @@ data class MoutionResponse (
     val iconOrgName: String,
     val orgCode: Int,
     val moutionTypeName: String,
+    val moutionTypeCode: Int,
     val passportNumber: String,
     val serialNumber: String,
     val makeDate: LocalDate,
