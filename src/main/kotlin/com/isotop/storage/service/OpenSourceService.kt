@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 open class OpenSourceService(
     private val containerService: ContainerService,
     private val containerRepository: ContainerRepository,
-//    private val storageService: StorageService,
+    private val packageService: PackageService,
     private val storageRepository: StorageRepository,
     private val packageRepository: PackageRepository
 ) {
@@ -34,6 +34,6 @@ open class OpenSourceService(
             payload.containerCode
         )
         packageRepository.addPackage(payload)
-        containerService.updateDataStorageAfterChanges(payload.storageCode)
+        packageService.updateDataStorageAfterChangesInPackage(payload.storageCode)
     }
 }

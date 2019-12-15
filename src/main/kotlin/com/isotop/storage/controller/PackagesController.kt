@@ -1,14 +1,14 @@
 package com.isotop.storage.controller
 
 import com.isotop.storage.dto.response.ListPackagesDataResponse
-import com.isotop.storage.service.PackagesService
+import com.isotop.storage.service.PackageService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/packages")
 open class PackagesController(
-    private val packagesService: PackagesService
+    private val packageService: PackageService
 ) {
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -17,7 +17,7 @@ open class PackagesController(
         @PathVariable(value = "storageId")
         storageId: Int
     ): ListPackagesDataResponse {
-        return packagesService.getPackagesByStorageCode(storageId)
+        return packageService.getPackagesByStorageCode(storageId)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
@@ -26,6 +26,6 @@ open class PackagesController(
         @PathVariable(value = "packageId")
         packageId: Int
     ) {
-        return packagesService.removePackageById(packageId)
+        return packageService.removePackageById(packageId)
     }
 }

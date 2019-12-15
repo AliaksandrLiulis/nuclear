@@ -5,10 +5,13 @@ import com.isotop.storage.dto.request.OpenSourceUsingRequest
 import com.isotop.storage.dto.response.PackageCodesResponse
 import com.isotop.storage.dto.response.PackageResponse
 import com.isotop.storage.jooq.Tables.*
+import org.jooq.Record1
 import org.jooq.impl.DSL
+import org.jooq.impl.DSL.sum
 import org.jooq.impl.DefaultDSLContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
+import java.math.BigDecimal
 
 @Repository
 open class PackageRepository(
@@ -95,5 +98,14 @@ open class PackageRepository(
                 .from(PACKAGES)
                 .where(PACKAGES.PACKAGE_CODE.eq(packageCode))
         )
+    }
+
+    open fun getCommonActivityFromPackageByStorageCode(storageCode: Int): MutableList<String>? {
+
+        return dsl.select(
+            sum(PACKAGES.OPEN_SOURCE_USING * PACKAGES.SOURCE_ACTIVITY)
+        ).from(PACKAGES)
+            .where(PACKAGES.STORAGE_CODE.eq(storageCode))
+            .fetch().map { record1: Record1<BigDecimal>? -> record1!![0].toString() }
     }
 }

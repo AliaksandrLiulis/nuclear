@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional
 
 
 @Service
-open class PackagesService(
+open class PackageService(
     private val packageRepository: PackageRepository,
     private val containerRepository: ContainerRepository,
-//    private val storageRepository: StorageRepository,
+    private val storageRepository: StorageRepository,
 //    private val storageService: StorageService,
     private val containerService: ContainerService
 
@@ -37,9 +37,16 @@ open class PackagesService(
             packageByCode.containerCode
         )
         packageRepository.removePackage(packageId)
-        containerService.updateDataStorageAfterChanges(packageByCode.storageCode)
+        updateDataStorageAfterChangesInPackage(packageByCode.storageCode)
 //        storageRepository.updateStorageActivity(
 //            containerActivity - (packageByCode.souceActivity * packageByCode.openSourceUsing),
 //            packageByCode.storageCode)
+    }
+
+    @Transactional
+    open fun updateDataStorageAfterChangesInPackage(storageCode: Int){
+        val commonActivity = packageRepository.getCommonActivityFromPackageByStorageCode(storageCode)!!
+            .map { it.toDouble() }[0]
+        storageRepository.updateStorageActivity(commonActivity, storageCode)
     }
 }
