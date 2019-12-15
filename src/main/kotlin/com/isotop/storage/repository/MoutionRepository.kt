@@ -132,6 +132,26 @@ open class MoutionRepository(
         return getMoutionById(moutionId!!)[0]
     }
 
+    open fun insertInMoutionNoteWhenGoToStorage(
+        storageCode: Int
+    ): Int? {
+
+        val insertValues = mapOf<Any, Any?>(
+            MOUTIONS.MOUTION_TYPE to 2,
+            MOUTIONS.MOUTION_DATE to LocalDate.now(),
+            MOUTIONS.ORG_CODE to 1,
+            MOUTIONS.STORAGE_CODE to storageCode,
+            MOUTIONS.HIDE_EVENT to 0
+            )
+
+        return dsl
+            .insertInto(MOUTIONS)
+            .set(insertValues)
+            .returning(MOUTIONS.MOUTION_CODE)
+            ?.fetchOne()
+            ?.getValue(MOUTIONS.MOUTION_CODE)
+    }
+
     open fun removeMoutions(storageCode: Int) {
         try {
             dsl.delete(

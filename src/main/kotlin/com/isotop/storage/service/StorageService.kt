@@ -41,10 +41,6 @@ open class StorageService(
         }
     }
 
-    open fun getActivityByStorageCode(storageCode:Int): Double {
-        return storageRepository.getContainerActivityByStorageCode(storageCode)
-    }
-
     @Transactional
     open fun addSourceToStorage(payload: AddContainerToStorageRequest): StorageResponse {
         val storageNote = storageRepository.addContainerToStorage(payload)
@@ -90,10 +86,19 @@ open class StorageService(
         if (!storageRepository.isExistStorageNoteById(storageCode)) {
             throw ValidationException(31)
         }
-        if(moutionRepository.getCountByStorageId(storageCode) > 1){
+        if (moutionRepository.getCountByStorageId(storageCode) > 1) {
             throw ValidationException(30)
         }
         moutionRepository.removeMoutions(storageCode)
         storageRepository.removeStorageNote(storageCode)
+    }
+
+    @Transactional
+    open fun goToStorage(storageCode: Int) {
+        if (!storageRepository.isExistStorageNoteById(storageCode)) {
+            throw ValidationException(31)
+        }
+        storageRepository.updateStorageNoteWhenGoToStorage(storageCode)
+        moutionRepository.insertInMoutionNoteWhenGoToStorage(storageCode)
     }
 }

@@ -218,7 +218,7 @@ open class ContainerRepository(
             .leftOuterJoin(STORAGES).on(CONTAINERS.STORAGE_CODE.eq(STORAGES.STORAGE_CODE))
             .where(
                 CONTAINERS.OPEN_SOURCE_REST.isNotNull.and(CONTAINERS.OPEN_SOURCE_REST.greaterOrEqual(1))
-            )
+            ).orderBy(STORAGES.COME_DATE)
             .fetchInto(AvailableSourceResponse::class.java)
     }
 

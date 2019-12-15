@@ -8,6 +8,7 @@ import com.isotop.storage.jooq.Tables.*
 import org.jooq.DSLContext
 import org.jooq.impl.DSL
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 
 @Repository
 open class StorageRepository(
@@ -245,6 +246,24 @@ open class StorageRepository(
 
         val updateValues = mapOf<Any, Any?>(
             STORAGES.ACTIVITY to activity
+        )
+
+        return dsl.update(STORAGES)
+            .set(updateValues)
+            .where(
+                STORAGES.STORAGE_CODE.eq(storageCode)
+            )
+            .returning(STORAGES.STORAGE_CODE)
+            ?.fetchOne()
+            ?.getValue(STORAGES.STORAGE_CODE)
+    }
+
+    open fun updateStorageNoteWhenGoToStorage(storageCode:Int): Int? {
+
+        val updateValues = mapOf<Any, Any?>(
+            STORAGES.COME_DATE to LocalDate.now(),
+            STORAGES.SOURCE_TYPE_CODE to 3,
+            STORAGES.OWNER_ORG_CODE to 1
         )
 
         return dsl.update(STORAGES)

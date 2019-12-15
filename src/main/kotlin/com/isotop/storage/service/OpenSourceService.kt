@@ -26,9 +26,6 @@ open class OpenSourceService(
         if (!storageRepository.isExistStorageNoteById(payload.storageCode)) {
             throw ValidationException(31)
         }
-//        val containerActivity = storageService.getActivityByStorageCode(payload.storageCode)
-//        val commonActivity = (payload.sourceActivity * payload.openSourceUsing) + containerActivity
-//        storageRepository.updateStorageActivity(commonActivity, payload.storageCode)
         containerRepository.updateOpenSourceRestInContainer(
             (container.openSourceRest - payload.openSourceUsing),
             payload.containerCode

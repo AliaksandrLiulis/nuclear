@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service
 open class SourceService(
     private val containerRepository: ContainerRepository
 ) {
+
     open fun getAvailableSources(): ListAvailableSourceDataResponse {
         return ListAvailableSourceDataResponse(containerRepository.getAvailableSources())
     }

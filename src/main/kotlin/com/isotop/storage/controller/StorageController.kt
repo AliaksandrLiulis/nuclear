@@ -62,4 +62,13 @@ open class StorageController(
     ) {
         return storageService.removeStorageNote(storageId)
     }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @PutMapping("/gotostorage/{storageCode}", produces = ["application/json"])
+    open fun goToStorage(
+        @PathVariable(value = "storageCode")
+        storageCode: Int
+    ) {
+        return storageService.goToStorage(storageCode)
+    }
 }

@@ -14,7 +14,6 @@ open class PackageService(
     private val packageRepository: PackageRepository,
     private val containerRepository: ContainerRepository,
     private val storageRepository: StorageRepository,
-//    private val storageService: StorageService,
     private val containerService: ContainerService
 
 ) {
@@ -29,7 +28,6 @@ open class PackageService(
             throw ValidationException(36)
         }
         val packageByCode = packageRepository.getPackageByPackageCode(packageId)
-//        val containerActivity = storageService.getActivityByStorageCode(packageByCode.storageCode)
         val containerByContainerCode =
             containerRepository.getContainersByContainerCode(packageByCode.containerCode)
         containerRepository.updateOpenSourceRestInContainer(
@@ -38,9 +36,6 @@ open class PackageService(
         )
         packageRepository.removePackage(packageId)
         updateDataStorageAfterChangesInPackage(packageByCode.storageCode)
-//        storageRepository.updateStorageActivity(
-//            containerActivity - (packageByCode.souceActivity * packageByCode.openSourceUsing),
-//            packageByCode.storageCode)
     }
 
     @Transactional
