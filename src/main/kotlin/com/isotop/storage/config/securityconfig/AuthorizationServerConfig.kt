@@ -63,14 +63,14 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
         private val SIGNINGKEY = "as466gf"
         internal val CLIEN_ID = "client"
         internal val CLIENT_SECRET = "$2a$04$.IE4.9yvxPJ2DuUAln3mmOcgs7Fe0Ol6ZpbgQj0MH.0fJOxbUzs56"
-        internal val GRANT_TYPE_PASSWORD = "password"// NOSONAR
+        internal val GRANT_TYPE_PASSWORD = "password"
         internal val AUTHORIZATION_CODE = "authorization_code"
         internal val REFRESH_TOKEN = "refresh_token"
         internal val IMPLICIT = "implicit"
         internal val SCOPE_READ = "read"
         internal val SCOPE_WRITE = "write"
         internal val TRUST = "trust"
-        internal val ACCESS_TOKEN_VALIDITY_SECONDS = 1 * 60 * 15000
-        internal val REFRESH_TOKEN_VALIDITY_SECONDS = 6 * 60 * 15000
+        internal val ACCESS_TOKEN_VALIDITY_SECONDS = 1 * 60 * 99000
+        internal val REFRESH_TOKEN_VALIDITY_SECONDS = 6 * 60 * 99000
     }
 }
