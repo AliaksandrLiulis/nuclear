@@ -1,11 +1,3 @@
-.focused{
-    box-shadow: 0 0 3px 0.5px rgba(128,128,196,0.75)
-/*    box-shadow:  2px  2px 5px rgba(128,128,196,0.5),
-                 2px -2px 5px rgba(128,128,196,0.5),
-                -2px  2px 5px rgba(128,128,196,0.5),
-                -2px -2px 5px rgba(128,128,196,0.5);*/
-}
-
 .DBlock{
     padding-top: 7px;
     /*white-space: nowrap;*/
@@ -19,12 +11,6 @@
     border-radius: 3px 3px 3px 3px;
     border: 1px solid #808080;
 }
-
-/*.DForm{
-    position:absolute;
-    background:silver;
-    border: 1px solid;
-}*/
 
 .DGrid{
     border: 1px solid #808080;
@@ -50,6 +36,7 @@
     padding: 0px;
     border-right: 1px solid #c0c0c0;
     border-bottom: 1px solid #c0c0c0;
+    box-sizing: border-box;
 }
 
 
@@ -76,101 +63,6 @@
 /*    text-overflow: ellipsis;*/
     white-space: nowrap;
     box-sizing: border-box;
-}
-
-.TButton{
-/*    box-sizing: border-box;*/
-    user-select: none;
-}
-
-.TButton:focus
-{
-    box-shadow: 0 0 3px 1px rgba(128,128,196,1)
-/*    box-shadow:  1px  1px 2px rgba(128,128,196,0.5),
-    1px -1px 2px rgba(128,128,196,0.5),
-    -1px  1px 2px rgba(128,128,196,0.5),
-    -1px -1px 2px rgba(128,128,196,0.5);*/
-}
-
-.TCheckBox
-{
-    /*    box-sizing: border-box;*/
-    user-select: none;
-    white-space: nowrap;
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-}
-
-.TCheckBox input
-{
-    margin: 0 2px;
-}
-
-.TCheckBox span
-{
-    vertical-align: 2px;
-}
-
-.TRadioButton
-{
-    /*    box-sizing: border-box;*/
-    user-select: none;
-    white-space: nowrap;
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-}
-
-.TRadioButton input
-{
-    margin: 0 2px;
-}
-
-.TRadioButton span
-{
-    vertical-align: 2px;
-}
-
-
-.TEdit{
-    padding: 1px 2px 1px 2px;
-    border-radius: 3px;
-    border: 1px solid #8080C0;
-    background: white;
-    box-sizing: border-box;
-}
-
-.TEdit input{
-    width: 100%;
-    height: 100%;
-    outline: none;
-    border: none;
-    box-sizing: border-box;
-    font-family: inherit;
-    font-size: inherit;
-    background-color: inherit;
-}
-
-.TPanel{
-/*    border: 1px outset;*/
-    background: #cccccc;
-    box-sizing: border-box;
-}
-
-.TLabel{
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    white-space: nowrap;
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-/* userSelect = "none"
-..whiteSpace = "nowrap"
-..overflow = "hidden"
-..textOverflow = "ellipsis"*/
 }
 
 .TSpeedButton
@@ -211,56 +103,6 @@
     overflow: hidden;
 }
 
-.POPUP
-{
-    box-shadow: 2px 2px 5px rgba(0,0,0,.25);
-    tab-index: -1;
-    position: absolute;
-    z-index: 2000;
-}
-
-.MAINMENU
-{
-    list-style: none;
-    margin: 0;
-    padding: 1px;
-    backface-visibility: hidden;
-    background: rgba(255,255,255,.2);
-    box-sizing: border-box;
-/*    box-sizing: content-box;*/
-}
-
-.MENUITEM
-{
-    border: 1px solid transparent;
-    white-space: nowrap;
-    padding: 2px 5px 2px 5px;
-    position: relative;
-    user-select: none;
-    display: inline-block;
-/*    background: url(images/Append.png) 0 no-repeat;*/
-}
-
-.MENUITEM:hover
-{
-    border: 1px solid #70a0e0;
-    background-color: #b9c8e3;
-}
-
-.MENUITEM.disabled
-{
-    pointer-events: none;
-    text-shadow: 0.5px 0.5px white;
-    color: gray;
-    opacity: 0.8;
-}
-
-.SEPARATE
-{
-    margin: 4px 0 4px 20px;
-    border-top: 1px solid #a0a0a0;
-    border-bottom: 1px solid #f0f0f0;
-}
 
 .SUBMENU
 {
