@@ -11,6 +11,7 @@ data class ListMoutionDataResponse(
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class MoutionResponse (
     val moutionDate: LocalDate,
+    val moutionType: Int,
     val actCode: Int,
     val docTypeCode: Int,
     val docNumber: String,
@@ -18,7 +19,6 @@ data class MoutionResponse (
     val iconOrgName: String,
     val orgCode: Int,
     val moutionTypeName: String,
-    val moutionTypeCode: Int,
     val passportNumber: String,
     val serialNumber: String,
     val makeDate: LocalDate,
