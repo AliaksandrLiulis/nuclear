@@ -12,10 +12,10 @@ data class ListMoutionDataResponse(
 data class MoutionResponse (
     val moutionDate: LocalDate,
     val actCode: Int,
+    val docTypeCode: Int,
     val iconOrgName: String,
     val orgCode: Int,
     val moutionTypeName: String,
-    val moutionTypeCode: Int,
     val passportNumber: String,
     val serialNumber: String,
     val makeDate: LocalDate,
