@@ -276,6 +276,22 @@ open class StorageRepository(
             ?.getValue(STORAGES.STORAGE_CODE)
     }
 
+    open fun updateStorageNoteToTransfer(storageCode:Int, leaveDate:LocalDate): Int? {
+
+        val updateValues = mapOf<Any, Any?>(
+            STORAGES.LEAVE_DATE to leaveDate
+        )
+
+        return dsl.update(STORAGES)
+            .set(updateValues)
+            .where(
+                STORAGES.STORAGE_CODE.eq(storageCode)
+            )
+            .returning(STORAGES.STORAGE_CODE)
+            ?.fetchOne()
+            ?.getValue(STORAGES.STORAGE_CODE)
+    }
+
     open fun isExistStorageNoteById(idStorage: Int): Boolean {
         return dsl.fetchExists(
             DSL.select(STORAGES.STORAGE_CODE)

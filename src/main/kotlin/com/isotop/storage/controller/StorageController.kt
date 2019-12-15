@@ -1,6 +1,7 @@
 package com.isotop.storage.controller
 
 import com.isotop.storage.dto.request.AddContainerToStorageRequest
+import com.isotop.storage.dto.request.TransferRequest
 import com.isotop.storage.dto.request.UpdateStorageRequest
 import com.isotop.storage.dto.response.ListStorageDataResponse
 import com.isotop.storage.dto.response.StorageResponse
@@ -70,5 +71,14 @@ open class StorageController(
         storageCode: Int
     ) {
         return storageService.goToStorage(storageCode)
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @PutMapping("/transfer", produces = ["application/json"])
+    open fun goToTransfer(
+        @RequestBody
+        payload: TransferRequest
+    ) {
+        return storageService.goToTransfer(payload)
     }
 }

@@ -1,6 +1,7 @@
 package com.isotop.storage.repository
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
+import com.isotop.storage.dto.request.TransferRequest
 import com.isotop.storage.dto.response.EventResponse
 import com.isotop.storage.dto.response.MoutionDto
 import com.isotop.storage.jooq.Tables.*
@@ -143,6 +144,30 @@ open class MoutionRepository(
             MOUTIONS.STORAGE_CODE to storageCode,
             MOUTIONS.HIDE_EVENT to 0
             )
+
+        return dsl
+            .insertInto(MOUTIONS)
+            .set(insertValues)
+            .returning(MOUTIONS.MOUTION_CODE)
+            ?.fetchOne()
+            ?.getValue(MOUTIONS.MOUTION_CODE)
+    }
+
+    open fun insertInMoutionNoteWhenTransfer(
+        payload: TransferRequest
+    ): Int? {
+
+        val insertValues = mapOf<Any, Any?>(
+            MOUTIONS.MOUTION_TYPE to payload.moutionType,
+            MOUTIONS.MOUTION_DATE to payload.transferDate,
+            MOUTIONS.ORG_CODE to payload.orgCode,
+            MOUTIONS.STORAGE_CODE to payload.storageCode,
+            MOUTIONS.DOC_DATE to payload.docDate,
+            MOUTIONS.DOC_NUMBER to payload.docNumber,
+            MOUTIONS.DOC_TYPE_CODE to payload.docTypeCode,
+            MOUTIONS.HIDE_EVENT to 0,
+            MOUTIONS.ACT_CODE to payload.actCode
+        )
 
         return dsl
             .insertInto(MOUTIONS)
