@@ -138,7 +138,7 @@ open class MoutionRepository(
 
     open fun updateMoutionByMotionCode(
         payload: UpdateMotionRequest
-    ): MoutionDto {
+    ): MoutionResponse {
 
         val updateValues = mapOf<Any, Any?>(
             MOUTIONS.MOUTION_DATE to payload.moutionDate,
@@ -158,7 +158,7 @@ open class MoutionRepository(
             ?.fetchOne()
             ?.getValue(MOUTIONS.MOUTION_CODE)
 
-        return getMoutionById(moutionCode!!)[0]
+        return getMoutionsByMoutionCode(moutionCode!!)
     }
 
     open fun insertInMoutionNoteWhenGoToStorage(
@@ -247,6 +247,36 @@ open class MoutionRepository(
         ).from(
             MOUTION_TYPES
         ).fetchInto(MoutionTypeResponse::class.java)
+    }
+
+    open fun getMoutionsByMoutionCode(motionCode:Int): MoutionResponse {
+        return dsl.select(
+            MOUTIONS.MOUTION_CODE,
+            MOUTIONS.MOUTION_DATE,
+            MOUTIONS.ACT_CODE,
+            MOUTIONS.DOC_TYPE_CODE,
+            MOUTIONS.DOC_NUMBER,
+            MOUTIONS.DOC_DATE,
+            MOUTIONS.MOUTION_TYPE,
+            ORGS.ICON_ORG_NAME,
+            ORGS.ORG_CODE,
+            MOUTION_TYPES.MOUTION_TYPE_NAME,
+            STORAGES.PASSPORT_NUMBER,
+            STORAGES.SERIAL_NUMBER,
+            STORAGES.MAKE_DATE,
+            STORAGES.ACTIVITY,
+            NUCLIDE_TYPES.NUCLIDE_TYPE,
+            MAKE_TYPES.MAKE_TYPE_NAME
+        ).from(
+            MOUTIONS
+        )
+            .leftOuterJoin(MOUTION_TYPES).on(MOUTIONS.MOUTION_TYPE.eq(MOUTION_TYPES.MOUTION_TYPE_CODE))
+            .leftOuterJoin(ORGS).on(MOUTIONS.ORG_CODE.eq(ORGS.ORG_CODE))
+            .leftOuterJoin(STORAGES).on(MOUTIONS.STORAGE_CODE.eq(STORAGES.STORAGE_CODE))
+            .leftOuterJoin(NUCLIDE_TYPES).on(STORAGES.NUCLIDE_TYPE_CODE.eq(NUCLIDE_TYPES.NUCLIDE_TYPE_CODE))
+            .leftOuterJoin(MAKE_TYPES).on(STORAGES.MAKE_TYPE_CODE.eq(MAKE_TYPES.MAKE_TYPE_CODE))
+            .where(MOUTIONS.MOUTION_CODE.eq(motionCode))
+            .fetchInto(MoutionResponse::class.java)[0]
     }
 
     open fun getMoutions(): List<MoutionResponse> {

@@ -3,7 +3,7 @@ package com.isotop.storage.controller
 import com.isotop.storage.dto.request.UpdateMotionRequest
 import com.isotop.storage.dto.response.ListMoutionDataResponse
 import com.isotop.storage.dto.response.ListMoutionTypeDataResponse
-import com.isotop.storage.dto.response.MoutionDto
+import com.isotop.storage.dto.response.MoutionResponse
 import com.isotop.storage.service.directory.MoutionService
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
@@ -31,7 +31,7 @@ open class MoutionController(
     open fun updateMoutionByMoutionCode(
         @RequestBody
         payload: UpdateMotionRequest
-    ): MoutionDto {
+    ): MoutionResponse {
         return moutionService.updateMotionByCode(payload)
     }
 }
