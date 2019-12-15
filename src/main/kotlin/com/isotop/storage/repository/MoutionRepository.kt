@@ -226,8 +226,11 @@ open class MoutionRepository(
     open fun getMoutions(): List<MoutionResponse> {
         return dsl.select(
             MOUTIONS.MOUTION_DATE,
+            MOUTIONS.ACT_CODE,
             ORGS.ICON_ORG_NAME,
+            ORGS.ORG_CODE,
             MOUTION_TYPES.MOUTION_TYPE_NAME,
+            MOUTION_TYPES.MOUTION_TYPE_CODE,
             STORAGES.PASSPORT_NUMBER,
             STORAGES.SERIAL_NUMBER,
             STORAGES.MAKE_DATE,
