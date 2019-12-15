@@ -33,7 +33,7 @@ open class PackageService(
         val containerByContainerCode =
             containerRepository.getContainersByContainerCode(packageByCode.containerCode)
         containerRepository.updateOpenSourceRestInContainer(
-            (containerByContainerCode.openSourceCount + packageByCode.openSourceUsing),
+            (containerByContainerCode.openSourceRest + packageByCode.openSourceUsing),
             packageByCode.containerCode
         )
         packageRepository.removePackage(packageId)

@@ -30,7 +30,7 @@ open class OpenSourceService(
 //        val commonActivity = (payload.sourceActivity * payload.openSourceUsing) + containerActivity
 //        storageRepository.updateStorageActivity(commonActivity, payload.storageCode)
         containerRepository.updateOpenSourceRestInContainer(
-            (container.openSourceCount - payload.openSourceUsing),
+            (container.openSourceRest - payload.openSourceUsing),
             payload.containerCode
         )
         packageRepository.addPackage(payload)
