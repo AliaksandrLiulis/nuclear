@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/moutions")
-open class MoutionTypeController(
+open class MoutionController(
     private val moutionService: MoutionService
 ) {
 

@@ -4,6 +4,8 @@ import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.TransferRequest
 import com.isotop.storage.dto.response.EventResponse
 import com.isotop.storage.dto.response.MoutionDto
+import com.isotop.storage.dto.response.MoutionResponse
+import com.isotop.storage.dto.response.MoutionTypeResponse
 import com.isotop.storage.jooq.Tables.*
 import org.jooq.DSLContext
 import org.jooq.impl.DSL
@@ -210,5 +212,36 @@ open class MoutionRepository(
             .from(MOUTIONS)
             .where(MOUTIONS.STORAGE_CODE.eq(idStorage))
             ?.fetchOne(0, Int::class.java) ?: 0
+    }
+
+    open fun getMoutionTypes(): List<MoutionTypeResponse> {
+        return dsl.select(
+            MOUTION_TYPES.MOUTION_TYPE_CODE,
+            MOUTION_TYPES.MOUTION_TYPE_NAME
+        ).from(
+            MOUTION_TYPES
+        ).fetchInto(MoutionTypeResponse::class.java)
+    }
+
+    open fun getMoutions(): List<MoutionResponse> {
+        return dsl.select(
+            MOUTIONS.MOUTION_DATE,
+            ORGS.ICON_ORG_NAME,
+            MOUTION_TYPES.MOUTION_TYPE_NAME,
+            STORAGES.PASSPORT_NUMBER,
+            STORAGES.SERIAL_NUMBER,
+            STORAGES.MAKE_DATE,
+            STORAGES.ACTIVITY,
+            NUCLIDE_TYPES.NUCLIDE_TYPE,
+            MAKE_TYPES.MAKE_TYPE_NAME
+        ).from(
+            MOUTIONS
+        )
+            .leftOuterJoin(MOUTION_TYPES).on(MOUTIONS.MOUTION_TYPE.eq(MOUTION_TYPES.MOUTION_TYPE_CODE))
+            .leftOuterJoin(ORGS).on(MOUTIONS.ORG_CODE.eq(ORGS.ORG_CODE))
+            .leftOuterJoin(STORAGES).on(MOUTIONS.STORAGE_CODE.eq(STORAGES.STORAGE_CODE))
+            .leftOuterJoin(NUCLIDE_TYPES).on(STORAGES.NUCLIDE_TYPE_CODE.eq(NUCLIDE_TYPES.NUCLIDE_TYPE_CODE))
+            .leftOuterJoin(MAKE_TYPES).on(STORAGES.MAKE_TYPE_CODE.eq(MAKE_TYPES.MAKE_TYPE_CODE))
+            .fetchInto(MoutionResponse::class.java)
     }
 }
