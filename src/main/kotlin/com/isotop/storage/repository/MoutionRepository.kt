@@ -152,7 +152,7 @@ open class MoutionRepository(
             .update(MOUTIONS)
             .set(updateValues)
             .where(
-                MOUTIONS.STORAGE_CODE.eq(payload.moutionCode)
+                MOUTIONS.MOUTION_CODE.eq(payload.moutionCode)
             )
             .returning(MOUTIONS.MOUTION_CODE)
             ?.fetchOne()
