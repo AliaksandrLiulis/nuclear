@@ -13,9 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 open class PackageService(
     private val packageRepository: PackageRepository,
     private val containerRepository: ContainerRepository,
-    private val storageRepository: StorageRepository,
-    private val containerService: ContainerService
-
+    private val storageRepository: StorageRepository
 ) {
 
     open fun getPackagesByStorageCode(storageCode: Int): ListPackagesDataResponse {
