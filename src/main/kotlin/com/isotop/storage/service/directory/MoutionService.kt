@@ -6,11 +6,14 @@ import com.isotop.storage.dto.response.ListMoutionDataResponse
 import com.isotop.storage.dto.response.ListMoutionTypeDataResponse
 import com.isotop.storage.dto.response.MoutionResponse
 import com.isotop.storage.repository.MoutionRepository
+import com.isotop.storage.repository.StorageRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 open class MoutionService(
-    private val moutionRepository: MoutionRepository
+    private val moutionRepository: MoutionRepository,
+    private val storageRepository: StorageRepository
 ) {
     open fun getMoutionTypes(): ListMoutionTypeDataResponse {
         return ListMoutionTypeDataResponse(moutionRepository.getMoutionTypes())
@@ -26,4 +29,21 @@ open class MoutionService(
         }
         return moutionRepository.updateMoutionByMotionCode(payload)
     }
+
+    @Transactional
+    open fun deleteMotionByMotionCode(motionCode: Int) {
+        if (!moutionRepository.isExistMotionByMotionCode(motionCode)) {
+            throw ValidationException(34)
+        }
+        val motionTypeAndStorageCode =
+            moutionRepository.getMoutionTypeAndStorageCodeByMotionCodeId(motionCode)
+        if (motionTypeAndStorageCode.moutionType == 2){
+            storageRepository.updateStorageComeDateToNull(motionTypeAndStorageCode.storageCode)
+        }else{
+            storageRepository.updateStorageLeaveDateToNull(motionTypeAndStorageCode.storageCode)
+        }
+        moutionRepository.removeMoutionsByMoutionCode(motionCode)
+    }
+
+
 }

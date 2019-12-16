@@ -159,8 +159,6 @@ open class StorageRepository(
         return getStorageNoteByIdStorage(storageId!!)[0]
     }
 
-
-
     open fun setStorageActivityToNull(storageCode: Int): Int? {
 
         val updateValues = mapOf<Any, Any?>(
@@ -231,17 +229,6 @@ open class StorageRepository(
         }
     }
 
-    open fun getContainerActivityByStorageCode(storageCode: Int): Double {
-        return dsl.select(
-            STORAGES.ACTIVITY
-        )
-            .from(
-                STORAGES
-            ).where(
-                STORAGES.STORAGE_CODE.eq(storageCode)
-            ).fetchOne(STORAGES.ACTIVITY)
-    }
-
     open fun updateStorageActivity(activity: Double, storageCode: Int): Int? {
 
         val updateValues = mapOf<Any, Any?>(
@@ -310,4 +297,34 @@ open class StorageRepository(
                 )
         )
     }
+
+    open fun updateStorageComeDateToNull(storageCode:Int) {
+
+        val updateValues = mapOf<Any, Any?>(
+            STORAGES.COME_DATE to null
+            )
+
+        dsl
+            .update(STORAGES)
+            .set(updateValues)
+            .where(
+                STORAGES.STORAGE_CODE.eq(storageCode)
+            ).execute()
+    }
+
+    open fun updateStorageLeaveDateToNull(storageCode:Int) {
+
+        val updateValues = mapOf<Any, Any?>(
+            STORAGES.LEAVE_DATE to null
+        )
+
+        dsl
+            .update(STORAGES)
+            .set(updateValues)
+            .where(
+                STORAGES.STORAGE_CODE.eq(storageCode)
+            ).execute()
+    }
+
+
 }

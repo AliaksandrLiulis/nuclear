@@ -90,7 +90,7 @@ open class StorageService(
         if (moutionRepository.getCountByStorageId(storageCode) > 1) {
             throw ValidationException(30)
         }
-        moutionRepository.removeMoutions(storageCode)
+        moutionRepository.removeMoutionsByStorageCode(storageCode)
         storageRepository.removeStorageNote(storageCode)
     }
 

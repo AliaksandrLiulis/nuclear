@@ -3,10 +3,7 @@ package com.isotop.storage.repository
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.TransferRequest
 import com.isotop.storage.dto.request.UpdateMotionRequest
-import com.isotop.storage.dto.response.EventResponse
-import com.isotop.storage.dto.response.MoutionDto
-import com.isotop.storage.dto.response.MoutionResponse
-import com.isotop.storage.dto.response.MoutionTypeResponse
+import com.isotop.storage.dto.response.*
 import com.isotop.storage.jooq.Tables.*
 import org.jooq.DSLContext
 import org.jooq.impl.DSL
@@ -59,6 +56,19 @@ open class MoutionRepository(
                 MOUTIONS.HIDE_EVENT.eq(0)
             ).orderBy(MOUTIONS.MOUTION_DATE)
             .fetchInto(EventResponse::class.java)
+    }
+
+    open fun getMoutionTypeAndStorageCodeByMotionCodeId(moutionCode: Int): MotionTypeAndStorageCodeResponse {
+
+        return dsl.select(
+            MOUTIONS.MOUTION_TYPE,
+            MOUTIONS.STORAGE_CODE
+        ).from(
+            MOUTIONS
+        )
+            .where(
+                MOUTIONS.MOUTION_CODE.eq(moutionCode)
+            ).fetchInto(MotionTypeAndStorageCodeResponse::class.java)[0]
     }
 
     open fun deactivateEvent(motionCodeId: Int) {
@@ -205,12 +215,24 @@ open class MoutionRepository(
             ?.getValue(MOUTIONS.MOUTION_CODE)
     }
 
-    open fun removeMoutions(storageCode: Int) {
+    open fun removeMoutionsByStorageCode(storageCode: Int) {
         try {
             dsl.delete(
                 MOUTIONS
             ).where(
                 MOUTIONS.STORAGE_CODE.eq(storageCode)
+            ).execute()
+        } catch (ex: Exception) {
+            throw ValidationException(30)
+        }
+    }
+
+    open fun removeMoutionsByMoutionCode(moutionCode: Int) {
+        try {
+            dsl.delete(
+                MOUTIONS
+            ).where(
+                MOUTIONS.MOUTION_CODE.eq(moutionCode)
             ).execute()
         } catch (ex: Exception) {
             throw ValidationException(30)

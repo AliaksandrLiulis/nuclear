@@ -34,4 +34,13 @@ open class MoutionController(
     ): MoutionResponse {
         return moutionService.updateMotionByCode(payload)
     }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @DeleteMapping("/{moutionCode}", produces = ["application/json"])
+    open fun deleteMoutionByMoutionCode(
+        @PathVariable(value = "moutionCode")
+        moutionCode: Int
+    ) {
+        return moutionService.deleteMotionByMotionCode(moutionCode)
+    }
 }
