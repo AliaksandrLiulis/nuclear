@@ -43,6 +43,9 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             35 -> "Make source by Id not exist"
             36 -> "Package by Id not exist"
             37 -> "OpenSourceUsing more than OpenSourceRest"
+            38 -> "Act format not valid"
+            39 -> "Act Format not exist"
+            40 -> "Act Format can not be empty or null"
             else -> ""
         }
     }
