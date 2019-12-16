@@ -48,7 +48,7 @@ open class StorageService(
         if (storageNote != null) {
             moutionRepository.addMoution(
                 payload.moutionType!!,
-                payload.makeDate,
+                payload.comeDate,
                 payload.orgCode,
                 storageNote,
                 payload.docDate,
