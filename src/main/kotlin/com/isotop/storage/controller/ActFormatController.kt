@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/acts_formats")
+@RequestMapping("/act_formats")
 open class ActFormatController(
     private val actFormatService: ActFormatService
 ) {
