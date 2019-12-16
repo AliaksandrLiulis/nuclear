@@ -37,13 +37,19 @@ open class MoutionService(
         }
         val motionTypeAndStorageCode =
             moutionRepository.getMoutionTypeAndStorageCodeByMotionCodeId(motionCode)
-        if (motionTypeAndStorageCode.moutionType == 2){
-            storageRepository.updateStorageComeDateToNull(motionTypeAndStorageCode.storageCode)
-        }else{
-            storageRepository.updateStorageLeaveDateToNull(motionTypeAndStorageCode.storageCode)
+        when(motionTypeAndStorageCode.moutionType){
+            1 -> {
+                moutionRepository.removeMoutionsByMoutionCode(motionCode)
+                storageRepository.removeStorageNote(motionTypeAndStorageCode.storageCode)
+            }
+            2 -> {
+                storageRepository.updateStorageComeDateToNull(motionTypeAndStorageCode.storageCode)
+                moutionRepository.removeMoutionsByMoutionCode(motionCode)
+            }
+            3,4,5 ->{
+                storageRepository.updateStorageLeaveDateToNull(motionTypeAndStorageCode.storageCode)
+                moutionRepository.removeMoutionsByMoutionCode(motionCode)
+            }
         }
-        moutionRepository.removeMoutionsByMoutionCode(motionCode)
     }
-
-
 }
