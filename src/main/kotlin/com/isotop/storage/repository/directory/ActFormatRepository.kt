@@ -21,7 +21,9 @@ open class ActFormatRepository(
             ACT_FORMATS.FIXED_STATE
         ).from(
             ACT_FORMATS
-        ).fetchInto(ActFormatResponse::class.java)
+        )
+            .where(ACT_FORMATS.FIXED_STATE.greaterOrEqual(0))
+            .fetchInto(ActFormatResponse::class.java)
     }
 
     open fun getActFormatById(actFormatId: Int): List<ActFormatResponse> {

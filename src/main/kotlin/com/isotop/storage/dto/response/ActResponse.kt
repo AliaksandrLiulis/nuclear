@@ -16,7 +16,7 @@ data class ActResponse(
     val actIntNumber: Int?,
     val actFormatCode: Int,
     val actNote: String,
-    val docTypeName: String,
+    val docTypeName: String?,
     val passportNumber: String?,
     val serialNumber: String?,
     val makeDate: LocalDate?,
