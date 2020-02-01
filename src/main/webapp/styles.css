@@ -1,0 +1,63 @@
+/*@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+#output {
+  padding: 20px;
+  text-align: center;
+}*/
+
+/*html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}*/
+
+body{
+  font-family: Arial, sans-serif;
+  font-size: 12pt;
+  padding: 0;
+  margin: 0;
+  background: radial-gradient(black 15%, transparent 16%) 0 0, radial-gradient(rgba(255, 255, 255, .1) 15%, transparent 20%) 0 1px;
+  background-color: #104050;
+  background-size: 12px 12px;
+
+  position:absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+
+}
+
+.nucler_event
+{
+  font-size: 12pt;
+}
+
+.nucler_event div:nth-child(odd) { background: #c0c0c0 }
+.nucler_event div:nth-child(even) { background: #d0d0d0 }
+
+.nuclear_event_close
+{
+  color: #c0a060;
+  font-size: 20px;
+  color: gray;
+  padding-left: 5px;
+  padding-right: 2px;
+  user-select: none;
+}
+
+.nuclear_event_close:hover
+{
+  color: red;
+}
+
