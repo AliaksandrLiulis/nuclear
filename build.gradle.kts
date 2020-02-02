@@ -97,6 +97,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security:$springSecurityVersion")
     implementation("org.springframework.security.oauth:spring-security-oauth2:$springSecurityOauthVersion")
     implementation("org.springframework.security:spring-security-jwt:$springSecurityJwtVersion")
+    implementation("org.springframework.boot:spring-boot-maven-plugin:2.1.5.RELEASE")
 
     jooqGeneratorRuntime("org.postgresql:postgresql:$postgresVersion")
 }
@@ -114,7 +115,7 @@ jooqGenerator {
             jdbc = Jdbc().withDriver("org.postgresql.Driver")
                 .withUsername("postgres")
                 .withPassword("root")
-                .withUrl("jdbc:postgresql://localhost:5433/nuclear_base")
+                .withUrl("jdbc:postgresql://localhost:5432/nuclear_base")
             generator = Generator().withTarget(Target()
                 .withPackageName("com.isotop.storage.jooq")
                 .withDirectory("${project.buildDir}/generated/jooq/base"))

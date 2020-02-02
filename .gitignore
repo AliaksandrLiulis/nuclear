@@ -1,7 +1,8 @@
 /.gradle
 /.idea
 /build
+/.gitignore
 /gradle
 /src/main/resources/application-dev.yml
-
-
+/jooq.properties
+/build.gradle.kts
