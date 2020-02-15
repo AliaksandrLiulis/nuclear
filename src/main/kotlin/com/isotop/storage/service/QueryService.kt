@@ -13,6 +13,8 @@ open class QueryService(
     private val WHERE = "where"
     private val AND = "and"
     private val REPORT_NUCLEAR = "report_nuclear_move"
+    private val START_DATE = "start_date"
+    private val END_DATE = "end_date"
 
     open fun executeQuery(payload: String): String {
         return repository.executeQuery(payload)
@@ -20,7 +22,7 @@ open class QueryService(
 
     open fun executeQueryWithParams(payload: JSONObject): String {
         if (payload[TABLE] == REPORT_NUCLEAR) {
-            getReportNuclearMoveQuery(payload)
+            return executeQuery(getReportNuclearMoveQuery(payload))
         }
         val query = BASE_QUERY + payload[TABLE]
         val params = payload[WHERE]
@@ -40,7 +42,12 @@ open class QueryService(
         return executeQuery(query)
     }
 
-    private fun getReportNuclearMoveQuery(payload: JSONObject) {
-
+    private fun getReportNuclearMoveQuery(payload: JSONObject): String {
+        val startDate = payload[START_DATE]
+        val endDate = payload[END_DATE]
+        return "SELECT * FROM moutions A" +
+                " left outer join storages B On(A.storage_code=B.storage_code)" +
+                "where A.moution_date BETWEEN $startDate AND $endDate" +
+                "order by A.moution_date"
     }
 }
