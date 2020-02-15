@@ -1,14 +1,8 @@
 package com.isotop.storage.service
 
 import com.isotop.storage.repository.QueryRepository
-import jdk.nashorn.internal.parser.JSONParser
-import org.apache.coyote.http11.Constants.a
-import org.bouncycastle.asn1.x500.style.RFC4519Style.c
-import org.jooq.tools.json.JSONArray
 import org.jooq.tools.json.JSONObject
-import org.jooq.tools.json.JSONValue
 import org.springframework.stereotype.Service
-import java.util.function.BiConsumer
 
 @Service
 open class QueryService(
@@ -18,12 +12,16 @@ open class QueryService(
     private val TABLE = "table"
     private val WHERE = "where"
     private val AND = "and"
+    private val REPORT_NUCLEAR = "report_nuclear_move"
 
     open fun executeQuery(payload: String): String {
         return repository.executeQuery(payload)
     }
 
     open fun executeQueryWithParams(payload: JSONObject): String {
+        if (payload[TABLE] == REPORT_NUCLEAR) {
+            getReportNuclearMoveQuery(payload)
+        }
         val query = BASE_QUERY + payload[TABLE]
         val params = payload[WHERE]
         if (params != null) {
@@ -40,5 +38,9 @@ open class QueryService(
             return executeQuery(resultQuery.substring(0, resultQuery.length - 4))
         }
         return executeQuery(query)
+    }
+
+    private fun getReportNuclearMoveQuery(payload: JSONObject) {
+
     }
 }
