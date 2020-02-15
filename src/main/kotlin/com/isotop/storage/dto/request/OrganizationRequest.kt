@@ -3,6 +3,7 @@ package com.isotop.storage.dto.request
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class OrganizationRequest (
+    @JsonProperty("org_code")
     val orgCode:Int,
     @JsonProperty("org_name")
     val orgName: String?,
