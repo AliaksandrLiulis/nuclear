@@ -27,9 +27,9 @@ open class QueryService(
         val query = BASE_QUERY + payload[TABLE]
         val params = payload[WHERE]
         if (params != null) {
-            val z = params as MutableMap<*, *>
+            val result = params as MutableMap<*, *>
             var whereQuery = " where"
-            z.forEach { t, u ->
+            result.forEach { t, u ->
                 whereQuery = if (u !is String) {
                     "$whereQuery $t = $u $AND"
                 } else {
@@ -43,8 +43,18 @@ open class QueryService(
     }
 
     private fun getReportNuclearMoveQuery(payload: JSONObject): String {
-        val startDate = payload[START_DATE]
-        val endDate = payload[END_DATE]
+        val params = payload[WHERE] as MutableMap<*, *>
+        var startDate = ""
+        var endDate = ""
+        params.forEach { key, value ->
+            if (key != null) {
+                if (key == START_DATE)
+                    startDate = value.toString()
+                if (key == END_DATE)
+                    endDate = value.toString()
+            }
+        }
+
         return "SELECT * FROM moutions A" +
                 " left outer join storages B On(A.storage_code=B.storage_code)" +
                 "where A.moution_date BETWEEN '$startDate' AND '$endDate'" +
