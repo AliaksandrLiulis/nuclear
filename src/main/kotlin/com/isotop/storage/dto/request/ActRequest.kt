@@ -12,7 +12,7 @@ data class ActRequest(
     val actNumber: String,
     @JsonProperty("act_int_number")
     val actIntNumber: Int?,
-    @JsonProperty("act_format")
+    @JsonProperty("act_format_code")
     val actFormatCode: Int,
     @JsonProperty("act_note")
     val actNote: String

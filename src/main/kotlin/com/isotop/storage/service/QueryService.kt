@@ -47,7 +47,7 @@ open class QueryService(
         val endDate = payload[END_DATE]
         return "SELECT * FROM moutions A" +
                 " left outer join storages B On(A.storage_code=B.storage_code)" +
-                "where A.moution_date BETWEEN $startDate AND $endDate" +
+                "where A.moution_date BETWEEN '$startDate' AND '$endDate'" +
                 "order by A.moution_date"
     }
 }
