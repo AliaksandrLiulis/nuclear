@@ -38,7 +38,7 @@ open class VarMainRepository(
 
     open fun addVarMain(varMainRequest: VarMainRequest): VarMainResponse {
 
-        val varMainId = dsl.insertInto(Tables.DOC_TYPES)
+        val varMainId = dsl.insertInto(VAR_MAIN)
             .columns(
                 VAR_MAIN.VAR_NAME,
                 VAR_MAIN.VAR_VALUE
@@ -46,8 +46,7 @@ open class VarMainRepository(
             .values(
                 varMainRequest.varName,
                 varMainRequest.varValue
-            ).onDuplicateKeyUpdate()
-            .set(VAR_MAIN.VAR_NAME, VAR_MAIN.VAR_VALUE)
+            )
             .returning(VAR_MAIN.VAR_CODE)
             ?.fetchOne()
             ?.getValue(VAR_MAIN.VAR_CODE)
