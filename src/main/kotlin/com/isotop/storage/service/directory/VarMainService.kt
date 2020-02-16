@@ -58,7 +58,7 @@ open class VarMainService(
         }
         if (varMainRequest.varName.isNullOrBlank() || varMainRequest.varValue.isNullOrBlank()
         ) {
-            throw ValidationException(24)
+            throw ValidationException(45)
         }
     }
 }
