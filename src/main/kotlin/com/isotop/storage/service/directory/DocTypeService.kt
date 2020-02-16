@@ -25,7 +25,7 @@ open class DocTypeService(
 
     @Transactional
     open fun addDocType(docTypeRequest: DocTypeRequest): DocTypeResponse {
-        validatAddDocTypeRequest(docTypeRequest)
+        validateAddDocTypeRequest(docTypeRequest)
         return docTypeRepository.addDocType(docTypeRequest)
     }
 
@@ -43,7 +43,7 @@ open class DocTypeService(
         return docTypeRepository.removeDocType(id)
     }
 
-    private fun validatAddDocTypeRequest(docTypeRequest: DocTypeRequest) {
+    private fun validateAddDocTypeRequest(docTypeRequest: DocTypeRequest) {
         if (docTypeRequest.docTypeName.isNullOrBlank()
             || docTypeRepository.isExistDocTypeByName(docTypeRequest.docTypeName)
         ) {

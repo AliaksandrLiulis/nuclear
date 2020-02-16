@@ -46,6 +46,12 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             38 -> "Act format not valid"
             39 -> "Act Format not exist"
             40 -> "Act Format can not be empty or null"
+            41 -> "Var Main by Id not exist"
+            42 -> "Var Name not exist"
+            43 -> "Var main not valid or exist"
+            44 -> "Var main not exist"
+            24 -> "Var Main params can not be empty or null"
+
             else -> ""
         }
     }
