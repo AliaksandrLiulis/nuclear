@@ -16,12 +16,12 @@ open class ActFormatController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
-    open fun getAllActsFormat(): ListActsFormatDataResponse {
+    open fun getActFormats(): ListActsFormatDataResponse {
         return actFormatService.getActFormats()
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PostMapping
+    @PostMapping(produces = ["application/json"])
     open fun addActFormat(
         @RequestBody
         payload: ActFormatAddRequest
@@ -30,7 +30,7 @@ open class ActFormatController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PutMapping
+    @PutMapping(produces = ["application/json"])
     open fun updateActFormat(
         @RequestBody
         payload: ActFormatUpdateRequest
@@ -39,11 +39,11 @@ open class ActFormatController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{actId}")
     open fun deleteActFormat(
-        @PathVariable(value = "id")
-        id: Int
+        @PathVariable(value = "actId")
+        actId: Int
     ) {
-        return actFormatService.removeDocType(id)
+        return actFormatService.removeDocType(actId)
     }
 }

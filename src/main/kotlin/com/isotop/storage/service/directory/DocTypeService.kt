@@ -12,11 +12,11 @@ import org.springframework.transaction.annotation.Transactional
 open class DocTypeService(
     private val docTypeRepository: DocTypeRepository
 ) {
-    open fun getDocTypes(): ListDocTypeDataResponse {
+    open fun getDocType(): ListDocTypeDataResponse {
         return ListDocTypeDataResponse(docTypeRepository.getDocTypes())
     }
 
-    open fun getDocTypeById(makeId: Int): DocTypeResponse {
+    open fun getDocTypeByTypeId(makeId: Int): DocTypeResponse {
         if (!docTypeRepository.isExistDocTypeById(makeId)) {
             throw ValidationException(10)
         }

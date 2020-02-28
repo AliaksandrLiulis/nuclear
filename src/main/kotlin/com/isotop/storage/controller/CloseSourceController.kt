@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/closesource")
-open class CloseSourceController (
+open class CloseSourceController(
     private val closeSourceService: CloseSourceService
 ) {
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
-    open fun getAllCloseSource(
-        authentication: Authentication
+    open fun getCloseSources(
     ): ListStorageDataResponse {
         return closeSourceService.getAllCloseSource()
     }

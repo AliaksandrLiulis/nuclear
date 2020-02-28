@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/acts")
-open class ActsController(
+open class ActController(
     private val actService: ActService
 ) {
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
-    open fun getAllActs(): ListActsDataResponse {
+    open fun getActs(): ListActsDataResponse {
         return actService.getActs()
     }
 
@@ -29,7 +29,7 @@ open class ActsController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PostMapping
+    @PostMapping(produces = ["application/json"])
     open fun addAct(
         @RequestBody
         payload: ActRequest
@@ -38,7 +38,7 @@ open class ActsController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PutMapping
+    @PutMapping(produces = ["application/json"])
     open fun updateAct(
         @RequestBody
         payload: ActRequest
@@ -47,11 +47,11 @@ open class ActsController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{actId}")
     open fun deleteActById(
-        @PathVariable(value = "id")
-        id: Int
+        @PathVariable(value = "actId")
+        actId: Int
     ) {
-        return actService.removeActById(id)
+        return actService.removeActById(actId)
     }
 }

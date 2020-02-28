@@ -33,7 +33,7 @@ open class MakeSourceService(
     }
 
     @Transactional
-    open fun removeMakeSource(storageCode: Int) {
+    open fun removeMakeSourceByStorageId(storageCode: Int) {
         if (!storageRepository.isExistStorageNoteById(storageCode)) {
             throw ValidationException(35)
         }

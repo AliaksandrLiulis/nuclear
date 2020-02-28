@@ -15,12 +15,12 @@ open class MakeSourceController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
-    open fun getAllMakeSource(): ListMakeSourceDataResponse {
+    open fun getMakeSources(): ListMakeSourceDataResponse {
         return makeSourceService.getMakeSources()
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PostMapping
+    @PostMapping(produces = ["application/json"])
     open fun addMakeSource(
         @RequestBody
         payload: MakeSourceRequest
@@ -29,7 +29,7 @@ open class MakeSourceController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PutMapping
+    @PutMapping(produces = ["application/json"])
     open fun updateMakeSource(
         @RequestBody
         payload: MakeSourceRequest
@@ -39,10 +39,10 @@ open class MakeSourceController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @DeleteMapping("/{storageId}")
-    open fun removeMakeSource(
+    open fun deleteMakeSourceByStorageId(
         @PathVariable(value = "storageId")
         storageId: Int
     ) {
-        return makeSourceService.removeMakeSource(storageId)
+        return makeSourceService.removeMakeSourceByStorageId(storageId)
     }
 }

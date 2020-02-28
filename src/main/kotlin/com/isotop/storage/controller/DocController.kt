@@ -15,21 +15,21 @@ open class DocController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
-    open fun getAllDocTypes(): ListDocTypeDataResponse {
-        return docTypeService.getDocTypes()
+    open fun getDocTypes(): ListDocTypeDataResponse {
+        return docTypeService.getDocType()
     }
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping("/{typeId}", produces = ["application/json"])
-    open fun getDocTypeById(
+    open fun getDocTypeByTypeId(
         @PathVariable(value = "typeId")
         typeId: Int
     ): DocTypeResponse {
-        return docTypeService.getDocTypeById(typeId)
+        return docTypeService.getDocTypeByTypeId(typeId)
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PostMapping
+    @PostMapping(produces = ["application/json"])
     open fun addDocType(
         @RequestBody
         payload: DocTypeRequest
@@ -38,7 +38,7 @@ open class DocController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PutMapping
+    @PutMapping(produces = ["application/json"])
     open fun updateDocType(
         @RequestBody
         payload: DocTypeRequest
@@ -47,11 +47,11 @@ open class DocController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{typeId}")
     open fun deleteDocType(
-        @PathVariable(value = "id")
-        id: Int
+        @PathVariable(value = "typeId")
+        typeId: Int
     ) {
-        return docTypeService.removeDocType(id)
+        return docTypeService.removeDocType(typeId)
     }
 }

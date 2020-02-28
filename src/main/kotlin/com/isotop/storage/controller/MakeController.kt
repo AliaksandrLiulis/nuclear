@@ -15,7 +15,7 @@ open class MakeController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
-    open fun getAllMakeTypes(): ListMakeTypeDataResponse {
+    open fun getMakeTypes(): ListMakeTypeDataResponse {
         return makeTypeService.getMakeTypes()
     }
 
@@ -29,7 +29,7 @@ open class MakeController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PostMapping
+    @PostMapping(produces = ["application/json"])
     open fun addMakeType(
         @RequestBody
         payload: MakeTypeRequest
@@ -38,7 +38,7 @@ open class MakeController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PutMapping
+    @PutMapping(produces = ["application/json"])
     open fun updateMakeType(
         @RequestBody
         payload: MakeTypeRequest
@@ -47,11 +47,11 @@ open class MakeController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{typeId}")
     open fun deleteMakeType(
-        @PathVariable(value = "id")
-        id: Int
+        @PathVariable(value = "typeId")
+        typeId: Int
     ) {
-        return makeTypeService.removeMakeType(id)
+        return makeTypeService.removeMakeType(typeId)
     }
 }
