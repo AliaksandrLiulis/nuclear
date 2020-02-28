@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 open class SecurityRepository(
-    @Autowired
     private val dsl: DefaultDSLContext
 ) {
 

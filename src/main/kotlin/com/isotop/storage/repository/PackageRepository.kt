@@ -15,7 +15,6 @@ import java.math.BigDecimal
 
 @Repository
 open class PackageRepository(
-    @Autowired
     private val dsl: DefaultDSLContext
 ) {
 

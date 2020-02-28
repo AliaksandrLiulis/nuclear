@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 open class QueryRepository(
-    @Autowired
     private val dsl: DefaultDSLContext
 ) {
 

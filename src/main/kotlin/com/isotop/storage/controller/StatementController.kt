@@ -5,10 +5,9 @@ import com.isotop.storage.dto.response.ListStatementResponse
 import com.isotop.storage.dto.response.StatementResponse
 import com.isotop.storage.service.StatementService
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
-@Controller
+@RestController
 @RequestMapping("/statements")
 open class StatementController(
     private val statementService: StatementService

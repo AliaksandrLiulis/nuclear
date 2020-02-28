@@ -10,7 +10,7 @@ data class ListStatementResponse(
 )
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class StatementResponse(
+data class StatementResponse (
     @JsonProperty("statement_code")
     val statementCode: Int,
     @JsonProperty("statement_type")

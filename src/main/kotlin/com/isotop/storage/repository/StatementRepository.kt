@@ -9,7 +9,6 @@ import com.isotop.storage.jooq.tables.Statements.STATEMENTS
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 
-
 @Repository
 open class StatementRepository(
     private val dsl: DSLContext

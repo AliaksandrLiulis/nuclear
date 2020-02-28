@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 open class UserRepository(
-    @Autowired
     private val dsl: DSLContext
 ) {
 
