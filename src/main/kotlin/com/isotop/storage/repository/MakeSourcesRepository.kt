@@ -35,7 +35,7 @@ open class MakeSourcesRepository(
             .fetchInto(MakeSourceResponse::class.java)
     }
 
-    open fun getAllMakeSourcesBySourceId(sourceId:Int): List<MakeSourceResponse> {
+    open fun getAllMakeSourcesBySourceId(sourceId: Int): List<MakeSourceResponse> {
 
         return dsl.select(
             STORAGES.STORAGE_CODE,
@@ -68,9 +68,9 @@ open class MakeSourcesRepository(
             STORAGES.MAKE_TYPE_CODE to payload.makeTypeCode,
             STORAGES.ACTIVITY to 0,
             STORAGES.MAKE_DATE to payload.makeDate
-            )
+        )
 
-        val sourceId =  dsl
+        val sourceId = dsl
             .insertInto(STORAGES)
             .set(insertValues)
             .returning(STORAGES.STORAGE_CODE)
@@ -90,7 +90,7 @@ open class MakeSourcesRepository(
             STORAGES.ACTIVITY to 0
         )
 
-        val sourceId =  dsl
+        val sourceId = dsl
             .update(STORAGES)
             .set(updateValues)
             .where(STORAGES.STORAGE_CODE.eq(payload.storageCode))

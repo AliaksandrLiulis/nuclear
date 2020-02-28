@@ -3,9 +3,9 @@ package com.isotop.storage.dto.request
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDate
 
-data class TransferRequest (
+data class TransferRequest(
     @JsonProperty("moution_type")
-    val moutionType:Int,
+    val moutionType: Int,
     @JsonProperty("transfer_date")
     val transferDate: LocalDate,
     @JsonProperty("org_code")

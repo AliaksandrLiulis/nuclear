@@ -2,7 +2,7 @@ package com.isotop.storage.dto.request
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class NuclideRequest (
+data class NuclideRequest(
     @JsonProperty("nuclide_type_code")
     val nuclideTypeCode: Int,
     @JsonProperty("nuclide_type")

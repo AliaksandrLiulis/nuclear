@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class ListOpenSourceTypeDataResponse (
+data class ListOpenSourceTypeDataResponse(
     val data: List<OpenSourceTypeResponse>
 )
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class OpenSourceTypeResponse (
+data class OpenSourceTypeResponse(
     @JsonProperty("open_source_type_code")
     val openSourceTypeCode: Int,
     @JsonProperty("open_source_type_name")

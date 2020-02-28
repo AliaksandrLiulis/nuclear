@@ -9,7 +9,7 @@ data class ListMakeTypeDataResponse(
 )
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class MakeTypeResponse (
+data class MakeTypeResponse(
     @JsonProperty("make_type_code")
     val makeTypeCode: Int,
     @JsonProperty("make_type_name")

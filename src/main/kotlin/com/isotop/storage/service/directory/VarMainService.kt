@@ -31,7 +31,7 @@ open class VarMainService(
     }
 
     @Transactional
-    open fun updateVarMain(varMainRequest: VarMainRequest): VarMainResponse  {
+    open fun updateVarMain(varMainRequest: VarMainRequest): VarMainResponse {
         validateUpdateVarMainRequest(varMainRequest)
         return varMainRepository.updateVarMain(varMainRequest)
     }

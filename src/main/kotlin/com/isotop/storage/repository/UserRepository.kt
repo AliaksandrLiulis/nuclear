@@ -6,10 +6,12 @@ import com.isotop.storage.jooq.Tables.USERS
 import com.isotop.storage.jooq.enums.UserRole
 import org.jooq.DSLContext
 import org.jooq.impl.DSL
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
 @Repository
 open class UserRepository(
+    @Autowired
     private val dsl: DSLContext
 ) {
 

@@ -10,7 +10,7 @@ data class ListMoutionDataResponse(
 )
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class MoutionResponse (
+data class MoutionResponse(
     @JsonProperty("moution_code")
     val moutionCode: Int,
     @JsonProperty("moution_date")

@@ -10,7 +10,7 @@ data class ListMakeSourceDataResponse(
 )
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class MakeSourceResponse (
+data class MakeSourceResponse(
     @JsonProperty("storage_code")
     val storageCode: Int,
     @JsonProperty("passport_number")

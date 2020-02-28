@@ -6,7 +6,6 @@ import org.jooq.conf.Settings
 import org.jooq.impl.DSL
 import org.jooq.impl.DefaultExecuteListener
 
-
 open class JooqLoggerListener : DefaultExecuteListener() {
 
     private val log = LogManager.getLogger()

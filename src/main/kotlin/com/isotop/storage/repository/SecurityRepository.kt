@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository
 
 @Repository
 open class SecurityRepository(
-
     @Autowired
-    val dsl: DefaultDSLContext
+    private val dsl: DefaultDSLContext
 ) {
 
     open fun getUserByEmail(payload: String): MutableList<UserCheckResponse> {

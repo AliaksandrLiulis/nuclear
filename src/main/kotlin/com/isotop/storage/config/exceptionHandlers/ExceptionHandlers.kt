@@ -28,7 +28,7 @@ class ExceptionHandlers {
     }
 
     @ExceptionHandler(ValidationException::class)
-    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleValidateException(e: ValidationException): NuclearError {
         return handleErrorCode(e)
     }

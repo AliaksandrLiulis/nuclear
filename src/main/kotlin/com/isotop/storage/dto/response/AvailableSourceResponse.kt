@@ -10,7 +10,7 @@ data class ListAvailableSourceDataResponse(
 )
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class AvailableSourceResponse (
+data class AvailableSourceResponse(
     @JsonProperty("container_code")
     val containerCode: Int,
     @JsonProperty("container_chipher")

@@ -7,9 +7,11 @@ import org.springframework.boot.web.servlet.ServletComponentScan
 import org.springframework.context.ApplicationContext
 
 @SpringBootApplication(
-    scanBasePackages = ["com.isotop.storage"])
+    scanBasePackages = ["com.isotop.storage"]
+)
 @ServletComponentScan(
-    basePackages = ["com.isotop.storage"])
+    basePackages = ["com.isotop.storage"]
+)
 @EnableConfigurationProperties
 open class Service
 

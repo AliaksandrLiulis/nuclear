@@ -2,7 +2,7 @@ package com.isotop.storage.dto.request
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class OpenSourceUsingRequest (
+data class OpenSourceUsingRequest(
     @JsonProperty("storage_code")
     val storageCode: Int,
     @JsonProperty("container_code")

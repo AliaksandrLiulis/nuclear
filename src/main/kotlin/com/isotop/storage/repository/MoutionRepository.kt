@@ -181,7 +181,7 @@ open class MoutionRepository(
             MOUTIONS.ORG_CODE to 1,
             MOUTIONS.STORAGE_CODE to storageCode,
             MOUTIONS.HIDE_EVENT to 0
-            )
+        )
 
         return dsl
             .insertInto(MOUTIONS)
@@ -271,7 +271,7 @@ open class MoutionRepository(
         ).fetchInto(MoutionTypeResponse::class.java)
     }
 
-    open fun getMoutionsByMoutionCode(motionCode:Int): MoutionResponse {
+    open fun getMoutionsByMoutionCode(motionCode: Int): MoutionResponse {
         return dsl.select(
             MOUTIONS.MOUTION_CODE,
             MOUTIONS.MOUTION_DATE,
