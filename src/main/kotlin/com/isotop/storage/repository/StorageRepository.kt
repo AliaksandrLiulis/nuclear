@@ -13,7 +13,6 @@ import java.time.LocalDate
 
 @Repository
 open class StorageRepository(
-    @Autowired
     private val dsl: DSLContext
 ) {
 
