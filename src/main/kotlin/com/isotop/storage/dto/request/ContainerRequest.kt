@@ -27,5 +27,4 @@ class ContainerRequest(
     var openSourceRest: Int?,
     @JsonProperty("container_code")
     var containerCode: Int?
-
 )

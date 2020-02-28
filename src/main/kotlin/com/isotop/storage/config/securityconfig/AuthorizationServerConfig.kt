@@ -70,7 +70,7 @@ open class AuthorizationServerConfig : AuthorizationServerConfigurerAdapter() {
         internal val SCOPE_READ = "read"
         internal val SCOPE_WRITE = "write"
         internal val TRUST = "trust"
-        internal val ACCESS_TOKEN_VALIDITY_SECONDS = 1 * 60 * 99000
-        internal val REFRESH_TOKEN_VALIDITY_SECONDS = 6 * 60 * 99000
+        internal val ACCESS_TOKEN_VALIDITY_SECONDS = 10 * 900 * 99000
+        internal val REFRESH_TOKEN_VALIDITY_SECONDS = 6 * 600 * 99000
     }
 }

@@ -1,5 +1,5 @@
 package com.isotop.storage.dto.request
 
-data class QueryRequest (
-    val query:String
+data class QueryRequest(
+    val query: String
 )

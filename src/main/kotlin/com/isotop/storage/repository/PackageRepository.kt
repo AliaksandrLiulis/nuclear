@@ -15,9 +15,8 @@ import java.math.BigDecimal
 
 @Repository
 open class PackageRepository(
-
     @Autowired
-    val dsl: DefaultDSLContext
+    private val dsl: DefaultDSLContext
 ) {
 
     open fun getPackagesByStorageCode(storageCode: Int): List<PackageResponse> {

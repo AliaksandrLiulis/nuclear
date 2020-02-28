@@ -86,7 +86,7 @@ open class NuclideTypesRepository(
             ).where(
                 NUCLIDE_TYPES.NUCLIDE_TYPE_CODE.eq(id)
             ).execute()
-        }catch (ex:Exception){
+        } catch (ex: Exception) {
             throw ValidationException(30)
         }
     }

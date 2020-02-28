@@ -6,7 +6,6 @@ import java.time.LocalDate
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ListStorageDataResponse(
-
     val data: List<StorageResponse>
 )
 

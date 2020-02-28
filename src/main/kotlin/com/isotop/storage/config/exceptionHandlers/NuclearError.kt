@@ -50,7 +50,8 @@ data class NuclearError(val errorCode: Int, val errorMessage: String?) {
             42 -> "Var Name not exist"
             43 -> "Var main not valid or exist"
             44 -> "Var main not exist"
-            24 -> "Var Main params can not be empty or null"
+            45 -> "Var Main params can not be empty or null"
+            46 -> "Statement by Id not exist"
 
             else -> ""
         }

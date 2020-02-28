@@ -158,11 +158,11 @@ open class ContainerRepository(
             ?.getValue(CONTAINERS.CONTAINER_CODE)
     }
 
-    open fun updateOpenSourceRestInContainer(openSourceRest:Int, containerCode: Int): Int? {
+    open fun updateOpenSourceRestInContainer(openSourceRest: Int, containerCode: Int): Int? {
 
         val updateValues = mapOf<Any, Any?>(
             CONTAINERS.OPEN_SOURCE_REST to openSourceRest
-         )
+        )
 
         return dsl
             .update(CONTAINERS)
@@ -174,8 +174,6 @@ open class ContainerRepository(
             ?.fetchOne()
             ?.getValue(CONTAINERS.CONTAINER_CODE)
     }
-
-
 
     open fun getCommonActivityByStorageCode(containerStorageCoe: Int): MutableList<String>? {
 
@@ -214,14 +212,14 @@ open class ContainerRepository(
             .from(
                 CONTAINERS
             )
-            .leftOuterJoin(OPEN_SOURCE_TYPES).on(CONTAINERS.OPEN_SOURCE_TYPE_CODE.eq(OPEN_SOURCE_TYPES.OPEN_SOURCE_TYPE_CODE))
+            .leftOuterJoin(OPEN_SOURCE_TYPES)
+            .on(CONTAINERS.OPEN_SOURCE_TYPE_CODE.eq(OPEN_SOURCE_TYPES.OPEN_SOURCE_TYPE_CODE))
             .leftOuterJoin(STORAGES).on(CONTAINERS.STORAGE_CODE.eq(STORAGES.STORAGE_CODE))
             .where(
                 CONTAINERS.OPEN_SOURCE_REST.isNotNull.and(CONTAINERS.OPEN_SOURCE_REST.greaterOrEqual(1))
             ).orderBy(STORAGES.COME_DATE)
             .fetchInto(AvailableSourceResponse::class.java)
     }
-
 
     open fun isExistContainerByStorageCode(payload: Int): Boolean {
 

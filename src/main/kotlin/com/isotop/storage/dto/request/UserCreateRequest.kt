@@ -8,5 +8,5 @@ data class UserCreateRequest(
     @field:NotEmpty(message = "User email must not be empty")
     val userEmail: String,
     @field:NotEmpty(message = "User password must not be empty")
-    var userPassword :String
+    var userPassword: String
 )

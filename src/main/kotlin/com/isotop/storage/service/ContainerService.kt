@@ -52,7 +52,7 @@ open class ContainerService(
     }
 
     @Transactional
-    open fun updateContainer(payload: ContainerRequest): ContainerResponse{
+    open fun updateContainer(payload: ContainerRequest): ContainerResponse {
         if (!containerRepository.isExistContainerByContainerCode(payload.containerCode ?: 0)) {
             throw ValidationException(33)
         }
@@ -72,16 +72,15 @@ open class ContainerService(
         containerRepository.removeContainer(storageCode, containerCode)
         if (containerRepository.isExistContainerByContainerCode(containerCode)) {
             updateDataStorageAfterChanges(storageCode)
-        }else{
+        } else {
             storageRepository.setStorageActivityToNull(storageCode)
         }
     }
 
     @Transactional
-    open fun updateDataStorageAfterChanges(storageCode: Int){
+    open fun updateDataStorageAfterChanges(storageCode: Int) {
         val commonActivity = containerRepository.getCommonActivityByStorageCode(storageCode)!!
             .map { it.toDouble() }[0]
         storageRepository.updateStorageActivity(commonActivity, storageCode)
     }
 }
-

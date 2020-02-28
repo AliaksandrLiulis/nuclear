@@ -9,7 +9,7 @@ data class ListActsFormatDataResponse(
 )
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class ActFormatResponse (
+data class ActFormatResponse(
     @JsonProperty("act_format_code")
     val actFormatCode: Int,
     @JsonProperty("act_format_name")

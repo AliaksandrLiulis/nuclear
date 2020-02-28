@@ -31,7 +31,7 @@ open class VarMainService(
     }
 
     @Transactional
-    open fun updateVarMain(varMainRequest: VarMainRequest): VarMainResponse  {
+    open fun updateVarMain(varMainRequest: VarMainRequest): VarMainResponse {
         validateUpdateVarMainRequest(varMainRequest)
         return varMainRepository.updateVarMain(varMainRequest)
     }
@@ -58,7 +58,7 @@ open class VarMainService(
         }
         if (varMainRequest.varName.isNullOrBlank() || varMainRequest.varValue.isNullOrBlank()
         ) {
-            throw ValidationException(24)
+            throw ValidationException(45)
         }
     }
 }

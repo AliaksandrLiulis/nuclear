@@ -37,7 +37,7 @@ open class MoutionService(
         }
         val motionTypeAndStorageCode =
             moutionRepository.getMoutionTypeAndStorageCodeByMotionCodeId(motionCode)
-        when(motionTypeAndStorageCode.moutionType){
+        when (motionTypeAndStorageCode.moutionType) {
             1 -> {
                 moutionRepository.removeMoutionsByMoutionCode(motionCode)
                 storageRepository.removeStorageNote(motionTypeAndStorageCode.storageCode)
@@ -46,7 +46,7 @@ open class MoutionService(
                 storageRepository.updateStorageComeDateToNull(motionTypeAndStorageCode.storageCode)
                 moutionRepository.removeMoutionsByMoutionCode(motionCode)
             }
-            3,4,5 ->{
+            3, 4, 5 -> {
                 storageRepository.updateStorageLeaveDateToNull(motionTypeAndStorageCode.storageCode)
                 moutionRepository.removeMoutionsByMoutionCode(motionCode)
             }
