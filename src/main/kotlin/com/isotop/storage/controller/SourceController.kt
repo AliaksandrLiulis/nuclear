@@ -20,7 +20,7 @@ open class SourceController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping("/types", produces = ["application/json"])
-    open fun getAllSourceTypes(): ListSourceTypeDataResponse {
+    open fun getSourceTypes(): ListSourceTypeDataResponse {
         return sourceTypeService.getSourceTypes()
     }
 

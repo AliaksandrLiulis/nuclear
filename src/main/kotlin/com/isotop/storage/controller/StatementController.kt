@@ -31,7 +31,7 @@ open class StatementController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PostMapping
+    @PostMapping(produces = ["application/json"])
     open fun addStatement(
         @RequestBody
         payload: StatementAddRequest
@@ -40,7 +40,7 @@ open class StatementController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PutMapping
+    @PutMapping(produces = ["application/json"])
     open fun updateStatement(
         @RequestBody
         payload: StatementUpdateRequest
@@ -49,11 +49,11 @@ open class StatementController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @DeleteMapping("/{id}")
-    open fun deleteStatementById(
-        @PathVariable(value = "id")
-        id: Int
+    @DeleteMapping("/{statementId}")
+    open fun deleteStatement(
+        @PathVariable(value = "statementId")
+        statementId: Int
     ) {
-        return statementService.removeStatement(id)
+        return statementService.removeStatement(statementId)
     }
 }

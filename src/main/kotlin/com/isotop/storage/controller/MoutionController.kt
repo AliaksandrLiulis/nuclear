@@ -16,7 +16,7 @@ open class MoutionController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping("types", produces = ["application/json"])
-    open fun getAllMoutionTypes(): ListMoutionTypeDataResponse {
+    open fun getMoutionTypes(): ListMoutionTypeDataResponse {
         return moutionService.getMoutionTypes()
     }
 
@@ -28,7 +28,7 @@ open class MoutionController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @PutMapping( produces = ["application/json"])
-    open fun updateMoutionByMoutionCode(
+    open fun updateMoution(
         @RequestBody
         payload: UpdateMotionRequest
     ): MoutionResponse {
@@ -36,8 +36,8 @@ open class MoutionController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @DeleteMapping("/{moutionCode}", produces = ["application/json"])
-    open fun deleteMoutionByMoutionCode(
+    @DeleteMapping("/{moutionCode}")
+    open fun deleteMoution(
         @PathVariable(value = "moutionCode")
         moutionCode: Int
     ) {

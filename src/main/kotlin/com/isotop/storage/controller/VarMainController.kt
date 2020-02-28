@@ -15,7 +15,7 @@ open class VarMainController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
-    open fun getAllVarMains(): ListVarMainResponse {
+    open fun getVarMains(): ListVarMainResponse {
         return varMainService.getVarMain()
     }
 
@@ -29,7 +29,7 @@ open class VarMainController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PostMapping
+    @PostMapping(produces = ["application/json"])
     open fun addVarMain(
         @RequestBody
         payload: VarMainRequest
@@ -38,7 +38,7 @@ open class VarMainController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PutMapping
+    @PutMapping(produces = ["application/json"])
     open fun updateVarMain(
         @RequestBody
         payload: VarMainRequest
@@ -47,11 +47,11 @@ open class VarMainController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @DeleteMapping("/{id}")
-    open fun deleteVarMainById(
-        @PathVariable(value = "id")
-        id: Int
+    @DeleteMapping("/{varMainId}")
+    open fun deleteVarMain(
+        @PathVariable(value = "varMainId")
+        varMainId: Int
     ) {
-        return varMainService.removeVarMain(id)
+        return varMainService.removeVarMain(varMainId)
     }
 }

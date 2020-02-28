@@ -15,12 +15,12 @@ open class OrganizationController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
-    open fun getAllOrganizations(): ListOrganizationDataResponse {
+    open fun getOrganizations(): ListOrganizationDataResponse {
         return organizationService.getOrganizations()
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PostMapping
+    @PostMapping(produces = ["application/json"])
     open fun addOrganizations(
         @RequestBody
         payload: OrganizationRequest
@@ -29,7 +29,7 @@ open class OrganizationController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PutMapping
+    @PutMapping(produces = ["application/json"])
     open fun updateOrganizations(
         @RequestBody
         payload: OrganizationRequest
@@ -38,11 +38,11 @@ open class OrganizationController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{organizationId}")
     open fun deleteOrganizations(
-        @PathVariable(value = "id")
-        id: Int
+        @PathVariable(value = "organizationId")
+        organizationId: Int
     ) {
-        return organizationService.removeOrganization(id)
+        return organizationService.removeOrganization(organizationId)
     }
 }

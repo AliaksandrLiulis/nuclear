@@ -15,7 +15,7 @@ open class NuclideController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
-    open fun getAllNuclideTypes(): ListNuclideTypeDataResponse {
+    open fun getNuclideTypes(): ListNuclideTypeDataResponse {
         return nuclideTypeService.getNuclideTypes()
     }
 
@@ -29,7 +29,7 @@ open class NuclideController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PostMapping
+    @PostMapping(produces = ["application/json"])
     open fun addNuclide(
         @RequestBody
         payload: NuclideRequest
@@ -38,7 +38,7 @@ open class NuclideController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PutMapping
+    @PutMapping(produces = ["application/json"])
     open fun updateNuclide(
         @RequestBody
         payload: NuclideRequest
@@ -47,11 +47,11 @@ open class NuclideController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{typeId}")
     open fun deleteNuclide(
-        @PathVariable(value = "id")
-        id: Int
+        @PathVariable(value = "typeId")
+        typeId: Int
     ) {
-        return nuclideTypeService.removeNuclide(id)
+        return nuclideTypeService.removeNuclide(typeId)
     }
 }

@@ -18,14 +18,13 @@ open class StorageController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping(produces = ["application/json"])
-    open fun getAllStorage(
-        authentication: Authentication
+    open fun getStorage(
     ): ListStorageDataResponse {
         return storageService.getAllStorage()
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PutMapping
+    @PutMapping(produces = ["application/json"])
     open fun updateStorage(
         @RequestBody
         payload: UpdateStorageRequest

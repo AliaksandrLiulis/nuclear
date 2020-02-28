@@ -16,7 +16,7 @@ open class ContainerService(
 
 ) {
 
-    open fun getAllFromContainer(): ListContainerDataResponse {
+    open fun getContainer(): ListContainerDataResponse {
         return ListContainerDataResponse(containerRepository.getAllFromContainer())
     }
 

@@ -17,7 +17,7 @@ open class OpenSourceController(
 
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping("/types", produces = ["application/json"])
-    open fun getAllOpenSourceTypes(): ListOpenSourceTypeDataResponse {
+    open fun getOpenSourceTypes(): ListOpenSourceTypeDataResponse {
         return openSourceTypeService.getOpenSourceTypes()
     }
 
@@ -31,7 +31,7 @@ open class OpenSourceController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @PutMapping("/using", produces = ["application/json"])
+    @PutMapping("/using")
     open fun updateOpenSourceUsing(
         @RequestBody
         payload: OpenSourceUsingRequest
