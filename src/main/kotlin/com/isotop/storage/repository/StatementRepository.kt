@@ -44,7 +44,7 @@ open class StatementRepository(
         )
             .where(
                 STATEMENTS.STATEMENT_CODE.eq(statementCodeId)
-            ).fetchOne().get(0, StatementResponse::class.java)
+            ).fetchInto(StatementResponse::class.java)[0]
     }
 
     open fun addStatement(statementRequest: StatementAddRequest): StatementResponse {
@@ -59,7 +59,7 @@ open class StatementRepository(
         )
 
         val statementId = dsl.insertInto(STATEMENTS)
-            .values(
+            .set(
                 insertValues
             )
             .returning(STATEMENTS.STATEMENT_CODE)
