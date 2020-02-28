@@ -1,6 +1,8 @@
 package com.isotop.storage.service
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
+import com.isotop.storage.dto.request.StatementAddRequest
+import com.isotop.storage.dto.request.StatementUpdateRequest
 import com.isotop.storage.dto.request.VarMainRequest
 import com.isotop.storage.dto.response.ListStatementResponse
 import com.isotop.storage.dto.response.StatementResponse
@@ -25,15 +27,14 @@ open class StatementService(
     }
 
     @Transactional
-    open fun addStatement(varMainRequest: VarMainRequest): StatementResponse {
-        validateVarMainRequest(varMainRequest)
-        return statementRepository.addStatement(varMainRequest)
+    open fun addStatement(statementRequest: StatementAddRequest): StatementResponse {
+        return statementRepository.addStatement(statementRequest)
     }
 
     @Transactional
-    open fun updateStatement(varMainRequest: VarMainRequest): StatementResponse {
-        validateUpdateVarMainRequest(varMainRequest)
-        return statementRepository.updateStatement(varMainRequest)
+    open fun updateStatement(updateRequest: StatementUpdateRequest): StatementResponse {
+        validateUpdateVarMainRequest(updateRequest)
+        return statementRepository.updateStatement(updateRequest)
     }
 
     @Transactional
@@ -44,21 +45,9 @@ open class StatementService(
         return statementRepository.removeStatement(id)
     }
 
-    private fun validateVarMainRequest(varMainRequest: VarMainRequest) {
-        if (varMainRequest.varName.isNullOrBlank() || varMainRequest.varValue.isNullOrBlank()
-//            || varMainRepository.isExistVarMainByVarName(varMainRequest.varName)
-        ) {
-            throw ValidationException(43)
-        }
-    }
-
-    private fun validateUpdateVarMainRequest(varMainRequest: VarMainRequest) {
-//        if (!varMainRepository.isExistVarMainById(varMainRequest.varCode)) {
-//            throw ValidationException(44)
-//        }
-        if (varMainRequest.varName.isNullOrBlank() || varMainRequest.varValue.isNullOrBlank()
-        ) {
-            throw ValidationException(45)
+    private fun validateUpdateVarMainRequest(statementUpdateRequestRequest: StatementUpdateRequest) {
+        if (!statementRepository.isExistStatementById(statementUpdateRequestRequest.statementCode)) {
+            throw ValidationException(46)
         }
     }
 }

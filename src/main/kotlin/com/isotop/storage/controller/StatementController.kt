@@ -1,5 +1,7 @@
 package com.isotop.storage.controller
 
+import com.isotop.storage.dto.request.StatementAddRequest
+import com.isotop.storage.dto.request.StatementUpdateRequest
 import com.isotop.storage.dto.request.VarMainRequest
 import com.isotop.storage.dto.response.ListStatementResponse
 import com.isotop.storage.dto.response.StatementResponse
@@ -32,7 +34,7 @@ open class StatementController(
     @PostMapping
     open fun addStatement(
         @RequestBody
-        payload: VarMainRequest
+        payload: StatementAddRequest
     ): StatementResponse {
         return statementService.addStatement(payload)
     }
@@ -41,7 +43,7 @@ open class StatementController(
     @PutMapping
     open fun updateStatement(
         @RequestBody
-        payload: VarMainRequest
+        payload: StatementUpdateRequest
     ): StatementResponse {
         return statementService.updateStatement(payload)
     }

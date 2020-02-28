@@ -1,6 +1,8 @@
 package com.isotop.storage.repository
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
+import com.isotop.storage.dto.request.StatementAddRequest
+import com.isotop.storage.dto.request.StatementUpdateRequest
 import com.isotop.storage.dto.request.VarMainRequest
 import com.isotop.storage.dto.response.StatementResponse
 import com.isotop.storage.dto.response.VarMainResponse
@@ -45,41 +47,48 @@ open class StatementRepository(
             ).fetchOne().get(0, StatementResponse::class.java)
     }
 
-    open fun addStatement(varMainRequest: VarMainRequest): StatementResponse {
+    open fun addStatement(statementRequest: StatementAddRequest): StatementResponse {
 
-        val statementId = dsl.insertInto(Tables.DOC_TYPES)
-            .columns(
-                Tables.VAR_MAIN.VAR_NAME,
-                Tables.VAR_MAIN.VAR_VALUE
-            )
+        val insertValues = mapOf<Any, Any?>(
+            STATEMENTS.STATEMENT_TYPE to statementRequest.statementType,
+            STATEMENTS.STATEMENT_DATE to statementRequest.statementDate,
+            STATEMENTS.STATEMENT_NUMBER to statementRequest.statementNumber,
+            STATEMENTS.STATEMENT_INT_NUMBER to statementRequest.statementIntNumber,
+            STATEMENTS.STATEMENT_NOTE to statementRequest.statementNote,
+            STATEMENTS.CONTAINS_URANIUM to statementRequest.containsUranium
+        )
+
+        val statementId = dsl.insertInto(STATEMENTS)
             .values(
-                varMainRequest.varName,
-                varMainRequest.varValue
-            ).onDuplicateKeyUpdate()
-            .set(Tables.VAR_MAIN.VAR_NAME, Tables.VAR_MAIN.VAR_VALUE)
-            .returning(Tables.VAR_MAIN.VAR_CODE)
+                insertValues
+            )
+            .returning(STATEMENTS.STATEMENT_CODE)
             ?.fetchOne()
-            ?.getValue(Tables.VAR_MAIN.VAR_CODE)
+            ?.getValue(STATEMENTS.STATEMENT_CODE)
 
         return getStatementById(statementId!!)
     }
 
-    open fun updateStatement(varMainRequest: VarMainRequest): StatementResponse {
+    open fun updateStatement(statementUpdateRequest: StatementUpdateRequest): StatementResponse {
 
         val updateValues = mapOf<Any, Any?>(
-            Tables.VAR_MAIN.VAR_NAME to varMainRequest.varName,
-            Tables.VAR_MAIN.VAR_VALUE to varMainRequest.varValue
+            STATEMENTS.STATEMENT_TYPE to statementUpdateRequest.statementType,
+            STATEMENTS.STATEMENT_DATE to statementUpdateRequest.statementDate,
+            STATEMENTS.STATEMENT_NUMBER to statementUpdateRequest.statementNumber,
+            STATEMENTS.STATEMENT_INT_NUMBER to statementUpdateRequest.statementIntNumber,
+            STATEMENTS.STATEMENT_NOTE to statementUpdateRequest.statementNote,
+            STATEMENTS.CONTAINS_URANIUM to statementUpdateRequest.containsUranium
         )
 
         val statementId = dsl
-            .update(Tables.VAR_MAIN)
+            .update(STATEMENTS)
             .set(updateValues)
             .where(
-                Tables.VAR_MAIN.VAR_CODE.eq(varMainRequest.varCode)
+                STATEMENTS.STATEMENT_CODE.eq(statementUpdateRequest.statementCode)
             )
-            .returning(Tables.VAR_MAIN.VAR_CODE)
+            .returning(STATEMENTS.STATEMENT_CODE)
             ?.fetchOne()
-            ?.getValue(Tables.VAR_MAIN.VAR_CODE)
+            ?.getValue(STATEMENTS.STATEMENT_CODE)
 
         return getStatementById(statementId!!)
 
