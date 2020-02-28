@@ -3,10 +3,7 @@ package com.isotop.storage.repository
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.StatementAddRequest
 import com.isotop.storage.dto.request.StatementUpdateRequest
-import com.isotop.storage.dto.request.VarMainRequest
 import com.isotop.storage.dto.response.StatementResponse
-import com.isotop.storage.dto.response.VarMainResponse
-import com.isotop.storage.jooq.Tables
 import com.isotop.storage.jooq.tables.Statements.STATEMENTS
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
@@ -16,7 +13,7 @@ open class StatementRepository(
     private val dsl: DSLContext
 ) {
 
-    open fun getStatement(): List<StatementResponse> {
+    open fun getStatement(statementType: Int): List<StatementResponse> {
         return dsl.select(
             STATEMENTS.STATEMENT_CODE,
             STATEMENTS.STATEMENT_TYPE,
@@ -27,7 +24,10 @@ open class StatementRepository(
             STATEMENTS.CONTAINS_URANIUM
         ).from(
             STATEMENTS
-        ).fetchInto(StatementResponse::class.java)
+        )
+            . where(
+                STATEMENTS.STATEMENT_TYPE.eq(statementType)
+            ).fetchInto(StatementResponse::class.java)
     }
 
     open fun getStatementById(statementCodeId: Int): StatementResponse {

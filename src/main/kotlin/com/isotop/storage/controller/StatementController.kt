@@ -16,9 +16,15 @@ open class StatementController(
 ) {
 
     @PreAuthorize("hasRole('STORAGE')")
-    @GetMapping(produces = ["application/json"])
-    open fun getStatements(): ListStatementResponse {
-        return statementService.getStatement()
+    @GetMapping("/in",produces = ["application/json"])
+    open fun getStatementsIn(): ListStatementResponse {
+        return statementService.getStatement(1)
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @GetMapping("/out",produces = ["application/json"])
+    open fun getStatementsOut(): ListStatementResponse {
+        return statementService.getStatement(2)
     }
 
     @PreAuthorize("hasRole('STORAGE')")

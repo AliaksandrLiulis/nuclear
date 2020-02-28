@@ -15,8 +15,8 @@ open class StatementService(
     private val statementRepository: StatementRepository
 ) {
 
-    open fun getStatement(): ListStatementResponse {
-        return ListStatementResponse(statementRepository.getStatement())
+    open fun getStatement(statementType:Int): ListStatementResponse {
+        return ListStatementResponse(statementRepository.getStatement(statementType))
     }
 
     open fun getStatementById(statementId: Int): StatementResponse {
