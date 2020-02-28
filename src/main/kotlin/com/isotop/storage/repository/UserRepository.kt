@@ -6,7 +6,6 @@ import com.isotop.storage.jooq.Tables.USERS
 import com.isotop.storage.jooq.enums.UserRole
 import org.jooq.DSLContext
 import org.jooq.impl.DSL
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -42,7 +41,7 @@ open class UserRepository(
             .fetchInto(UserResponse::class.java)
     }
 
-    open fun getUserById(idUser: Int): List<UserResponse> {
+    open fun getUserById(userId: Int): List<UserResponse> {
 
         return dsl.select(
             USERS.USER_CODE.`as`("userId"),
@@ -52,7 +51,7 @@ open class UserRepository(
         ).from(
             USERS
         ).where(
-            USERS.USER_CODE.eq(idUser)
+            USERS.USER_CODE.eq(userId)
         ).orderBy(USERS.NAME)
             .fetchInto(UserResponse::class.java)
     }
@@ -86,24 +85,24 @@ open class UserRepository(
     }
 
     open fun isExistUserById(
-        idUser: Int
+        userId: Int
     ): Boolean {
 
         return dsl.fetchExists(
             DSL.select(USERS.USER_CODE)
                 .from(USERS)
-                .where(USERS.USER_CODE.eq(idUser))
+                .where(USERS.USER_CODE.eq(userId))
         )
     }
 
     open fun isExistUserByName(
-        payload: String
+        userName: String
     ): Boolean {
 
         return dsl.fetchExists(
             DSL.select(USERS.USER_CODE)
                 .from(USERS)
-                .where(USERS.NAME.equalIgnoreCase(payload))
+                .where(USERS.NAME.equalIgnoreCase(userName))
         )
     }
 

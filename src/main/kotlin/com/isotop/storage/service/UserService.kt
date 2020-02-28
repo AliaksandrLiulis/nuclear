@@ -30,7 +30,7 @@ open class UserService(
 
     @Transactional
     open fun createUser(payload: UserCreateRequest): UserResponse {
-        val isExistName = userRepository.isExistUserByName(payload = payload.userName)
+        val isExistName = userRepository.isExistUserByName(userName = payload.userName)
         val isExistEmail = userRepository.isExistUserByEmail(payload = payload.userEmail)
 
         if (isExistName) {
