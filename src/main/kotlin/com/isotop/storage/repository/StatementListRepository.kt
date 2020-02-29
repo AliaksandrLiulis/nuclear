@@ -1,7 +1,10 @@
 package com.isotop.storage.repository
 
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
+import com.isotop.storage.dto.request.StatementAddRequest
+import com.isotop.storage.dto.request.StatementListRequest
 import com.isotop.storage.dto.response.StatementListResponse
+import com.isotop.storage.dto.response.StatementResponse
 import com.isotop.storage.jooq.Tables.*
 import com.isotop.storage.jooq.tables.Statements
 import org.jooq.DSLContext
@@ -34,6 +37,22 @@ open class StatementListRepository(
             .where(
                 STATEMENT_LISTS.STATEMENT_CODE.eq(statementCode)
             ).fetchInto(StatementListResponse::class.java)
+    }
+
+    open fun addStatementListNote(statementListRequest: StatementListRequest): Int {
+
+        val insertValues = mapOf<Any, Any?>(
+            STATEMENT_LISTS.STATEMENT_CODE to statementListRequest.statementCode,
+            STATEMENT_LISTS.STORAGE_CODE to statementListRequest.storageCode
+        )
+
+        return dsl.insertInto(STATEMENT_LISTS)
+            .set(
+                insertValues
+            )
+            .returning(STATEMENT_LISTS.STATEMENT_LIST_CODE)
+            ?.fetchOne()
+            ?.getValue(STATEMENT_LISTS.STATEMENT_LIST_CODE)!!
     }
 
     open fun removeStatementNoteList(statementListCode: Int) {
