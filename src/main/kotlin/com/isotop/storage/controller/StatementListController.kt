@@ -3,10 +3,7 @@ package com.isotop.storage.controller
 import com.isotop.storage.dto.response.ListStatementListResponse
 import com.isotop.storage.service.StatementListService
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/statementlists")
@@ -21,5 +18,14 @@ open class StatementListController(
         statementId: Int
     ): ListStatementListResponse {
         return statementListService.getStatementList(statementId)
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @DeleteMapping("/{statementListCode}")
+    open fun deleteStatementListNote(
+        @PathVariable(value = "statementListCode")
+        statementListCode: Int
+    ) {
+        return statementListService.removeStatementNote(statementListCode)
     }
 }

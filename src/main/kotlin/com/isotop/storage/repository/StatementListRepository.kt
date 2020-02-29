@@ -1,7 +1,9 @@
 package com.isotop.storage.repository
 
+import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.response.StatementListResponse
 import com.isotop.storage.jooq.Tables.*
+import com.isotop.storage.jooq.tables.Statements
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 
@@ -32,5 +34,25 @@ open class StatementListRepository(
             .where(
                 STATEMENT_LISTS.STATEMENT_CODE.eq(statementCode)
             ).fetchInto(StatementListResponse::class.java)
+    }
+
+    open fun removeStatementNoteList(statementListCode: Int) {
+        try {
+            dsl.delete(
+                STATEMENT_LISTS
+            ).where(
+                STATEMENT_LISTS.STATEMENT_LIST_CODE.eq(statementListCode)
+            ).execute()
+        } catch (ex: Exception) {
+            throw ValidationException(30)
+        }
+    }
+
+    open fun isExistStatementNoteByListCode(statementListCode: Int): Boolean {
+        return dsl.fetchExists(
+            dsl.select(STATEMENT_LISTS.STATEMENT_LIST_CODE)
+                .from(STATEMENT_LISTS)
+                .where(STATEMENT_LISTS.STATEMENT_LIST_CODE.eq(statementListCode))
+        )
     }
 }
