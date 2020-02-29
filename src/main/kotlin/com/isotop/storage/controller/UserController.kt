@@ -52,7 +52,7 @@ open class UserController(
         return userService.updateUserRoleByUserId(authentication, payload)
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('STORAGE') || hasRole('WORKER')")
     @PutMapping("/password")
     open fun changePassword(
         authentication: Authentication,
