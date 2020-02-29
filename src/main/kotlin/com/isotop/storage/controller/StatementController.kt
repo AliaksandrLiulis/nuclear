@@ -30,7 +30,13 @@ open class StatementController(
     @PreAuthorize("hasRole('STORAGE')")
     @GetMapping("/available/in", produces = ["application/json"])
     open fun getStatementsAvailableIn(): ListSourceFromStorageResponse {
-        return statementService.getAllSourceFromStorageOnRegister()
+        return statementService.getAllSourceStorageOnRegister()
+    }
+
+    @PreAuthorize("hasRole('STORAGE')")
+    @GetMapping("/available/out", produces = ["application/json"])
+    open fun getStatementsAvailableFrom(): ListSourceFromStorageResponse {
+        return statementService.getAllSourceStorageFromRegister()
     }
 
     @PreAuthorize("hasRole('STORAGE')")

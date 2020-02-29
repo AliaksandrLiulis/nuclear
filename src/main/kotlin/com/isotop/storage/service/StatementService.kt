@@ -26,8 +26,12 @@ open class StatementService(
         return statementRepository.getStatementById(statementId)
     }
 
-    open fun getAllSourceFromStorageOnRegister(): ListSourceFromStorageResponse {
-        return ListSourceFromStorageResponse(statementRepository.getAllSourceFromStorageOnRegister())
+    open fun getAllSourceStorageOnRegister(): ListSourceFromStorageResponse {
+        return ListSourceFromStorageResponse(statementRepository.getAllSourceStorageOnRegister())
+    }
+
+    open fun getAllSourceStorageFromRegister(): ListSourceFromStorageResponse {
+        return ListSourceFromStorageResponse(statementRepository.getAllSourceStoragesFromRegister())
     }
 
     @Transactional

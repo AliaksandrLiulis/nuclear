@@ -33,7 +33,7 @@ open class StatementRepository(
             ).fetchInto(StatementResponse::class.java)
     }
 
-    open fun getAllSourceFromStorageOnRegister(): List<SourceFromStorageResponse> {
+    open fun getAllSourceStorageOnRegister(): List<SourceFromStorageResponse> {
         return dsl.select(
             STORAGES.PASSPORT_NUMBER,
             STORAGES.SERIAL_NUMBER,
@@ -53,42 +53,25 @@ open class StatementRepository(
             ).fetchInto(SourceFromStorageResponse::class.java)
     }
 
-//    open fun getAllSourceFromStoragesFromRegister(): List<SourceFromStorageResponse> {
-//        return dsl.select(
-//            STORAGES.PASSPORT_NUMBER,
-//            STORAGES.SERIAL_NUMBER,
-//            STORAGES.MAKE_DATE,
-//            STORAGES.ACTIVITY,
-//            NUCLIDE_TYPES.NUCLIDE_TYPE,
-//            MAKE_TYPES.MAKE_TYPE_NAME
-//        ).from(
-//            STORAGES
-//        )
-//            .leftOuterJoin(STATEMENT_LISTS).on(STORAGES.STORAGE_CODE.eq(STATEMENT_LISTS.STORAGE_CODE))
-//            .leftOuterJoin(STATEMENTS).on(STATEMENT_LISTS.STATEMENT_CODE.eq(STATEMENTS.STATEMENT_CODE))
-//            .leftOuterJoin(NUCLIDE_TYPES).on(STORAGES.NUCLIDE_TYPE_CODE.eq(NUCLIDE_TYPES.NUCLIDE_TYPE_CODE))
-//            .leftOuterJoin(MAKE_TYPES).on(STORAGES.MAKE_TYPE_CODE.eq(MAKE_TYPES.MAKE_TYPE_CODE))
-//            .leftOuterJoin(
-//                dsl.selectCount(
-//                      STORAGES.STORAGE_CODE
-//                )
-//                    .from(
-//                        STATEMENT_LISTS
-//                    ).groupBy(STATEMENT_LISTS.STORAGE_CODE)
-//
-//            ).on(STORAGES.STORAGE_CODE)
-//            .where(
-//                STATEMENTS.STATEMENT_TYPE.isNotNull.and(STORAGES.COME_DATE.isNotNull)
-//            ).fetchInto(SourceFromStorageResponse::class.java)
-//    }
-//
-//    private final String GET_ALL_SOURCE_FROM_STORAGES_FROM_REGISTER =
-//    SELECT * FROM storages A left outer join statement_lists B On(A.StorageCode=B.StorageCode)
-//    left outer join statements C On(B.StatementCode=C.StatementCode)
-//    left outer join nuclide_types D on(A.NuclideTypeCode=D.NuclideTypeCode)
-//    left outer join make_types F on(A.MakeTypeCode=F.MakeTypeCode)
-//    left outer join  (SELECT COUNT(*) StatementTypeCount, StorageCode FROM statement_lists group by StorageCode) G on(A.StorageCode=G.StorageCode) where A.LeaveDate is not null and G.StatementTypeCount='1'";
+    open fun getAllSourceStoragesFromRegister(): List<SourceFromStorageResponse> {
+        val sql = "SELECT A.passport_number, " +
+                "A.serial_number, " +
+                "A.make_date, " +
+                "A.activity, " +
+                "D.nuclide_type, " +
+                "F.make_type_name " +
+                "FROM storages A " +
+                "left outer join statement_lists B On(A.storage_code=B.storage_code) " +
+                "left outer join statements C On(B.statement_code=C.statement_code) " +
+                "left outer join nuclide_types D on(A.nuclide_type_code=D.nuclide_type_code) " +
+                "left outer join make_types F on(A.make_type_code=F.make_type_code) " +
+                "left outer join (SELECT COUNT(*) StatementTypeCount, storage_code " +
+                "FROM statement_lists group by storage_code) G on(A.storage_code=G.storage_code) " +
+                "where A.leave_date is not null and G.StatementTypeCount='1'"
 
+        return dsl.fetch(sql).into(SourceFromStorageResponse::class.java)
+
+    }
 
     open fun getStatementById(statementCodeId: Int): StatementResponse {
         return dsl.select(
