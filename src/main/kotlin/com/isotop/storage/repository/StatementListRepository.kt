@@ -30,7 +30,7 @@ open class StatementListRepository(
             .on(STORAGES.STORAGE_CODE.eq(MOUTIONS.STORAGE_CODE).and(MOUTIONS.MOUTION_TYPE.eq(1)))
             .leftOuterJoin(ORGS).on(MOUTIONS.ORG_CODE.eq(ORGS.ORG_CODE))
             .where(
-                STATEMENTS.STATEMENT_CODE.eq(statementCode)
+                STATEMENT_LISTS.STATEMENT_CODE.eq(statementCode)
             ).fetchInto(StatementListResponse::class.java)
     }
 }

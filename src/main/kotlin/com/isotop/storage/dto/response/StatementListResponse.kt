@@ -12,23 +12,23 @@ data class ListStatementListResponse(
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class StatementListResponse(
     @JsonProperty("statement_list_code")
-    val statementListCode: Int,
+    val statementListCode: Int?,
     @JsonProperty("statement_code")
-    val statementCode: Int,
+    val statementCode: Int?,
     @JsonProperty("storage_code")
-    val storageCode: Int,
+    val storageCode: Int?,
     @JsonProperty("storage_life_time")
-    val storageLifeTime: Double,
+    val storageLifeTime: Double?,
     @JsonProperty("storage_category")
-    val storageCategory: Int,
+    val storageCategory: Int?,
     @JsonProperty("passport_number")
-    val passportNumber: String,
+    val passportNumber: String?,
     @JsonProperty("serial_number")
-    val serialNumber: String,
+    val serialNumber: String?,
     @JsonProperty("activity")
-    val activity: Double,
+    val activity: Double?,
     @JsonProperty("come_date")
-    val comeDate: LocalDate,
+    val comeDate: LocalDate?,
     @JsonProperty("icon_org_name")
-    val iconOrgName: LocalDate
+    val iconOrgName: LocalDate?
 )
