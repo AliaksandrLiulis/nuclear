@@ -2,6 +2,7 @@ package com.isotop.storage.controller
 
 import com.isotop.storage.dto.request.StatementListRequest
 import com.isotop.storage.dto.response.ListStatementListResponse
+import com.isotop.storage.dto.response.StatementListResponse
 import com.isotop.storage.dto.response.StatementResponse
 import com.isotop.storage.service.StatementListService
 import org.springframework.security.access.prepost.PreAuthorize
@@ -27,7 +28,7 @@ open class StatementListController(
     open fun addStatementListNote(
         @RequestBody
         payload: StatementListRequest
-    ): ListStatementListResponse {
+    ): StatementListResponse {
         return statementListService.addStatementListNote(payload)
     }
 

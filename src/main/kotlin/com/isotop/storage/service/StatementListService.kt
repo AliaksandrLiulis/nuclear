@@ -4,6 +4,7 @@ import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.StatementAddRequest
 import com.isotop.storage.dto.request.StatementListRequest
 import com.isotop.storage.dto.response.ListStatementListResponse
+import com.isotop.storage.dto.response.StatementListResponse
 import com.isotop.storage.dto.response.StatementResponse
 import com.isotop.storage.repository.StatementListRepository
 import org.springframework.stereotype.Service
@@ -19,9 +20,9 @@ open class StatementListService(
     }
 
 
-    open fun addStatementListNote(statementListRequest: StatementListRequest): ListStatementListResponse {
+    open fun addStatementListNote(statementListRequest: StatementListRequest): StatementListResponse {
         val statementCode = statementListRepository.addStatementListNote(statementListRequest)
-        return ListStatementListResponse(statementListRepository.getStatementListByStatementListCode(statementCode))
+        return statementListRepository.getStatementListByStatementListCode(statementCode)[0]
     }
 
     @Transactional
