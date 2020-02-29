@@ -18,10 +18,10 @@ open class StatementListService(
         return ListStatementListResponse(statementListRepository.getStatementList(statementCode))
     }
 
-    @Transactional
+
     open fun addStatementListNote(statementListRequest: StatementListRequest): ListStatementListResponse {
         val statementCode = statementListRepository.addStatementListNote(statementListRequest)
-        return getStatementList(statementCode)
+        return ListStatementListResponse(statementListRepository.getStatementListByStatementListCode(statementCode))
     }
 
     @Transactional

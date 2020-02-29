@@ -22,5 +22,7 @@ data class SourceFromStorageResponse(
     @JsonProperty("nuclide_type")
     val nuclideType: String,
     @JsonProperty("make_type_name")
-    val makeTypeName: String
+    val makeTypeName: String,
+    @JsonProperty("storage_code")
+    val storageCode: Int
 )

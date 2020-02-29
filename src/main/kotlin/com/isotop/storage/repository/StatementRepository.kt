@@ -55,6 +55,7 @@ open class StatementRepository(
 
     open fun getAllSourceStoragesFromRegister(): List<SourceFromStorageResponse> {
         val sql = "SELECT A.passport_number, " +
+                "A.storage_code, " +
                 "A.serial_number, " +
                 "A.make_date, " +
                 "A.activity, " +
@@ -67,7 +68,7 @@ open class StatementRepository(
                 "left outer join make_types F on(A.make_type_code=F.make_type_code) " +
                 "left outer join (SELECT COUNT(*) StatementTypeCount, storage_code " +
                 "FROM statement_lists group by storage_code) G on(A.storage_code=G.storage_code) " +
-                "where A.leave_date is not null and G.StatementTypeCount='1'"
+                "where A.leave_date is not null"
 
         return dsl.fetch(sql).into(SourceFromStorageResponse::class.java)
 
