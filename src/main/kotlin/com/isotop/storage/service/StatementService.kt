@@ -3,7 +3,6 @@ package com.isotop.storage.service
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.StatementAddRequest
 import com.isotop.storage.dto.request.StatementUpdateRequest
-import com.isotop.storage.dto.request.VarMainRequest
 import com.isotop.storage.dto.response.ListSourceFromStorageResponse
 import com.isotop.storage.dto.response.ListStatementResponse
 import com.isotop.storage.dto.response.StatementResponse
@@ -27,8 +26,8 @@ open class StatementService(
         return statementRepository.getStatementById(statementId)
     }
 
-    open fun getAllSourceFromStoragesOnRegister(): ListSourceFromStorageResponse {
-        return ListSourceFromStorageResponse(statementRepository.getAllSourceFromStoragesOnRegister())
+    open fun getAllSourceFromStorageOnRegister(): ListSourceFromStorageResponse {
+        return ListSourceFromStorageResponse(statementRepository.getAllSourceFromStorageOnRegister())
     }
 
     @Transactional

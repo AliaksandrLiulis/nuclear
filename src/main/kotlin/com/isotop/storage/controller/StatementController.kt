@@ -2,7 +2,6 @@ package com.isotop.storage.controller
 
 import com.isotop.storage.dto.request.StatementAddRequest
 import com.isotop.storage.dto.request.StatementUpdateRequest
-import com.isotop.storage.dto.request.VarMainRequest
 import com.isotop.storage.dto.response.ListSourceFromStorageResponse
 import com.isotop.storage.dto.response.ListStatementResponse
 import com.isotop.storage.dto.response.StatementResponse
@@ -29,9 +28,9 @@ open class StatementController(
     }
 
     @PreAuthorize("hasRole('STORAGE')")
-    @GetMapping("/avaliable/in", produces = ["application/json"])
-    open fun getStatementsAvaliableIn(): ListSourceFromStorageResponse {
-        return statementService.getAllSourceFromStoragesOnRegister()
+    @GetMapping("/available/in", produces = ["application/json"])
+    open fun getStatementsAvailableIn(): ListSourceFromStorageResponse {
+        return statementService.getAllSourceFromStorageOnRegister()
     }
 
     @PreAuthorize("hasRole('STORAGE')")

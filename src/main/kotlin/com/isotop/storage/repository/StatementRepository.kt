@@ -33,7 +33,7 @@ open class StatementRepository(
             ).fetchInto(StatementResponse::class.java)
     }
 
-    open fun getAllSourceFromStoragesOnRegister(): List<SourceFromStorageResponse> {
+    open fun getAllSourceFromStorageOnRegister(): List<SourceFromStorageResponse> {
         return dsl.select(
             STORAGES.PASSPORT_NUMBER,
             STORAGES.SERIAL_NUMBER,
