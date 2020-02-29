@@ -4,6 +4,7 @@ import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.StatementAddRequest
 import com.isotop.storage.dto.request.StatementUpdateRequest
 import com.isotop.storage.dto.request.VarMainRequest
+import com.isotop.storage.dto.response.ListSourceFromStorageResponse
 import com.isotop.storage.dto.response.ListStatementResponse
 import com.isotop.storage.dto.response.StatementResponse
 import com.isotop.storage.repository.StatementRepository
@@ -15,7 +16,7 @@ open class StatementService(
     private val statementRepository: StatementRepository
 ) {
 
-    open fun getStatement(statementType:Int): ListStatementResponse {
+    open fun getStatement(statementType: Int): ListStatementResponse {
         return ListStatementResponse(statementRepository.getStatement(statementType))
     }
 
@@ -24,6 +25,10 @@ open class StatementService(
             throw ValidationException(46)
         }
         return statementRepository.getStatementById(statementId)
+    }
+
+    open fun getAllSourceFromStoragesOnRegister(): ListSourceFromStorageResponse {
+        return ListSourceFromStorageResponse(statementRepository.getAllSourceFromStoragesOnRegister())
     }
 
     @Transactional
