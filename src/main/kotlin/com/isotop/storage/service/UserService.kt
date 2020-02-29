@@ -70,15 +70,14 @@ open class UserService(
         }
     }
 
-    @Transactional
-    open fun updateUserNameAndPassword(
+    open fun updateUserProfile(
         authentication: Authentication,
         payload: UpdateUserNameAndEmailRequest
     ): UserResponse {
         val currentUser = userRepository.getUserByName(authentication.name)[0]
         if (!payload.name.isBlank() || !payload.email.isBlank()) {
-            val userId = userRepository.updateUserNameAndPassword(currentUser.name, payload.name, payload.email)
-            return userRepository.getUserByName(authentication.name)[0]
+            userRepository.updateUserProfile(currentUser.name, payload.name, payload.email)
+            return userRepository.getUserById(currentUser.userId)[0]
         } else {
             throw ResourceNotFoundException(48)
         }

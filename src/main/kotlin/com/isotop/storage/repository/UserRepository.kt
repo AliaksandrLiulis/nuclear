@@ -131,7 +131,7 @@ open class UserRepository(
         )
     }
 
-    open fun updateUserNameAndPassword(currentUserName: String, userName: String, email: String): Int {
+    open fun updateUserProfile(currentUserName: String, userName: String, email: String): String {
         return dsl
             .update(USERS)
             .set(USERS.NAME, userName)
@@ -139,9 +139,9 @@ open class UserRepository(
             .where(
                 USERS.NAME.eq(currentUserName)
             )
-            .returning(USERS.USER_CODE)
+            .returning(USERS.NAME)
             .fetchOne()
-            .get(USERS.USER_CODE)
+            .get(USERS.NAME)
     }
 
     open fun updateUserRoleByUserId(

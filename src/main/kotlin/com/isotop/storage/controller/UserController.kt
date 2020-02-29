@@ -71,7 +71,7 @@ open class UserController(
         @RequestBody
         @Valid
         payload: UpdateUserNameAndEmailRequest
-    ) {
-        userService.updateUserNameAndPassword(authentication, payload)
+    ): UserResponse {
+        return userService.updateUserProfile(authentication, payload)
     }
 }
