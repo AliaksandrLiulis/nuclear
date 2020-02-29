@@ -19,7 +19,7 @@ open class UserController(
     private val userService: UserService
 ) {
 
-    @GetMapping("/role", produces = ["application/json"])
+    @GetMapping("/profile", produces = ["application/json"])
     open fun getUserAuthentication(
         authentication: Authentication
     ): UserResponse {
