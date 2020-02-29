@@ -4,6 +4,7 @@ import com.isotop.storage.config.exceptionHandlers.exception.ResourceNotFoundExc
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
 import com.isotop.storage.dto.request.ChangePasswordRequest
 import com.isotop.storage.dto.request.UpdateRoleUserByIdRequest
+import com.isotop.storage.dto.request.UpdateUserNameAndEmailRequest
 import com.isotop.storage.dto.request.UserCreateRequest
 import com.isotop.storage.dto.response.ListUserDataResponse
 import com.isotop.storage.dto.response.UserResponse
@@ -70,13 +71,28 @@ open class UserService(
     }
 
     @Transactional
+    open fun updateUserNameAndPassword(
+        authentication: Authentication,
+        payload: UpdateUserNameAndEmailRequest
+    ): UserResponse {
+        val currentUser = userRepository.getUserByName(authentication.name)[0]
+        if (!payload.name.isBlank() || !payload.email.isBlank()) {
+            val userId = userRepository.updateUserNameAndPassword(currentUser.name, payload.name, payload.email)
+            return userRepository.getUserByName(authentication.name)[0]
+        } else {
+            throw ResourceNotFoundException(48)
+        }
+    }
+
+
+    @Transactional
     open fun updateUserPassword(
         authentication: Authentication,
         payload: ChangePasswordRequest
     ) {
         val adminUser = userRepository.getUserByName(authentication.name)[0]
         val password = userRepository.getUserPasswordByUserName(adminUser.name)
-        if (password != null) {
+        if (password != null || payload.newPassword.length < 4) {
             if (encoder.matches(payload.oldPassword, password)) {
                 val newPassword = encoder.encode(payload.newPassword)
                 userRepository.updatePassword(adminUser.name, newPassword)

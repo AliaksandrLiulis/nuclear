@@ -131,13 +131,17 @@ open class UserRepository(
         )
     }
 
-    open fun isExistUserByPasswordAndUserName(userName: String, oldPassword: String): Boolean {
-
-        return dsl.fetchExists(
-            DSL.select(USERS.USER_CODE)
-                .from(USERS)
-                .where(USERS.NAME.equalIgnoreCase(userName).and(USERS.PASSWORD.eq(oldPassword)))
-        )
+    open fun updateUserNameAndPassword(currentUserName: String, userName: String, email: String): Int {
+        return dsl
+            .update(USERS)
+            .set(USERS.NAME, userName)
+            .set(USERS.EMAIL, email)
+            .where(
+                USERS.NAME.eq(currentUserName)
+            )
+            .returning(USERS.USER_CODE)
+            .fetchOne()
+            .get(USERS.USER_CODE)
     }
 
     open fun updateUserRoleByUserId(
