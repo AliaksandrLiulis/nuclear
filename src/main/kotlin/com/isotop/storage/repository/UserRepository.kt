@@ -73,6 +73,20 @@ open class UserRepository(
             .getValue(USERS.USER_CODE)
     }
 
+    open fun updatePassword(userName: String, newPassword: String): Int {
+
+        val insertValues = mapOf<Any, Any?>(
+            USERS.PASSWORD to newPassword
+        )
+        return dsl
+            .update(USERS)
+            .set(insertValues)
+            .where(USERS.NAME.eq(userName))
+            .returning(USERS.USER_CODE)
+            .fetchOne()
+            .getValue(USERS.USER_CODE)
+    }
+
     open fun isExistUserByEmail(
         payload: String
     ): Boolean {
@@ -103,6 +117,15 @@ open class UserRepository(
             DSL.select(USERS.USER_CODE)
                 .from(USERS)
                 .where(USERS.NAME.equalIgnoreCase(userName))
+        )
+    }
+
+    open fun isExistUserByPasswordAndUserName(userName: String, oldPassword: String): Boolean {
+
+        return dsl.fetchExists(
+            DSL.select(USERS.USER_CODE)
+                .from(USERS)
+                .where(USERS.NAME.equalIgnoreCase(userName).and(USERS.PASSWORD.eq(oldPassword)))
         )
     }
 

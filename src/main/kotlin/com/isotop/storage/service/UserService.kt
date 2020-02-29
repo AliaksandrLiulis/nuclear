@@ -2,6 +2,7 @@ package com.isotop.storage.service
 
 import com.isotop.storage.config.exceptionHandlers.exception.ResourceNotFoundException
 import com.isotop.storage.config.exceptionHandlers.exception.ValidationException
+import com.isotop.storage.dto.request.ChangePasswordRequest
 import com.isotop.storage.dto.request.UpdateRoleUserByIdRequest
 import com.isotop.storage.dto.request.UserCreateRequest
 import com.isotop.storage.dto.response.ListUserDataResponse
@@ -65,6 +66,20 @@ open class UserService(
             return userRepository.getUserById(userId)[0]
         } else {
             throw ResourceNotFoundException(1)
+        }
+    }
+
+    @Transactional
+    open fun updateUserPassword(
+        authentication: Authentication,
+        payload: ChangePasswordRequest
+    ) {
+        val adminUser = userRepository.getUserByName(authentication.name)[0]
+        if (userRepository.isExistUserByPasswordAndUserName(adminUser.name, encoder.encode(payload.oldPassword))) {
+            val newPassword = encoder.encode(payload.newPassword)
+            userRepository.updatePassword(adminUser.name, newPassword)
+        } else {
+            throw ResourceNotFoundException(48)
         }
     }
 }

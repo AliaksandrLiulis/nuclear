@@ -1,5 +1,6 @@
 package com.isotop.storage.controller
 
+import com.isotop.storage.dto.request.ChangePasswordRequest
 import com.isotop.storage.dto.request.UpdateRoleUserByIdRequest
 import com.isotop.storage.dto.request.UserCreateRequest
 import com.isotop.storage.dto.response.ListUserDataResponse
@@ -49,5 +50,16 @@ open class UserController(
         payload: UpdateRoleUserByIdRequest
     ): UserResponse {
         return userService.updateUserRoleByUserId(authentication, payload)
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/password")
+    open fun changePassword(
+        authentication: Authentication,
+        @RequestBody
+        @Valid
+        payload: ChangePasswordRequest
+    ) {
+        userService.updateUserPassword(authentication, payload)
     }
 }
