@@ -73,6 +73,17 @@ open class UserRepository(
             .getValue(USERS.USER_CODE)
     }
 
+    open fun getUserPasswordByUserName(userName: String): String? {
+
+        return dsl.select(
+            USERS.PASSWORD
+        ).from(
+            USERS
+        ).where(
+            USERS.NAME.eq(userName)
+        ).fetchInto(String::class.java)[0]
+    }
+
     open fun updatePassword(userName: String, newPassword: String): Int {
 
         val insertValues = mapOf<Any, Any?>(

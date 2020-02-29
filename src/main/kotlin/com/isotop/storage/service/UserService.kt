@@ -75,9 +75,14 @@ open class UserService(
         payload: ChangePasswordRequest
     ) {
         val adminUser = userRepository.getUserByName(authentication.name)[0]
-        if (userRepository.isExistUserByPasswordAndUserName(adminUser.name, encoder.encode(payload.oldPassword))) {
-            val newPassword = encoder.encode(payload.newPassword)
-            userRepository.updatePassword(adminUser.name, newPassword)
+        val password = userRepository.getUserPasswordByUserName(adminUser.name)
+        if (password != null) {
+            if (encoder.matches(payload.oldPassword, password)) {
+                val newPassword = encoder.encode(payload.newPassword)
+                userRepository.updatePassword(adminUser.name, newPassword)
+            } else {
+                throw ResourceNotFoundException(48)
+            }
         } else {
             throw ResourceNotFoundException(48)
         }
