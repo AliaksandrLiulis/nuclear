@@ -75,7 +75,7 @@ open class UserService(
         payload: UpdateUserNameAndEmailRequest
     ): UserResponse {
         val currentUser = userRepository.getUserByName(authentication.name)[0]
-        if (!payload.name.isBlank() || !payload.email.isBlank() || !userRepository.isExistUserByNameAndEmail(
+        if (payload.name.isNotEmpty() || payload.email.isNotEmpty() || !userRepository.isExistUserByNameAndEmail(
                 payload.name,
                 payload.email
             )
