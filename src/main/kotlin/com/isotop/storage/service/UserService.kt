@@ -70,21 +70,20 @@ open class UserService(
         }
     }
 
+    @Transactional
     open fun updateUserProfile(
         authentication: Authentication,
         payload: UpdateUserNameAndEmailRequest
     ): UserResponse {
         val currentUser = userRepository.getUserByName(authentication.name)[0]
-        if (payload.name.isNotEmpty() || payload.email.isNotEmpty() || !userRepository.isExistUserByNameAndEmail(
-                payload.name,
-                payload.email
-            )
-        ) {
-            userRepository.updateUserProfile(currentUser.name, payload.name, payload.email)
-            return userRepository.getUserById(currentUser.userId)[0]
-        } else {
+        if (payload.name.isEmpty() || currentUser.name != payload.name && userRepository.isExistUserByName(payload.name)) {
             throw ValidationException(48)
         }
+        if (payload.email.isEmpty() || currentUser.email != payload.email && userRepository.isExistUserByEmail(payload.email)) {
+            throw ValidationException(48)
+        }
+        userRepository.updateUserProfile(currentUser.name, payload.name, payload.email)
+        return userRepository.getUserById(currentUser.userId)[0]
     }
 
 
@@ -93,12 +92,12 @@ open class UserService(
         authentication: Authentication,
         payload: ChangePasswordRequest
     ) {
-        val adminUser = userRepository.getUserByName(authentication.name)[0]
-        val password = userRepository.getUserPasswordByUserName(adminUser.name)
+        val currentUser = userRepository.getUserByName(authentication.name)[0]
+        val password = userRepository.getUserPasswordByUserName(currentUser.name)
         if (password != null || payload.newPassword.length < 4) {
             if (encoder.matches(payload.oldPassword, password)) {
                 val newPassword = encoder.encode(payload.newPassword)
-                userRepository.updatePassword(adminUser.name, newPassword)
+                userRepository.updatePassword(currentUser.name, newPassword)
             } else {
                 throw ValidationException(48)
             }
