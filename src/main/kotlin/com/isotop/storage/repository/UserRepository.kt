@@ -131,6 +131,17 @@ open class UserRepository(
         )
     }
 
+    open fun isExistUserByNameAndEmail(
+        userName: String, email: String
+    ): Boolean {
+
+        return dsl.fetchExists(
+            DSL.select(USERS.USER_CODE)
+                .from(USERS)
+                .where(USERS.NAME.equalIgnoreCase(userName).or(USERS.EMAIL.eq(email)))
+        )
+    }
+
     open fun updateUserProfile(currentUserName: String, userName: String, email: String): String {
         return dsl
             .update(USERS)

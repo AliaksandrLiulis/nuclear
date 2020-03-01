@@ -75,11 +75,15 @@ open class UserService(
         payload: UpdateUserNameAndEmailRequest
     ): UserResponse {
         val currentUser = userRepository.getUserByName(authentication.name)[0]
-        if (!payload.name.isBlank() || !payload.email.isBlank()) {
+        if (!payload.name.isBlank() || !payload.email.isBlank() || !userRepository.isExistUserByNameAndEmail(
+                payload.name,
+                payload.email
+            )
+        ) {
             userRepository.updateUserProfile(currentUser.name, payload.name, payload.email)
             return userRepository.getUserById(currentUser.userId)[0]
         } else {
-            throw ResourceNotFoundException(48)
+            throw ValidationException(48)
         }
     }
 
@@ -96,10 +100,10 @@ open class UserService(
                 val newPassword = encoder.encode(payload.newPassword)
                 userRepository.updatePassword(adminUser.name, newPassword)
             } else {
-                throw ResourceNotFoundException(48)
+                throw ValidationException(48)
             }
         } else {
-            throw ResourceNotFoundException(48)
+            throw ValidationException(48)
         }
     }
 }
