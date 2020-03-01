@@ -13,7 +13,7 @@ open class MakeController(
     private val makeTypeService: MakeTypeService
 ) {
 
-    @PreAuthorize("hasRole('STORAGE')")
+    @PreAuthorize("hasRole('STORAGE') or hasRole('WORKER')")
     @GetMapping(produces = ["application/json"])
     open fun getMakeTypes(): ListMakeTypeDataResponse {
         return makeTypeService.getMakeTypes()

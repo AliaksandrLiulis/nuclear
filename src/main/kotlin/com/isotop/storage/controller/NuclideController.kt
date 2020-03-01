@@ -13,7 +13,7 @@ open class NuclideController(
     private val nuclideTypeService: NuclideTypeService
 ) {
 
-    @PreAuthorize("hasRole('STORAGE')")
+    @PreAuthorize("hasRole('STORAGE') or hasRole('WORKER')")
     @GetMapping(produces = ["application/json"])
     open fun getNuclideTypes(): ListNuclideTypeDataResponse {
         return nuclideTypeService.getNuclideTypes()

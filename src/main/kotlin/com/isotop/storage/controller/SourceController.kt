@@ -24,7 +24,7 @@ open class SourceController(
         return sourceTypeService.getSourceTypes()
     }
 
-    @PreAuthorize("hasRole('STORAGE')")
+    @PreAuthorize("hasRole('STORAGE') or hasRole('WORKER')")
     @GetMapping("/available", produces = ["application/json"])
     open fun getAvailableSources(): ListAvailableSourceDataResponse {
         return sourceService.getAvailableSources()

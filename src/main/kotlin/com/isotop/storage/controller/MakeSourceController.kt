@@ -13,13 +13,13 @@ open class MakeSourceController(
     private val makeSourceService: MakeSourceService
 ) {
 
-    @PreAuthorize("hasRole('STORAGE')")
+    @PreAuthorize("hasRole('STORAGE') or hasRole('WORKER')")
     @GetMapping(produces = ["application/json"])
     open fun getMakeSources(): ListMakeSourceDataResponse {
         return makeSourceService.getMakeSources()
     }
 
-    @PreAuthorize("hasRole('STORAGE')")
+    @PreAuthorize("hasRole('STORAGE') or hasRole('WORKER')")
     @PostMapping(produces = ["application/json"])
     open fun addMakeSource(
         @RequestBody
@@ -28,7 +28,7 @@ open class MakeSourceController(
         return makeSourceService.addMakeSource(payload)
     }
 
-    @PreAuthorize("hasRole('STORAGE')")
+    @PreAuthorize("hasRole('STORAGE') or hasRole('WORKER')")
     @PutMapping(produces = ["application/json"])
     open fun updateMakeSource(
         @RequestBody
@@ -37,7 +37,7 @@ open class MakeSourceController(
         return makeSourceService.updateMakeSource(payload)
     }
 
-    @PreAuthorize("hasRole('STORAGE')")
+    @PreAuthorize("hasRole('STORAGE') or hasRole('WORKER')")
     @DeleteMapping("/{storageId}")
     open fun deleteMakeSourceByStorageId(
         @PathVariable(value = "storageId")

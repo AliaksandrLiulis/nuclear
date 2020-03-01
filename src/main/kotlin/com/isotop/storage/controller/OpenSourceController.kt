@@ -30,7 +30,7 @@ open class OpenSourceController(
         return openSourceTypeService.getOpenSourceTypeById(typeId)
     }
 
-    @PreAuthorize("hasRole('STORAGE')")
+    @PreAuthorize("hasRole('STORAGE') or hasRole('WORKER')")
     @PutMapping("/using")
     open fun updateOpenSourceUsing(
         @RequestBody

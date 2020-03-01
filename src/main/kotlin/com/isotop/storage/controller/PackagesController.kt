@@ -11,7 +11,7 @@ open class PackagesController(
     private val packageService: PackageService
 ) {
 
-    @PreAuthorize("hasRole('STORAGE')")
+    @PreAuthorize("hasRole('STORAGE') or hasRole('WORKER')")
     @GetMapping("/{storageId}", produces = ["application/json"])
     open fun getPackagesByStorageId(
         @PathVariable(value = "storageId")
