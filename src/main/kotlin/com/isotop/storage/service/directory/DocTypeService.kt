@@ -44,9 +44,7 @@ open class DocTypeService(
     }
 
     private fun validateAddDocTypeRequest(docTypeRequest: DocTypeRequest) {
-        if (docTypeRequest.docTypeName.isNullOrBlank()
-            || docTypeRepository.isExistDocTypeByName(docTypeRequest.docTypeName)
-        ) {
+        if (docTypeRequest.docTypeName.isNullOrBlank()) {
             throw ValidationException(22)
         }
     }
