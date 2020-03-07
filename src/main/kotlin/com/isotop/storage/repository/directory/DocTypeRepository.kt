@@ -19,7 +19,9 @@ open class DocTypeRepository(
             DOC_TYPES.DOC_TYPE_NAME
         ).from(
             DOC_TYPES
-        ).fetchInto(DocTypeResponse::class.java)
+        )
+            .orderBy(DOC_TYPES.DOC_TYPE_NAME)
+            .fetchInto(DocTypeResponse::class.java)
     }
 
     open fun getDocTypeById(typeId: Int): List<DocTypeResponse> {
